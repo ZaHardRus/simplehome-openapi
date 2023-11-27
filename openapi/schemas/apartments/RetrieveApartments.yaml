@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+  apartment_number:
+    type: integer
+  residence_id:
+    type: integer
+  residence_title:
+    type: string
+  type_label:
+    type: string
+  type_label_eng:
+    type: string

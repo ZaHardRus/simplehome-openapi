@@ -1,0 +1,9 @@
+type: object
+required:
+  - residences_ids
+properties:
+  residences_ids:
+    description: список id резиденций, доступ до которых будет изменён
+    type: array
+    items:
+      type: integer

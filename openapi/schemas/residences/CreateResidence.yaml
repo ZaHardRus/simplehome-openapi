@@ -1,0 +1,18 @@
+type: object
+required:
+  - title
+  - address
+  - city
+properties:
+  title:
+    type: string
+  address:
+    type: string
+  description:
+    type: string
+  image_id:
+    type: integer
+  integrator_id:
+    type: integer
+  city:
+    type: string

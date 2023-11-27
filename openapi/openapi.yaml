@@ -1,0 +1,466 @@
+openapi: '3.0.3'
+
+
+info:
+  title: sh api
+  version: n0.1
+
+paths:
+
+  /api/v2/admin/residences/{id}:
+    put:
+      operationId: update
+      description: Обновляет объект резиденции
+      tags:
+        - residences
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateResidence"
+      responses:
+        '201':
+          description: Успешное получение данных
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveResidence"
+
+        '404':
+          description: Резиденция не найдена
+          # content:
+            # 'Not Found!'
+
+        '400':
+          description: Изображение не найдено
+          # Image Id {image_id} Does Not Exists!
+
+    get:
+      operationId: retrieve
+      description: Получение резиденции по id
+      tags:
+        - residences
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Объект резиденции
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveResidence"
+
+    delete:
+      operationId: delete
+      description: Удаляет резиденцию по id
+      tags:
+        - residences
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Резиденция успешно удалена
+        '404':
+          description: Резиденция не существует
+
+  /api/v2/admin/residences:
+    get:
+      operationId: list
+      description: Получение списка доступных резиденций
+      tags:
+        - residences
+      parameters:
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: max_result
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: search
+          required: false
+          schema:
+            type: string
+
+        - in: query
+          name: create_dt_after
+          required: false
+          schema:
+            type: string
+
+        - in: query
+          name: updated_dt_after
+          required: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Успешное получение списка резиденций
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RetrieveResidence"
+
+    post:
+      operationId: create
+      description: Создание резиденции
+      tags:
+        - residences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateResidence"
+      responses:
+        '201':
+          description: Резиденция успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveResidence"
+
+    delete:
+      operationId: delete_multiple
+      description: Множественное удаление резиденций по их id
+      tags:
+        - residences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object 
+              properties:
+                id:
+                  type: string
+                  description: список с id резиденций, которые требуется удалить
+                  example: "[1,2,3,4]"
+      responses:
+        '200':
+          description: Успешное удаление резиденций
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: "#/components/schemas/RetrieveResidence"
+
+  /api/v2/admin/residences_and_apartments:
+    get:
+      operationId: get_residences_and_apartments
+      description: WARNING! GOVNOROUTE.
+                   Этот роут возвращаеет все резиденты доступные пользователю с апартаментами.
+                   Логика выдачи апартаментов - тайна за семью печатями
+      tags:
+        - residences
+      responses:
+        '200':
+          description: Успешное получение резиденций с их апартаментами
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveResidenceWithApartments"
+
+# этого метода не должно быть. Удалить его
+# фронтенд получает эти данные, чтобы считать кол-во удаляемых объектов и выводить в модалке
+# запрос нагруженный и дерьмовый. Я бы его переписал :/
+  /api/v2/admin/residences/get_list_related_entities:
+    get:
+      operationId: get_list_related_entities
+      description: Получение доступных резиденций и 
+      tags:
+        - residences
+      parameters:
+        - in: path
+          schema:
+            type: integer
+          name: residence_id
+          required: true
+        
+      responses:
+        '400':
+          description: Id Must Be An Integer!
+        
+        '200':
+          description: Успешное получение связанных с резиденцией данных
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: "#/components/schemas/RetrieveResidence"
+                properties:
+                  controller_ids:
+                    type: array
+                    items:
+                      type: integer
+                  driver_ids:
+                    type: array
+                    items:
+                      type: integer
+                  room_ids:
+                    type: array
+                    items:
+                      type: integer
+                  scenario_ids:
+                    type: array
+                    items:
+                      type: integer
+                  device_ids:
+                    type: array
+                    items:
+                      type: integer
+
+  /api/v2/admin/residences/{pk:\d+}/buildings:
+    get:
+      operationId: retrieve_buildings
+      description: Отдаёт список строений принадлежащих резиденции.
+                   Доступно инженеру и выше
+      tags:
+        - residences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          description: id резиденции
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешно возвращает список зданий резиденции
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    created_at:
+                      type: string
+                      format: date-time
+                    updated_at:
+                      type: string
+                      format: date-time
+                    residence_id:
+                      type: integer
+
+  # доступы до резиденций
+  /api/v2/admin/residences_accesses/{pk}:
+    post:
+      operationId: multiple_create
+      description: Множественное добавление досутпов до резиденции
+      tags:
+        - residences
+      parameters:
+        - in: path
+          name: pk
+          description: id пользователя, у которого обновляется доступ
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeResidenceAccess'
+
+      responses:
+        "201":
+          description: перечисленные доступы успешно добавленны
+
+
+    delete:
+      operationId: multiple_delete
+      description: Множественное удаление досутпов до резиденции
+      tags:
+        - residences
+      parameters:
+        - in: path
+          name: pk
+          description: id пользователя, у которого обновляется доступ
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: перечисленные доступы успешно удалены
+
+    # роуты на интеграторов нужно перенести
+  /api/v2/admin/integrator:
+    post:
+      operationId: create
+      description: создаёт нового интегратора. Метод доступен с роли суперпользователя
+      tags:
+        - integrators
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+               - title
+              properties:
+                title:
+                  type: string
+                  description: Название интегратора
+      responses:
+        '200':
+          description: Интегратор успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveIntegrator'
+
+    get:
+      operationId: get_integrator
+      description: Получить интегратора по произвольному полю.
+                   Метод доступен с ролью engeneer и выше
+      tags:
+        - integrators
+      parameters:
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: title
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное получение интегратора
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveIntegrator"
+
+    delete:
+      operationId: delete_integrator
+      description: метод доступен только для суперпользователя
+      tags:
+        - integrators
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: id удаляемого интегратора
+      responses:
+        '200':
+          description: Успешное удаление интегратора
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveIntegrator"
+      
+
+  /api/v2/admin/integrators:
+    get:
+      operationId: get_integrators_paginated
+      description: получить список всех интеграторов
+      tags:
+        - integrators
+      responses:
+        "200":
+          description: список интеграторов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RetrieveIntegrator"
+
+    patch:
+      description: Обновление полей интегратора. Метод доступен только суперпользователям
+      tags:
+        - integrators
+      parameters:
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: integer
+          description: id по которому будем обновлять интегратора
+        - in: query
+          name: title
+          required: false
+          schema:
+            type: string
+          description: title по которому будем обновлять интегратора
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                title:
+                  type: string
+      responses:
+        '200':
+          description: успешное обновление полей интегратора
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RetrieveIntegrator"
+
+components:
+  schemas:
+    UpdateResidence:
+      $ref: './schemas/residences/UpdateResidence.yaml'
+
+    CreateResidence:
+      $ref: './schemas/residences/CreateResidence.yaml'
+
+    RetrieveResidence:
+      $ref: './schemas/residences/RetrieveResidence.yaml'
+
+    ChangeResidenceAccess:
+      $ref: './schemas/residences/ChangeResidenceAccess.yaml'
+
+    RetrieveResidenceWithApartments:
+      $ref: "./schemas/residences/RetrieveResidenceWithApartments.yaml"
+
+    # апартаменты
+    RetrieveApartments:
+      $ref: './schemas/apartments/RetrieveApartments.yaml'
+
+    # интеграторы
+    RetrieveIntegrator:
+      $ref: './schemas/integrators/RetrieveIntegrator.yaml'
+      

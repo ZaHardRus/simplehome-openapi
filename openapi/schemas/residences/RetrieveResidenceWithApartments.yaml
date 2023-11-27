@@ -1,0 +1,8 @@
+type: object
+allOf:
+  - $ref: "./RetrieveResidence.yaml"
+properties:
+  apartments:
+    type: array
+    items:
+      $ref: "../apartments/RetrieveApartments.yaml"

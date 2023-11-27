@@ -1,0 +1,33 @@
+type: object
+properties:
+  id:
+    type: integer
+
+  title:
+    type: string
+
+  address:
+    type: string
+
+  city:
+    type: string
+
+  description:
+    type: string
+
+  created_at:
+    type: string
+    format: date-time
+
+  updated_at:
+    type: string
+    format: date-time
+
+  image_id:
+    type: integer
+
+  integrator_id:
+    type: integer
+
+  customer_support_email:
+    type: string
