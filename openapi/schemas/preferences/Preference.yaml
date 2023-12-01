@@ -1,0 +1,10 @@
+type: object
+properties:
+  apartment_id:
+    type: integer
+  displayed_title:
+    type: string
+  displayed_image_hash:
+    type: string
+  displayed_image_id:
+    type: integer

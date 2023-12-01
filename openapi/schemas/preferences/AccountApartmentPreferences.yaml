@@ -1,0 +1,35 @@
+type: object
+properties:
+  group_order:
+    type: array
+    items:
+      type: object
+
+  global_scenarios:
+    type: array
+    items:
+      type: object
+
+  global_security_order:
+    type: array
+    items:
+      type: string
+      enum:
+        - leakage
+        - door
+        - cleaning_mod
+
+  room_groups:
+    type: list
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+
+  rooms:
+    type: array
+    items:
+      type: object

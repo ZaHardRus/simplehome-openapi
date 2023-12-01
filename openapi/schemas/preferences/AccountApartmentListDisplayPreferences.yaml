@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: integer
+  account_id:
+    type: integer
+  updated_at:
+    type: date-time
+  preferences:
+    type: object
+    # типы преференсов, скорее всего требуется описать
