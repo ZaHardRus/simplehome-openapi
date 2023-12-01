@@ -439,6 +439,490 @@ paths:
                 items:
                   $ref: "#/components/schemas/RetrieveIntegrator"
 
+  # TODO: переименование данных методов
+  #  преференсы-----------------------------------------------------------------------------------------------------------------
+  /api/v2/account_apartment_list_display_preferences:
+    post:
+      operationId: create_list_display_preferences
+      tags:
+        - preferences
+      description: Создание преференса. Доступно пользователю и выше
+                   Достаёт доступные пользователю апартаменты
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                global_scenarios:
+                  type: array
+                  description: список с какими-то сценариями
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: id сценария
+                      title:
+                        type: string
+                        description: название сценария
+
+                global_security_order:
+                  type: array
+                  description: список хуй пойми с чем
+                  items:
+                    # TODO: заменить на enum
+                    type: string
+                
+                rooms:
+                  type: array
+                  # TODO: wtf. Почему у объектов списка всего одно поле
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: id комнат наверное
+      responses:
+        # TODO: статус 201 надо заменить на 200.
+        # 201 используется в случае отсутствия данных в ответе
+        "201":
+          description: что-то произошло :/
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApartmentListDisplayPreferences"
+        # TODO: какой статус код ?
+        # UserPermissionError
+
+    # TODO: дописать
+    get:
+      # TODO: метод - полный кал, который стоит переписать
+      operationId: retrieve_list_display_preferences
+      description: Получение объекта. Доступно с ролью пользователя и выше.
+                   По id пользователя достаёт единственную сущность AccountApartmentListDisplayPreferences
+                   Итерируем данные апартаментов, лежащие в поле preferences полученного объекта
+                   Убираем все апартаменты из поля preferences, которые недоступны пользователю.
+      responses:
+        "200":
+          description: Успешное получение объекта
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: id апартаментов
+                  account_id:
+                    type: integer
+                    # TODO: что за аккаунты могут быть
+                    description: id некого аккаунта
+                  updated_at:
+                    type: string
+                    format: date-time
+                    example: "2022-02-14T11:59:37.945Z"
+                  # TODO: абсолютно конченно устроено хранение данных на бэкенде
+                  preferences:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        apartment_id:
+                          type: integer
+                        displayed_title:
+                          type: string
+
+  /api/v2/account_apartment_list_display_preferences/{pk:\d+}:
+    put:
+      operationId: update_list_display_preferences
+      description: Доступно юзеру и выше. Достаёт доступные апартаменты.
+                   Проверяет может ли пользователь изменить преференсы
+                   (может, если ему доступна резиденция). иначе выплёвывает
+                   UserPermissionError. В случае успеха обновляет json поле preferences в 
+                   AccountApartmentListDisplayPreferences
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  apartment_id:
+                    type: integer
+                  displayed_title:
+                    type: string
+                  displayed_image_hash:
+                    type: string
+                  displayed_image_id:
+                    type: integer
+      responses:
+        '200':
+          description: Обновлённый объект AccountApartmentListDisplayPreferences
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApartmentListDisplayPreferences"
+        '404':
+          description: 0_0
+
+    delete:
+      operationId: delete_list_display_preferences
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '404':
+          description: удаляемый объект не найден
+        '204':
+          description: удаление произведено
+
+  /api/v2/account_apartment_preferences:
+    # Закончить описание
+    post:
+      operationId: create_account_apartment_preferences
+      description: Достаёт объект AccountApartmentPreferences.
+                   Создаёт новый преференс, если его не существует
+      tags:
+        - preferences
+      parameters:
+        - in: query
+          name: room_group_support
+          description: ни малейшего понимания
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: apartment_id
+          description: id апартаментов, в которых мы создаём преференсы
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountApartmentPreferences'
+      responses:
+        '201':
+          description: Успешное создание чего-то
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountApartmentPreferences2'
+
+    get:
+      operationId: retrieve_account_apartment_preferences
+      tags:
+        - preferences
+      parameters:
+        - in: query
+          name: room_group_support
+          description: ни малейшего понимания
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: apartment_id
+          description: id апартаментов, в которых мы создаём преференсы
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: успешное получение преференсов
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApartmentPreferences2"
+          
+        '400':
+          description: type of apartment_id must be integer
+
+  /api/v2/account_apartment_preferences/{pk:\d+}:
+    put:
+      operationId: update_account_apartment_preferences
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: room_group_support
+          required: false
+          schema:
+            type: boolean
+      requestBody:
+        $ref: '#/components/schemas/AccountApartmentPreferences2'
+      responses:
+        '200':
+          description: успешное обновление преференсов
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountApartmentPreferences2"
+
+    delete:
+      operationId: delete_account_apartment_preferences
+      tags:
+        - preferences
+      description: удаление объекта AccountApartmentPreferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '404':
+          description: успешное удаление AccountApartmentPreferences
+        '204':
+          description: успешное удаление
+
+  /api/v2/account_apartment_preferences/update_room_group_order/{pk:\d+}:
+    put:
+       operationId: update_room_groups_order
+       parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+
+        - in: query
+          name: room_group_support
+          required: false
+          schema:
+            type: boolean
+
+       tags:
+        - preferences
+       responses:
+        '200':
+          description: успешное изменение порядка преференсов
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+        '404':
+          description: Account Apartment Preferences Not Found!
+
+
+  /api/v2/account_apartment_preferences/delete_room_groups/{pk:\d+}:
+    delete:
+      operationId: delete_room_groups
+      description: доступно с ролью пользователя и выше
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/AccountApartmentPreferences"
+      responses:
+        '200':
+          description: успешное изменение порядка преференсов
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+
+  /api/v2/account_apartment_preferences/set_default:
+    post:
+      operationId: set_default_apartment_preferences
+      tags:
+        - preferences
+      parameters:
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+        # NotFound(f"Default preference for apartment with id {apartment_id} not found")
+
+  /api/v2/account_apartment_preferences/get_default:
+    # TODO: на фронте не используется
+    get:
+      operationId: get_default_apartment_preferences
+      parameters:
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      tags:
+        - preferences
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+
+  /api/v2/admin/account_apartment_default_preferences:
+    post:
+      operationId: create_account_apartment_default_preferences
+      tags:
+        - preferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/AccountApartmentPreferences"
+      responses:
+        # TODO: должно быть 200.
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+
+    get:
+      operationId: retrieve_account_apartment_default_preferences
+      tags:
+        - preferences
+      parameters:
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+
+  /api/v2/admin/account_apartment_default_preferences/{pk:\d+}:
+    put:
+      operationId: update_account_apartment_default_preferences
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                # NotFound('Account Apartment Default Preferences Not Found!', 404)
+
+    delete:
+      operationId: delete_account_apartment_default_preferences
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: success
+        '404':
+          description: Account Apartment Default Preferences Not Found!
+
+
+  /api/v2/admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}:
+    put:
+      operationId: update_room_groups_order
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/AccountApartmentPreferences"
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+        '404':
+          description: Account Apartment Default Preferences Not Found!
+
+  /api/v2/admin/account_apartment_default_preferences/delete_room_groups/{pk:\d+}:
+    delete:
+      operationId: delete_room_groups
+      tags:
+        - preferences
+      parameters:
+        - in: path
+          name: pk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountApartmentPreferences2"
+      responses:
+        '200':
+          description: "
+            — Кто тебе дом строил? Здорово получилось…
+            — Да пидорасы!
+            — ??
+            — Нанял рабочих залить фундамент.
+              Выкопали, залили, ушли.
+              Нанял каменщиков, те пришли спрашивают:
+                Какие пидорасы фундамент заливали?
+                Стены выложили, ушли.
+                Нанял штукатуров, те тоже — что за пидорасы кладку делали?
+              Ну, и так далее. Вот и получается,
+              что дом строили одни пидорасы… "
+
+
 components:
   schemas:
     UpdateResidence:
@@ -464,3 +948,15 @@ components:
     RetrieveIntegrator:
       $ref: './schemas/integrators/RetrieveIntegrator.yaml'
       
+    # преференсы
+    AccountApartmentListDisplayPreferences:
+      $ref: './schemas/preferences/AccountApartmentListDisplayPreferences.yaml'
+
+    Preference:
+      $ref: './schemas/preferences/Preference.yaml'
+
+    AccountApartmentPreferences:
+      $ref: './schemas/preferences/AccountApartmentPreferences.yaml'
+
+    AccountApartmentPreferences2:
+      $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'

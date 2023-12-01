@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+  account_id:
+    type: integer
+  apartment_id:
+    type: integer
+  updated_at:
+    type: string
+    format: date-time
+  preferences:
+    type: object
+    # какой-то объект
