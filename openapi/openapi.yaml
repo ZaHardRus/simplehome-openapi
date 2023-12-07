@@ -941,7 +941,6 @@ paths:
         '404':
           description: Account Apartment Default Preferences Not Found!
 
-
   /admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}:
     put:
       operationId: update_room_groups_order
@@ -998,7 +997,6 @@ paths:
                 Нанял штукатуров, те тоже — что за пидорасы кладку делали?
               Ну, и так далее. Вот и получается,
               что дом строили одни пидорасы… "
-
 
 components:
   schemas:

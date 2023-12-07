@@ -1,0 +1,55 @@
+type: object
+required:
+  - phone_number
+  - group_id
+
+properties:
+  email:
+    type: string
+    maxLength: 64
+
+  phone_number:
+    type: string
+    minLength: 11
+    maxLength: 16
+
+  password:
+    type: string
+    minLength: 6
+    maxLength: 512
+
+  first_name:
+    type: string
+    maxLength: 32
+
+  last_name:
+    type: string
+    maxLength: 32
+
+  middle_name:
+    type: string
+    maxLength: 32
+
+  image_id:
+    type: integer
+    minimum: 0
+
+  integrator_id:
+    type: integer
+    minimum: 0
+
+  last_code:
+    type: integer
+    minimum: 1000
+    maximum: 9999
+
+  group_id:
+    type: integer
+    minimum:: 0
+    maximum: 10
+
+  language:
+    type: string
+    enum:
+      - rus
+      - eng

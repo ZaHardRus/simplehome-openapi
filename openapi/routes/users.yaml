@@ -1,0 +1,186 @@
+/api/v2/admin/get_accessible_schemas:
+  post:
+
+/api/v2/users/get_accessible_schemas:
+  post:
+
+# /api/v2/users/:
+
+
+/api/v2/admin/users:
+  post:
+    description: Доступно с ролью администратора и выше
+    operationId: admin_user_create
+    requestBody:
+      $ref: "../schemas/users/CreateUser.yaml"
+    responses:
+      # TODO: неподходящий статус
+      '201':
+        description: success
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/users/RetrieveUser.yaml"
+
+  get:
+    description: Доступно с ролью инженера и выше
+    operationId: admin_user_list
+    parameters:
+      - in: query
+        name: is_admin bool
+        schema:
+          type: boolean
+          default: false
+        
+      - in: query
+        name: has_access_to_any_residence bool
+        schema:
+          type: boolean
+          default: true
+        
+      - in: query
+        name: residence_ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+        
+      - in: query
+        name: integrator_ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+        
+      - in: query
+        name: group_ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+        
+      - in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        
+      - in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+        
+      - in: query
+        name: max_results
+        required: false
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: success
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../schemas/users/RetrieveUser.yaml'
+
+
+  delete:
+    operationId: admin_user_delete_multiple
+
+
+/api/v2/admin/users/{pk:\d+}:
+  get:
+    operationId: admin_user_retrieve
+
+  delete:
+    operationId: admin_user_delete
+
+  patch:
+    operationId: admin_user_update
+
+
+/admin/users/all_user_phones:
+  get:
+    operationId: admin_view.all_user_phones
+
+/admin/login:
+  post:
+    operationId: admin_login_view.login
+
+/admin/refresh_token:
+  post:
+    operationId: admin_login_view.refresh_token
+
+/users/registration:
+  post:
+    operationId: login_view.registration
+
+/users/registration/check_email_and_phone:
+  post:
+    operationId: login_view.check_email_and_phone
+
+/users/get_allowed_auth_method:
+  get:
+    operationId: login_view.get_allowed_auth_method
+
+/users/registration/confirm:
+  post:
+    operationId: login_view.confirm_registration
+
+/users/login:
+  post:
+    operationId: login_view.login
+
+/users/login_email:
+  post:
+    operationId: login_view.login_using_email
+
+/users/confirm:
+  post:
+    operationId: login_view.confirm_code_legacy
+
+/users/token:
+  post:
+    operationId: login_view.token_obtain_legacy
+
+/users/confirm_code:
+  post:
+    operationId: login_view.confirm_code_and_token_obtain
+
+/users/confirm_email_code:
+  post:
+    operationId: login_view.confirm_email_code
+
+/users/refresh_token:
+  post:
+    operationId: login_view.refresh_token_legacy
+
+/users/refresh_token_new:
+  post:
+    operationId: login_view.refresh_token
+
+/api/v2/user_details:
+  get:
+    operationId: user_view.retrieve
+
+/api/v2/users/{pk:\d+}:
+  patch:
+    operationId: user_view.update
+
+  delete:
+    operationId: user_view.delete
+
+
+/api/v2/user_info:
+  get:
+    operationId: user_view.get_user_info_by_user_id
+
+/api/v2/user_by_phone_number:
+  post:
+    operationId: user_view.get_or_create_by_phone_number

@@ -1,0 +1,48 @@
+type: object
+properties:
+  id:
+    type: integer
+  
+  phone_number:
+    type: string
+  
+  email:
+    type: string
+  
+  first_name:
+    type: string
+  
+  last_name:
+    type: string
+  
+  middle_name:
+    type: string
+  
+  created_at:
+    type: string
+    format: date-time
+  
+  updated_at:
+    type: string
+    format: date-time
+  
+  image_id:
+    type: integer
+  
+  group_id:
+    type: integer
+  
+  language:
+    type: string
+    enum:
+      - rus
+      - eng
+
+  integrator_id:
+    type: integer
+
+  user_residences:
+    type: array
+    description: список id резиденций доступных пользователю
+    items:
+      type: integer
