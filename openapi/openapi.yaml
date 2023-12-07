@@ -516,11 +516,9 @@ paths:
                 items:
                   $ref: "#/components/schemas/RetrieveIntegrator"
 
-security:
-  - BearerAuth: []
   # TODO: переименование данных методов
   #  преференсы-----------------------------------------------------------------------------------------------------------------
-  /api/v2/account_apartment_list_display_preferences:
+  /account_apartment_list_display_preferences:
     post:
       operationId: create_list_display_preferences
       tags:
@@ -612,7 +610,7 @@ security:
                         displayed_title:
                           type: string
 
-  /api/v2/account_apartment_list_display_preferences/{pk:\d+}:
+  /account_apartment_list_display_preferences/{pk:\d+}:
     put:
       operationId: update_list_display_preferences
       description: Доступно юзеру и выше. Достаёт доступные апартаменты.
@@ -670,7 +668,7 @@ security:
         '204':
           description: удаление произведено
 
-  /api/v2/account_apartment_preferences:
+  /account_apartment_preferences:
     # Закончить описание
     post:
       operationId: create_account_apartment_preferences
@@ -732,7 +730,7 @@ security:
         '400':
           description: type of apartment_id must be integer
 
-  /api/v2/account_apartment_preferences/{pk:\d+}:
+  /account_apartment_preferences/{pk:\d+}:
     put:
       operationId: update_account_apartment_preferences
       tags:
@@ -775,7 +773,7 @@ security:
         '204':
           description: успешное удаление
 
-  /api/v2/account_apartment_preferences/update_room_group_order/{pk:\d+}:
+  /account_apartment_preferences/update_room_group_order/{pk:\d+}:
     put:
        operationId: update_room_groups_order
        parameters:
@@ -804,7 +802,7 @@ security:
           description: Account Apartment Preferences Not Found!
 
 
-  /api/v2/account_apartment_preferences/delete_room_groups/{pk:\d+}:
+  /account_apartment_preferences/delete_room_groups/{pk:\d+}:
     delete:
       operationId: delete_room_groups
       description: доступно с ролью пользователя и выше
@@ -829,7 +827,7 @@ security:
               schema:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
 
-  /api/v2/account_apartment_preferences/set_default:
+  /account_apartment_preferences/set_default:
     post:
       operationId: set_default_apartment_preferences
       tags:
@@ -848,7 +846,7 @@ security:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
         # NotFound(f"Default preference for apartment with id {apartment_id} not found")
 
-  /api/v2/account_apartment_preferences/get_default:
+  /account_apartment_preferences/get_default:
     # TODO: на фронте не используется
     get:
       operationId: get_default_apartment_preferences
@@ -867,7 +865,7 @@ security:
               schema:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
 
-  /api/v2/admin/account_apartment_default_preferences:
+  /admin/account_apartment_default_preferences:
     post:
       operationId: create_account_apartment_default_preferences
       tags:
@@ -903,7 +901,7 @@ security:
               schema:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
 
-  /api/v2/admin/account_apartment_default_preferences/{pk:\d+}:
+  /admin/account_apartment_default_preferences/{pk:\d+}:
     put:
       operationId: update_account_apartment_default_preferences
       tags:
@@ -944,7 +942,7 @@ security:
           description: Account Apartment Default Preferences Not Found!
 
 
-  /api/v2/admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}:
+  /admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}:
     put:
       operationId: update_room_groups_order
       tags:
@@ -970,7 +968,7 @@ security:
         '404':
           description: Account Apartment Default Preferences Not Found!
 
-  /api/v2/admin/account_apartment_default_preferences/delete_room_groups/{pk:\d+}:
+  /admin/account_apartment_default_preferences/delete_room_groups/{pk:\d+}:
     delete:
       operationId: delete_room_groups
       tags:
@@ -1026,13 +1024,7 @@ components:
     # интеграторы
     RetrieveIntegrator:
       $ref: './schemas/integrators/RetrieveIntegrator.yaml'
-    
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      
+
     # преференсы
     AccountApartmentListDisplayPreferences:
       $ref: './schemas/preferences/AccountApartmentListDisplayPreferences.yaml'
@@ -1045,3 +1037,10 @@ components:
 
     AccountApartmentPreferences2:
       $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
