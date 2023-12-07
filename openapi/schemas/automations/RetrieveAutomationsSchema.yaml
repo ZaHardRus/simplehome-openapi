@@ -1,0 +1,29 @@
+type: object
+properties:
+  id:
+    type: integer
+  is_active:
+    type: boolean
+  apartment_id:
+    type: integer
+  extra:
+    type: string
+    description: json
+  creator_id:
+    type: integer
+  updated_at:
+    type: string
+  created_at:
+    type: string
+  residence_id:
+    type: integer
+  title:
+    type: string
+  icon_tag:
+    type: string
+  time_offset:
+    type: integer
+  actions:
+    type: array
+  triggers:
+    type: array

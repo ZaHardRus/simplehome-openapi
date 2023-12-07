@@ -1,0 +1,93 @@
+get:
+  operationId: admin_get_automation_action
+  description: Получение действия автоматизации для админа
+  tags:
+    - automation_actions
+  parameters:
+    - $ref: "#/components/parameters/AutomationActionPathId"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Action Not Found!
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/automation_actions/RetrieveAutomationAction.yaml"
+
+delete:
+  operationId: admin_delete_automation_action
+  description: Удаление действия автоматизации админом
+  tags:
+    - automation_actions
+  parameters:
+    - $ref: "#/components/parameters/AutomationActionPathId"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Action Not Found!
+    "204":
+      description: Действие удалено
+
+put:
+  operationId: admin_update_automation_action
+  description: Обновление триггера автоматизации админом
+  tags:
+    - automation_actions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/automation_actions/CreateAutomationAction.yaml"
+  parameters:
+    - $ref: "#/components/parameters/AutomationActionPathId"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Action Not Found!
+    "201":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/automation_actions/RetrieveAutomationAction.yaml"
+
+
+components:
+  parameters:
+    AutomationActionPathId:
+      in: path
+      name: automation_action_id
+      description: id действия автоматизации
+      required: true
+      schema:
+        type: integer

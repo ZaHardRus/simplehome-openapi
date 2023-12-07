@@ -1,0 +1,5 @@
+type: object
+properties:
+  detail:
+    type: string
+    example: Id Must Be An Integer!

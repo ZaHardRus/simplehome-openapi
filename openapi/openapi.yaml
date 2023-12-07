@@ -4,10 +4,87 @@ openapi: '3.0.3'
 info:
   title: sh api
   version: n0.1
+servers:
+  - url: '{api_domain}/api/{api_version}'
+    variables:
+      api_domain:
+        default: https://dev.simple-home.liis.su
+        enum:
+          - https://dev.simple-home.liis.su  # Development server
+          - https://simple-home.liis.su  # Production server
+          - http://localhost:8080  # Local server
+      api_version:
+        default: v2
+        enum:
+          - v2
+          - v1
+
 
 paths:
+  /admin/login:
+    post:
+      operationId: admin_login
+      tags:
+        - login
+      parameters:
+        - in: header
+          name: X-Schema
+          schema:
+            type: string
+            example: public
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                email:
+                  type: string
+                client_unique_id:
+                  type: string
+      responses:
+        "200":
+          description: Успешная авторизация
 
-  /api/v2/admin/residences/{id}:
+  /admin/automations:
+    $ref: ./paths/automations/AdminAutomationsEndpoints.yaml
+
+  /admin/automations/{automation_id}:
+    $ref: ./paths/automations/AdminAutomationEndpoints.yaml
+    
+  /admin/automations/clone/{automation_id}:
+    $ref: ./paths/automations/AdminCloneAutomationsEndpoints.yaml
+  
+  /automations/{automation_id}:
+    $ref: ./paths/automations/UserAutomationEndpoints.yaml
+
+  /automation_triggers:
+    $ref: ./paths/automation_triggers/UserAutomationsTriggers.yaml
+
+  /automation_triggers/{automation_trigger_id}:
+    $ref: ./paths/automation_triggers/UserAutomationTriggers.yaml
+  
+  /admin/automation_triggers:
+    $ref: ./paths/automation_triggers/AdminAutomationsTriggers.yaml
+
+  /admin/automation_triggers/{automation_trigger_id}:
+    $ref: ./paths/automation_triggers/AdminAutomationTriggers.yaml
+
+  /automation_actions/{automation_action_id}:
+    $ref: ./paths/automation_actions/UserAutomationAction.yaml
+
+  /automation_actions:
+    $ref: ./paths/automation_actions/UserAutomationsActions.yaml
+
+  /admin/automation_actions/{automation_action_id}:
+    $ref: ./paths/automation_actions/AdminAutomationAction.yaml
+
+  /admin/automation_actions:
+    $ref: ./paths/automation_actions/AdminAutomationsActions.yaml
+
+  /admin/residences/{id}:
     put:
       operationId: update
       description: Обновляет объект резиденции
@@ -77,7 +154,7 @@ paths:
         '404':
           description: Резиденция не существует
 
-  /api/v2/admin/residences:
+  /admin/residences:
     get:
       operationId: list
       description: Получение списка доступных резиденций
@@ -170,7 +247,7 @@ paths:
                 items:
                     $ref: "#/components/schemas/RetrieveResidence"
 
-  /api/v2/admin/residences_and_apartments:
+  /admin/residences_and_apartments:
     get:
       operationId: get_residences_and_apartments
       description: WARNING! GOVNOROUTE.
@@ -189,7 +266,7 @@ paths:
 # этого метода не должно быть. Удалить его
 # фронтенд получает эти данные, чтобы считать кол-во удаляемых объектов и выводить в модалке
 # запрос нагруженный и дерьмовый. Я бы его переписал :/
-  /api/v2/admin/residences/get_list_related_entities:
+  /admin/residences/get_list_related_entities:
     get:
       operationId: get_list_related_entities
       description: Получение доступных резиденций и 
@@ -236,7 +313,7 @@ paths:
                     items:
                       type: integer
 
-  /api/v2/admin/residences/{pk:\d+}/buildings:
+  /admin/residences/{pk:\d+}/buildings:
     get:
       operationId: retrieve_buildings
       description: Отдаёт список строений принадлежащих резиденции.
@@ -274,7 +351,7 @@ paths:
                       type: integer
 
   # доступы до резиденций
-  /api/v2/admin/residences_accesses/{pk}:
+  /admin/residences_accesses/{pk}:
     post:
       operationId: multiple_create
       description: Множественное добавление досутпов до резиденции
@@ -315,7 +392,7 @@ paths:
           description: перечисленные доступы успешно удалены
 
     # роуты на интеграторов нужно перенести
-  /api/v2/admin/integrator:
+  /admin/integrator:
     post:
       operationId: create
       description: создаёт нового интегратора. Метод доступен с роли суперпользователя
@@ -386,7 +463,7 @@ paths:
                 $ref: "#/components/schemas/RetrieveIntegrator"
       
 
-  /api/v2/admin/integrators:
+  /admin/integrators:
     get:
       operationId: get_integrators_paginated
       description: получить список всех интеграторов
@@ -441,7 +518,7 @@ paths:
 
   # TODO: переименование данных методов
   #  преференсы-----------------------------------------------------------------------------------------------------------------
-  /api/v2/account_apartment_list_display_preferences:
+  /account_apartment_list_display_preferences:
     post:
       operationId: create_list_display_preferences
       tags:
@@ -533,7 +610,7 @@ paths:
                         displayed_title:
                           type: string
 
-  /api/v2/account_apartment_list_display_preferences/{pk:\d+}:
+  /account_apartment_list_display_preferences/{pk:\d+}:
     put:
       operationId: update_list_display_preferences
       description: Доступно юзеру и выше. Достаёт доступные апартаменты.
@@ -591,7 +668,7 @@ paths:
         '204':
           description: удаление произведено
 
-  /api/v2/account_apartment_preferences:
+  /account_apartment_preferences:
     # Закончить описание
     post:
       operationId: create_account_apartment_preferences
@@ -653,7 +730,7 @@ paths:
         '400':
           description: type of apartment_id must be integer
 
-  /api/v2/account_apartment_preferences/{pk:\d+}:
+  /account_apartment_preferences/{pk:\d+}:
     put:
       operationId: update_account_apartment_preferences
       tags:
@@ -696,7 +773,7 @@ paths:
         '204':
           description: успешное удаление
 
-  /api/v2/account_apartment_preferences/update_room_group_order/{pk:\d+}:
+  /account_apartment_preferences/update_room_group_order/{pk:\d+}:
     put:
        operationId: update_room_groups_order
        parameters:
@@ -725,7 +802,7 @@ paths:
           description: Account Apartment Preferences Not Found!
 
 
-  /api/v2/account_apartment_preferences/delete_room_groups/{pk:\d+}:
+  /account_apartment_preferences/delete_room_groups/{pk:\d+}:
     delete:
       operationId: delete_room_groups
       description: доступно с ролью пользователя и выше
@@ -750,7 +827,7 @@ paths:
               schema:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
 
-  /api/v2/account_apartment_preferences/set_default:
+  /account_apartment_preferences/set_default:
     post:
       operationId: set_default_apartment_preferences
       tags:
@@ -769,7 +846,7 @@ paths:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
         # NotFound(f"Default preference for apartment with id {apartment_id} not found")
 
-  /api/v2/account_apartment_preferences/get_default:
+  /account_apartment_preferences/get_default:
     # TODO: на фронте не используется
     get:
       operationId: get_default_apartment_preferences
@@ -788,7 +865,7 @@ paths:
               schema:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
 
-  /api/v2/admin/account_apartment_default_preferences:
+  /admin/account_apartment_default_preferences:
     post:
       operationId: create_account_apartment_default_preferences
       tags:
@@ -824,7 +901,7 @@ paths:
               schema:
                 $ref:  "#/components/schemas/AccountApartmentPreferences2"
 
-  /api/v2/admin/account_apartment_default_preferences/{pk:\d+}:
+  /admin/account_apartment_default_preferences/{pk:\d+}:
     put:
       operationId: update_account_apartment_default_preferences
       tags:
@@ -865,7 +942,7 @@ paths:
           description: Account Apartment Default Preferences Not Found!
 
 
-  /api/v2/admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}:
+  /admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}:
     put:
       operationId: update_room_groups_order
       tags:
@@ -891,7 +968,7 @@ paths:
         '404':
           description: Account Apartment Default Preferences Not Found!
 
-  /api/v2/admin/account_apartment_default_preferences/delete_room_groups/{pk:\d+}:
+  /admin/account_apartment_default_preferences/delete_room_groups/{pk:\d+}:
     delete:
       operationId: delete_room_groups
       tags:
@@ -947,7 +1024,7 @@ components:
     # интеграторы
     RetrieveIntegrator:
       $ref: './schemas/integrators/RetrieveIntegrator.yaml'
-      
+
     # преференсы
     AccountApartmentListDisplayPreferences:
       $ref: './schemas/preferences/AccountApartmentListDisplayPreferences.yaml'
@@ -960,3 +1037,10 @@ components:
 
     AccountApartmentPreferences2:
       $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      

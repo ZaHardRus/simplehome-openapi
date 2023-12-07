@@ -1,0 +1,27 @@
+type: object
+properties:
+  automation_id:
+    type: integer
+  type:
+    type: string
+  extra:
+    type: string
+  capability_id:
+    type: integer
+  scenario_id:
+    type: integer
+  value:
+    type: string
+  notification_text:
+    type: string
+  notification_recipients:
+    type: array
+    example: null
+  created_at:
+    type: string
+    example: 2023-11-28T08:01:22.713972+00:00
+  updated_at:
+    type: string
+    example: 2023-11-28T08:01:22.713972+00:00
+  apartment_id:
+    type: integer
