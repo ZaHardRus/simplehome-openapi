@@ -1,0 +1,18 @@
+type: object
+properties:
+  automation_id:
+    type: integer
+  type:
+    type: string
+  extra:
+    type: string
+  capability_id:
+    type: integer
+  scenario_id:
+    type: integer
+  value:
+    type: string
+  notification_text:
+    type: string
+  notification_recipients:
+    type: array

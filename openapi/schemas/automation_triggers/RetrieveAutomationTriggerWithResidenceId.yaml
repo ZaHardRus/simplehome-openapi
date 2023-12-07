@@ -1,0 +1,41 @@
+type: object
+properties:
+  automation_id:
+    type: integer
+    required: true
+  type:
+    type: string
+    required: true
+    example: "time"
+  time_condition:
+    type: string
+    required: false
+    example: "2021-05-27 12:55:54.940827+00:00"
+  repeat_condition:
+    type: string
+    required: false
+  is_repeatable:
+    type: boolean
+    required: false
+  event_condition:
+    type: string
+    required: false
+  event_address:
+    type: string
+    required: false
+  event_capability_id:
+    type: integer
+    required: false
+  extra:
+    type: string
+    required: false
+    example: {}
+  residence_id:
+    type: integer
+    example: 1
+  created_at:
+    type: string
+    example: 2023-11-28T08:01:22.713972+00:00
+  updated_at:
+    type: string
+    example: 2023-11-28T08:01:22.713972+00:00

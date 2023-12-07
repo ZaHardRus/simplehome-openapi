@@ -1,0 +1,128 @@
+get:
+  operationId: user_get_automation_triggers
+  description: Получение триггера автоматизации для пользователя
+  tags:
+    - automation_triggers
+  parameters:
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
+    - in: query
+      name: apartment_id
+      required: false
+      description: Обязательный параметр, если объект request не содержит apartment
+      schema:
+        type: integer
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Trigger Not Found!
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
+
+delete:
+  operationId: user_delete_automation_trigger
+  description: Удаление триггера автоматизации пользователем
+  tags:
+    - automation_triggers
+  parameters:
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
+    - in: query
+      name: apartment_id
+      required: false
+      description: Обязательный параметр, если объект request не содержит apartment
+      schema:
+        type: integer
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Trigger Not Found!
+    "204":
+      description: Триггер удален
+
+put:
+  operationId: user_update_automation_trigger
+  description: Обновление триггера автоматизации пользователем
+  tags:
+    - automation_triggers
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/automation_triggers/CreateAutomationTrigger.yaml"
+  parameters:
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
+    - in: query
+      name: apartment_id
+      required: false
+      description: Обязательный параметр, если объект request не содержит apartment
+      schema:
+        type: integer
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Trigger Not Found!
+    "201":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
+
+
+components:
+  parameters:
+    AutomationTriggerPathId:
+      in: path
+      name: automation_trigger_id
+      description: id триггера автоматизации
+      required: true
+      schema:
+        type: integer

@@ -1,0 +1,21 @@
+type: object
+properties:
+  is_active:
+    type: boolean
+  apartment_id:
+    type: integer
+  extra:
+    type: string
+    required: false
+    example: {}
+  residence_id:
+    type: integer
+  title:
+    type: string
+  icon_tag:
+    type: string
+    required: false
+    example: toy
+  time_offset:
+    type: integer
+    required: false

@@ -4,8 +4,77 @@ openapi: '3.0.3'
 info:
   title: sh api
   version: n0.1
+servers:
+  - url: https://dev.simple-home.liis.su
+    description: Development server
+  - url: https://simple-home.liis.su
+    description: Production server
+  - url: http://localhost:8080
+    description: Local server
 
 paths:
+  /api/v2/admin/login:
+    post:
+      operationId: admin_login
+      tags:
+        - login
+      parameters:
+        - in: header
+          name: X-Schema
+          schema:
+            type: string
+            example: public
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                email:
+                  type: string
+                client_unique_id:
+                  type: string
+      responses:
+        "200":
+          description: Успешная авторизация
+
+  /api/v2/admin/automations:
+    $ref: ./paths/automations/AdminAutomationsEndpoints.yaml
+
+  /api/v2/admin/automations/{automation_id}:
+    $ref: ./paths/automations/AdminAutomationEndpoints.yaml
+    
+  /api/v2/admin/automations/clone/{automation_id}:
+    $ref: ./paths/automations/AdminCloneAutomationsEndpoints.yaml
+  
+  /api/v2/automations/{automation_id}:
+    $ref: ./paths/automations/UserAutomationEndpoints.yaml
+
+  /api/v2/automation_triggers:
+    $ref: ./paths/automation_triggers/UserAutomationsTriggers.yaml
+
+  /api/v2/automation_triggers/{automation_trigger_id}:
+    $ref: ./paths/automation_triggers/UserAutomationTriggers.yaml
+  
+  /api/v2/admin/automation_triggers:
+    $ref: ./paths/automation_triggers/AdminAutomationsTriggers.yaml
+
+  /api/v2/admin/automation_triggers/{automation_trigger_id}:
+    $ref: ./paths/automation_triggers/AdminAutomationTriggers.yaml
+
+  /api/v2/automation_actions/{automation_action_id}:
+    $ref: ./paths/automation_actions/UserAutomationAction.yaml
+
+  /api/v2/automation_actions:
+    $ref: ./paths/automation_actions/UserAutomationsActions.yaml
+
+  /api/v2/admin/automation_actions/{automation_action_id}:
+    $ref: ./paths/automation_actions/AdminAutomationAction.yaml
+
+  /api/v2/admin/automation_actions:
+    $ref: ./paths/automation_actions/AdminAutomationsActions.yaml
 
   /api/v2/admin/residences/{id}:
     put:
@@ -439,6 +508,9 @@ paths:
                 items:
                   $ref: "#/components/schemas/RetrieveIntegrator"
 
+security:
+  - BearerAuth: []
+
 components:
   schemas:
     UpdateResidence:
@@ -463,4 +535,9 @@ components:
     # интеграторы
     RetrieveIntegrator:
       $ref: './schemas/integrators/RetrieveIntegrator.yaml'
-      
+    
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

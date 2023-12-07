@@ -1,0 +1,54 @@
+get:
+  operationId: user_list_automation_actions
+  description: Выдача списка триггеров автоматизаций для пользователя
+  tags:
+    - automation_actions
+  parameters:
+    - in: query
+      name: apartment_id
+      required: false
+      description: Обязательный параметр, если объект request не содержит apartment
+      schema:
+        type: integer
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/automation_actions/RetrieveAutomationAction.yaml"
+
+post:
+  operationId: user_create_automation_action
+  description: Создание триггера автоматизации пользователем
+  tags:
+    - automation_actions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/automation_actions/CreateAutomationAction.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+              - $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/automation_actions/RetrieveAutomationAction.yaml"
