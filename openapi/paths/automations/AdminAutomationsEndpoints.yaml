@@ -45,7 +45,9 @@ post:
             $ref: "../../schemas/automations/RetrieveAutomationsSchema.yaml"
       links:
         GetAutomationById:
-          operationId: retrieve_automation
+          #FIXME: links do not work!!
+          # operationRef: "../../paths/automations/AdminAutomationEndpoints.yaml#/{automation_id}/get"
+          operationRef: "../../openapi.yaml#/paths/~1admin~1automations~1{automation_id}/get"
           parameters:
             automation_id: '$response.body#/id'
     "403":

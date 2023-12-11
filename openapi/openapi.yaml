@@ -20,6 +20,9 @@ servers:
           - v1
 
 
+security:
+  - BearerAuth: []
+
 paths:
   /admin/login:
     post:
@@ -1037,6 +1040,7 @@ components:
 
     AccountApartmentPreferences2:
       $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
+
 
   securitySchemes:
     BearerAuth:
