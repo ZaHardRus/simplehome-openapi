@@ -1,0 +1,34 @@
+put:
+  operationId: admin-apartment-templates-update-apartment
+  description: Данный метод обновляет только те поля в шаблоне квартиры, которые относятся к квартире.
+  tags:
+    - apartment_templates
+  parameters:
+    - $ref: "#/components/parameters/apartmentTemplateId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/apartment_templates/ApartmentTemplateUpdateApartment.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplate.yaml"
+
+
+components:
+  parameters:
+    apartmentTemplateId:
+      in: path
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer

@@ -87,6 +87,21 @@ paths:
   /admin/automation_actions:
     $ref: ./paths/automation_actions/AdminAutomationsActions.yaml
 
+  /api/v2/admin/apartment_templates:
+    $ref: ./paths/apartment_templates/AdminApartmentTemplates.yaml
+
+  /api/v2/admin/apartment_templates/import_apartments:
+    $ref: ./paths/apartment_templates/AdminImportApartments.yaml
+
+  /api/v2/admin/apartment_templates/{apartment_template_id}:
+    $ref: ./paths/apartment_templates/AdminApartmentTemplate.yaml
+
+  /api/v2/admin/apartment_templates/controller/{apartment_template_id}:
+    $ref: ./paths/apartment_templates/AdminApartmentTemplateController.yaml
+
+  /api/v2/admin/apartment_templates/apartment/{apartment_template_id}:
+    $ref: ./paths/apartment_templates/
+
   /admin/residences/{id}:
     put:
       operationId: update

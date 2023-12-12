@@ -1,0 +1,8 @@
+type: object
+properties:
+  controller_ip:
+    type: string
+  is_dhcp:
+    type: boolean
+  controller_port:
+    type: integer

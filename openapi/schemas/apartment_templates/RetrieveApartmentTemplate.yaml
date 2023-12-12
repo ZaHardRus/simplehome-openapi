@@ -1,0 +1,22 @@
+type: object
+properties:
+  id:
+    type: integer
+  controller_ip:
+    type: string
+  controller_port:
+    type: integer
+  residence_id:
+    type: integer
+  title:
+    type: string
+  created_at:
+    type: string
+  updated_at:
+    type: string
+  created_user_id:
+    type: integer
+  last_updated_user_id:
+    type: integer
+  is_dhcp:
+    type: boolean

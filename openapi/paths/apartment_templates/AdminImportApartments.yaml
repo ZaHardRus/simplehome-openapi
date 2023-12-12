@@ -1,0 +1,89 @@
+post:
+  operationId: admin-apartment-templates-import
+  description: 'Импорт шаблонов квартир из xlsx файла.'
+  tags:
+    - apartment_templates
+  parameters:
+   - $ref: "../../schemas/core/query_params/residence_id.yaml#/Required"
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            file:
+              type: string
+              format: binary
+
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/ResidenceMustBeInteger"
+              - $ref: "#/components/schemas/ResidenceMustNotBeNone"
+          examples:
+            Must Be An Integer:
+              value:
+                detail: residence_id Must Be An Integer!
+            Must Not Be None:
+              value:
+                detail: residence_id Must Not Be None!
+            Wrong file format:
+              value:
+                detail: Wrong file format!
+            Apartment Types Not Exists:
+              value:
+                detail: Apartment Types Not Exists! Create Apartments Types First
+    "201":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              created_apartments:
+                type: integer
+              created_controllers:
+                type: integer
+              created_drivers:
+                type: integer
+              created_rooms:
+                type: integer
+              created_device:
+                type: integer
+              created_capabilities:
+                type: integer
+              created_scenarios:
+                type: integer
+              created_actions:
+                type: integer
+              raised_exceptions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    line_index:
+                      type: integer
+                    apartment_number:
+                      type: string
+                    floor_number:
+                      type: string
+                    error_message:
+                      type: string
+
+
+components:
+  schemas:
+    ResidenceMustBeInteger:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: residence_id Must Be An Integer!
+    ResidenceMustNotBeNone:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: residence_id Must Not Be None!
