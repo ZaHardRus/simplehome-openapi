@@ -107,6 +107,11 @@ paths:
   /api/v2/admin/room_templates/{room_template_id}:
     $ref: ./paths/room_templates/AdminRoomTemplate.yaml
 
+  /api/v2/admin/driver_templates:
+    $ref: ./paths/driver_templates/AdminDriverTemplates.yaml
+
+  /api/v2/admin/driver_templates/{driver_template_id}:
+    $ref: ./paths/driver_templates/AdminDriverTemplate.yaml
 
   /admin/residences/{id}:
     put:

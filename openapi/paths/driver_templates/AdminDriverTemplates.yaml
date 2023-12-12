@@ -1,8 +1,8 @@
 get:
-  operationId: admin-room-templates-list
-  description: Получение списка шаблонов комнат
+  operationId: admin-driver-templates-list
+  description: Получение  списка шаблонов драйверов
   tags:
-    - rooms_templates
+    - drivers_templates
   properties:
     - $ref: "#/components/parameters/apartmentTemplateQueryId"
     - $ref: "../../schemas/core/filters/sorting_query.yaml"
@@ -13,38 +13,44 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+              $ref: "../../schemas/driver_templates/RetrieveDriverTemplates.yaml"
 
 post:
-  operationId: admin-room-templates-create
-  description: Создание шаблонов комнат
+  operationId: admin-driver-templates-create
+  description: Создание шаблона драйвера
   tags:
-    - rooms_templates
+    - drivers_templates
   requestBody:
     content:
       application/json:
         schema:
           type: array
           items:
-            $ref: "../../schemas/room_templates/CreateRoomTemplate.yaml"
+            $ref: "../../schemas/driver_templates/CreateDriverTemplates.yaml"
   responses:
-    "400":
+    "404":
       content:
         application/json:
-          $ref: "#/components/schemas/payloadValidationError"
+          schema:
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
     "200":
       content:
         application/json:
           schema:
             type: array
             items:
-              $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+              $ref: "../../schemas/driver_templates/RetrieveDriverTemplates.yaml"
 
 delete:
-  operationId: admin-multiple-room-templates-delete
-  description: Удаление множества шаблонов комнат
+  operationId: admin-multiple-driver-templates-delete
+  description: Удаление множества шаблонов драйверов
   tags:
-    - rooms_templates
+    - drivers_templates
   requestBody:
     content:
       application/json:
@@ -64,12 +70,11 @@ delete:
               detailed_rows:
                 type: array
                 items:
-                  $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+                  $ref: "../../schemas/driver_templates/RetrieveDriverTemplates.yaml"
               deleted_rows:
                 type: integer
                 example: 1
-                description: Кол-во удаленных шаблонов комнат
-
+                description: Кол-во удаленных шаблонов драйверов
 
 components:
   parameters:
@@ -82,10 +87,9 @@ components:
         type: integer
 
   schemas:
-    payloadValidationError:
+    ApartmentTemplatesNotFound:
       type: object
       properties:
         detail:
           type: string
-          example: Payload Type Must Be List Or Dict, Not {type(data)}
-
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!
