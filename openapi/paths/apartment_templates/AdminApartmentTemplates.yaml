@@ -58,11 +58,7 @@ delete:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            id:
-              type: array
-              example: [1, 2, 3]
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
   responses:
     "403":
       content:

@@ -1,0 +1,91 @@
+get:
+  operationId: admin-room-templates-list
+  description: Получение списка шаблонов комнат
+  tags:
+    - rooms_templates
+  preferences:
+    - $ref: "#/components/parameters/apartmentTemplateQueryId"
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+
+post:
+  operationId: admin-room-templates-create
+  description: Создание шаблонов комнат
+  tags:
+    - rooms_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../schemas/room_templates/CreateRoomTemplate.yaml"
+  responses:
+    "400":
+      content:
+        application/json:
+          $ref: "#/components/schemas/payloadValidationError"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+
+delete:
+  operationId: admin-multiple-room-templates-delete
+  description: Удаление множества шаблонов комнат
+  tags:
+    - rooms_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+              deleted_rows:
+                type: integer
+                example: 1
+                description: Кол-во удаленных шаблонов комнат
+
+
+components:
+  parameters:
+    apartmentTemplateQueryId:
+      in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer
+
+  schemas:
+    payloadValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Payload Type Must Be List Or Dict, Not {type(data)}
+

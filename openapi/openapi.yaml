@@ -19,7 +19,6 @@ servers:
           - v2
           - v1
 
-
 security:
   - BearerAuth: []
 
@@ -100,7 +99,14 @@ paths:
     $ref: ./paths/apartment_templates/AdminApartmentTemplateController.yaml
 
   /api/v2/admin/apartment_templates/apartment/{apartment_template_id}:
-    $ref: ./paths/apartment_templates/
+    $ref: ./paths/apartment_templates/AdminApartmentTemplateApartment.yaml
+
+  /api/v2/admin/room_templates:
+    $ref: ./paths/room_templates/AdminRoomTemplates.yaml
+
+  /api/v2/admin/room_templates/{room_template_id}:
+    $ref: ./paths/room_templates/AdminRoomTemplate.yaml
+
 
   /admin/residences/{id}:
     put:
@@ -1015,7 +1021,9 @@ paths:
                 Стены выложили, ушли.
                 Нанял штукатуров, те тоже — что за пидорасы кладку делали?
               Ну, и так далее. Вот и получается,
-              что дом строили одни пидорасы… "
+              что дом строили одни пидорасы… 
+            
+            pidoras architecture pattern"
 
 
 components:

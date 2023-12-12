@@ -1,0 +1,95 @@
+get:
+  operationId: admin-room-templates-retrieve
+  description: Получение шаблона комнаты
+  tags:
+    - rooms_templates
+  parameters:
+    - $ref: "#/components/parameters/roomTemplateId"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+
+put:
+  operationId: admin-room-templates-update
+  description: Обновление шаблона комнаты
+  tags:
+    - rooms_templates
+  parameters:
+    - $ref: "#/components/parameters/roomTemplateId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../schemas/room_templates/CreateRoomTemplate.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+
+delete:
+  operationId: admin-room-templates-delete
+  description: Удаление шаблона комнаты
+  tags:
+    - rooms_templates
+  parameters:
+    - $ref: "#/components/parameters/roomTemplateId"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/Validation Error.yaml"
+    "204":
+      description: Шаблон комнаты удален
+
+
+components:
+  parameters:
+    roomTemplateId:
+      in: path
+      name: room_template_id
+      description: id шаблона комнаты
+      required: true
+      schema:
+        type: integer
+
+  schemas:
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!
+
