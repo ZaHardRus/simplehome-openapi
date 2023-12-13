@@ -119,6 +119,12 @@ paths:
   /api/v2/admin/device_templates/{device_template_id}:
     $ref: ./paths/device_templates/AdminDeviceTemplate.yaml
 
+  /api/v2/admin/capability_templates:
+    $ref: ./paths/capability_templates/AdminCapabilityTemplates.yaml
+
+  /api/v2/admin/capability_templates/{capability_template_id}:
+    $ref: ./paths/capability_templates/AdminCapabilityTemplate.yaml
+
   /admin/residences/{id}:
     put:
       operationId: update
