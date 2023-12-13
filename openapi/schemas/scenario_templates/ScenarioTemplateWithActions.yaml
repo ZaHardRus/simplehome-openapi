@@ -1,0 +1,43 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 217
+  apartment_template_id:
+    type: integer
+    example: 142
+  title:
+    type: string
+    example: Ddd
+  trigger_type:
+    type: string
+    example: auto
+  icon_tag:
+    type: string
+    example: day
+  room_template_id:
+    type: integer
+    example: 194
+  actions:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 558
+        scenario_template_id:
+          type: integer
+          example: 217
+        capability_template_id:
+          type: integer
+          example: 1296
+        apartment_template_id:
+          type: integer
+          example: 142
+        value:
+          type: string
+          example: "1"
+        device_template_id:
+          type: integer
+          example: 535

@@ -125,6 +125,12 @@ paths:
   /api/v2/admin/capability_templates/{capability_template_id}:
     $ref: ./paths/capability_templates/AdminCapabilityTemplate.yaml
 
+  /api/v2/admin/scenario_templates:
+    $ref: ./paths/scenario_templates/AdminScenarioTemplates.yaml
+
+  /api/v2/admin/scenario_templates/{scenario_template_id}:
+    $ref: ./paths/scenario_templates/AdminScenarioTemplate.yaml
+
   /admin/residences/{id}:
     put:
       operationId: update

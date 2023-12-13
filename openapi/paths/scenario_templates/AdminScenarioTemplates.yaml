@@ -1,11 +1,12 @@
 get:
-  operationId: admin-capability-templates-list
-  description: Получение списка шаблонов навыков
+  operationId: admin-scenario-templates-list
+  description: Получение списка шаблонов сценариев
   tags:
-    - capability_templates
+    - scenario_templates
   parameters:
     - $ref: "#/components/parameters/apartmentTemplateQueryId"
-    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+    - $ref: "#/components/parameters/type"
+    - $ref: "#/components/parameters/roomTemplateIds"
   responses:
     "200":
       content:
@@ -13,20 +14,20 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+              $ref: "../../schemas/scenario_templates/ScenarioTemplateWithActions.yaml"
 
 post:
-  operationId: admin-capability-templates-create
-  description: Создание шаблонов навыков
+  operationId: admin-scenario-templates-create
+  description: Создание шаблонов сценариев
   tags:
-    - capability_templates
+    - scenario_templates
   requestBody:
     content:
       application/json:
         schema:
           type: array
           items:
-            $ref: "../../schemas/capabilities_templates/CreateCapabilitiesTemplates.yaml"
+            $ref: "../../schemas/scenario_templates/CreateScenarioTemplate.yaml"
   responses:
     "404":
       content:
@@ -44,13 +45,13 @@ post:
           schema:
             type: array
             items:
-              $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+              $ref: "../../schemas/scenario_templates/RetrieveScenarioTemplate.yaml"
 
 delete:
-  operationId: admin-multiple-capability-templates-delete
-  description: Удаление множества шаблонов навыков
+  operationId: admin-multiple-scenario-templates-delete
+  description: Удаление множества шаблонов сценариев
   tags:
-    - capability_templates
+    - scenario_templates
   requestBody:
     content:
       application/json:
@@ -70,11 +71,11 @@ delete:
               detailed_rows:
                 type: array
                 items:
-                  $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+                  $ref: "../../schemas/scenario_templates/RetrieveScenarioTemplate.yaml"
               deleted_rows:
                 type: integer
                 example: 1
-                description: Кол-во удаленных шаблонов комнат
+                description: Кол-во удаленных шаблонов сценариев
 
 
 components:
@@ -86,6 +87,22 @@ components:
       required: false
       schema:
         type: integer
+    roomTemplateIds:
+      in: query
+      name: room_template_ids
+      description: ids шаблонов сценариев
+      required: false
+      schema:
+        type: string
+        example: 1, 2, 3
+    type:
+      in: query
+      name: type
+      description: Тип сценария. Может быть либо global либо local
+      required: false
+      schema:
+        type: string
+        example: global
 
   schemas:
     ApartmentTemplatesNotFound:

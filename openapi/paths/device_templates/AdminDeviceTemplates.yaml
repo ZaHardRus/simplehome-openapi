@@ -44,7 +44,7 @@ post:
             oneOf:
               - $ref: "#/components/schemas/ApartmentTemplatesNotFound"
               - $ref: "#/components/schemas/failToFind"
-    "400":
+    "403":
       content:
         application/json:
           schema:
