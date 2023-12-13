@@ -113,6 +113,12 @@ paths:
   /api/v2/admin/driver_templates/{driver_template_id}:
     $ref: ./paths/driver_templates/AdminDriverTemplate.yaml
 
+  /api/v2/admin/device_templates:
+    $ref: ./paths/device_templates/AdminDeviceTemplates.yaml
+
+  /api/v2/admin/device_templates/{device_template_id}:
+    $ref: ./paths/device_templates/AdminDeviceTemplate.yaml
+
   /admin/residences/{id}:
     put:
       operationId: update

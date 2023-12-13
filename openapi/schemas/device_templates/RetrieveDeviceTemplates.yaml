@@ -1,0 +1,23 @@
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  type:
+    type: string
+  subtype:
+    type: string
+  driver_template_id:
+    type: integer
+  apartment_template_id:
+    type: integer
+  description:
+    type: string
+  room_template_id:
+    type: integer
+  icon_tag:
+    type: string
+  extra:
+    type: string
+    example: {}
