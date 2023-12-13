@@ -28,9 +28,7 @@ put:
     content:
       application/json:
         schema:
-          type: array
-          items:
-            $ref: "../../schemas/device_templates/CreateDeviceTemplates.yaml"
+          $ref: "../../schemas/device_templates/CreateDeviceTemplates.yaml"
   responses:
     "403":
       content:

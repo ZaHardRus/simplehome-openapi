@@ -131,6 +131,13 @@ paths:
   /api/v2/admin/scenario_templates/{scenario_template_id}:
     $ref: ./paths/scenario_templates/AdminScenarioTemplate.yaml
 
+  /api/v2/admin/action_templates:
+    $ref: ./paths/actions_templates/AdminActionTemplates.yaml
+
+  /api/v2/admin/action_templates/{action_template_id}:
+    $ref: ./paths/actions_templates/AdminActionTemplate.yaml
+
+
   /admin/residences/{id}:
     put:
       operationId: update

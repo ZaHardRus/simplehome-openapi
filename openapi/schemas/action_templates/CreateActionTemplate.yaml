@@ -1,0 +1,10 @@
+type: object
+properties:
+  scenario_template_id:
+    type: integer
+  capability_template_id:
+    type: integer
+  apartment_template_id:
+    type: integer
+  value:
+    type: string

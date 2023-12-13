@@ -28,9 +28,7 @@ put:
     content:
       application/json:
         schema:
-          type: array
-          items:
-            $ref: "../../schemas/driver_templates/CreateDriverTemplates.yaml"
+          $ref: "../../schemas/driver_templates/CreateDriverTemplates.yaml"
   responses:
     "404":
       content:

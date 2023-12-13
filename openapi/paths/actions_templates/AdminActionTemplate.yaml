@@ -1,10 +1,10 @@
 get:
-  operationId: admin-room-templates-retrieve
-  description: Получение шаблона комнаты
+  operationId: admin-action-templates-retrieve
+  description: Получение шаблона действия
   tags:
-    - rooms_templates
+    - action_templates
   parameters:
-    - $ref: "#/components/parameters/roomTemplateId"
+    - $ref: "#/components/parameters/actionTemplateId"
   responses:
     "404":
       content:
@@ -15,20 +15,20 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+            $ref: "../../schemas/action_templates/ScenarioTemplateWithDeviceId.yaml"
 
 put:
-  operationId: admin-room-templates-update
-  description: Обновление шаблона комнаты
+  operationId: admin-action-templates-update
+  description: Обновление шаблона действия
   tags:
-    - rooms_templates
+    - action_templates
   parameters:
-    - $ref: "#/components/parameters/roomTemplateId"
+    - $ref: "#/components/parameters/actionTemplateId"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "../../schemas/room_templates/CreateRoomTemplate.yaml"
+          $ref: "../../schemas/action_templates/CreateActionTemplate.yaml"
   responses:
     "403":
       content:
@@ -40,19 +40,19 @@ put:
         application/json:
           schema:
             $ref: "#/components/schemas/ApartmentTemplatesNotFound"
-    "200":
+    "201":
       content:
         application/json:
           schema:
-            $ref: "../../schemas/room_templates/RetrieveRoomTemplate.yaml"
+            $ref: "../../schemas/action_templates/RetrieveActionTemplate.yaml"
 
 delete:
-  operationId: admin-room-templates-delete
-  description: Удаление шаблона комнаты
+  operationId: admin-action-templates-delete
+  description: Удаление шаблона действия
   tags:
-    - rooms_templates
+    - action_templates
   parameters:
-    - $ref: "#/components/parameters/roomTemplateId"
+    - $ref: "#/components/parameters/actionTemplateId"
   responses:
     "403":
       content:
@@ -70,15 +70,15 @@ delete:
           schema:
             $ref: "../../schemas/core/errors/Validation Error.yaml"
     "204":
-      description: Шаблон комнаты удален
+      description: Шаблон действия удален
 
 
 components:
   parameters:
-    roomTemplateId:
+    actionTemplateId:
       in: path
-      name: room_template_id
-      description: id шаблона комнаты
+      name: action_template_id
+      description: id шаблона действия
       required: true
       schema:
         type: integer
@@ -90,4 +90,3 @@ components:
         detail:
           type: string
           example: ApartmentTemplates With id {apartment_template_id} Not Found!
-
