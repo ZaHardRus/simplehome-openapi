@@ -2,13 +2,17 @@ type: object
 properties:
   id:
     type: integer
-  title:
-    type: string
-  trigger_type:
-    type: string
-  icon_tag:
-    type: string
+  scenario_template_id:
+    type: integer
+  capability_template_id:
+    type: integer
   apartment_template_id:
     type: integer
-  room_template_id:
-    type: integer
+  value:
+    type: string
+required:
+  - scenario_template_id
+  - capability_template_id
+  - apartment_template_id
+  - value
+  - id

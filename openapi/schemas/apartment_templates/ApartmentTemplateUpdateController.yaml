@@ -6,3 +6,6 @@ properties:
     type: boolean
   controller_port:
     type: integer
+required:
+  - is_dhcp
+  - controller_port

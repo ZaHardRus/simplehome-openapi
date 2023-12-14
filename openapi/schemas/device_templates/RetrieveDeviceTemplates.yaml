@@ -10,14 +10,24 @@ properties:
     type: string
   driver_template_id:
     type: integer
+    nullable: true
   apartment_template_id:
     type: integer
   description:
     type: string
   room_template_id:
     type: integer
+    nullable: true
   icon_tag:
     type: string
+    nullable: true
   extra:
     type: string
     example: {}
+    nullable: true
+required:
+  - id
+  - name
+  - type
+  - subtype
+  - apartment_template_id

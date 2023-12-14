@@ -19,3 +19,9 @@ properties:
   extra:
     type: string
     example: {}
+required:
+  - name
+  - type
+  - subtype
+  - driver_template_id
+  - apartment_template_id

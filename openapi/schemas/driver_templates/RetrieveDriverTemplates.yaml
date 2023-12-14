@@ -13,3 +13,10 @@ properties:
   extra:
     type: string
     example: {}
+    nullable: true
+required:
+  - apartment_template_id
+  - ip
+  - port
+  - type
+  - id

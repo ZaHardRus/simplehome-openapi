@@ -16,3 +16,8 @@ properties:
     type: string
     required: false
     example: {}
+required:
+  - apartment_template_id
+  - ip
+  - port
+  - type

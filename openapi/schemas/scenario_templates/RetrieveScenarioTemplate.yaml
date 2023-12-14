@@ -8,7 +8,14 @@ properties:
     type: string
   icon_tag:
     type: string
+    nullable: true
   apartment_template_id:
     type: integer
   room_template_id:
     type: integer
+    nullable: true
+required:
+  - title
+  - trigger_type
+  - apartment_template_id
+  - id

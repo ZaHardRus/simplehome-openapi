@@ -8,3 +8,8 @@ properties:
     type: integer
   value:
     type: string
+required:
+  - scenario_template_id
+  - capability_template_id
+  - apartment_template_id
+  - value

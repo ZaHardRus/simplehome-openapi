@@ -10,3 +10,7 @@ properties:
     type: string
   image_id:
     type: integer
+required:
+  - id
+  - apartment_template_id
+  - title

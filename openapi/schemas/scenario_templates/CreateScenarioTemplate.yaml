@@ -10,3 +10,7 @@ properties:
     type: integer
   room_template_id:
     type: integer
+required:
+  - title
+  - trigger_type
+  - apartment_template_id

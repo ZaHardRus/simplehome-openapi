@@ -23,3 +23,7 @@ properties:
     type: string
   push_enabled:
     type: string
+required:
+  - device_template_id
+  - apartment_template_id
+  - type

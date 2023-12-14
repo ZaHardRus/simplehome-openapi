@@ -22,3 +22,12 @@ properties:
     type: boolean
   integrator_id:
     type: integer
+required:
+  - id
+  - controller_port
+  - title
+  - created_at
+  - updated_at
+  - created_user_id
+  - last_updated_user_id
+  - is_dhcp

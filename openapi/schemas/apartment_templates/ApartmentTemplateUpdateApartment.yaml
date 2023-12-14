@@ -2,7 +2,7 @@ type: object
 properties:
   residence_id:
     type: integer
-    required: false
   title:
     type: string
-    required: true
+required:
+  - title

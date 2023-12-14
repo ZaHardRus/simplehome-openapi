@@ -8,3 +8,6 @@ properties:
     type: string
   image_id:
     type: integer
+required:
+  - apartment_template_id
+  - title

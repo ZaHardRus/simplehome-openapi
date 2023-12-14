@@ -12,3 +12,7 @@ properties:
     type: string
   is_dhcp:
     type: boolean
+required:
+  - controller_port
+  - is_dhcp
+  - title

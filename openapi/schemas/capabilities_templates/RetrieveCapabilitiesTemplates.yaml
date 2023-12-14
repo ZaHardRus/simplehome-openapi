@@ -10,18 +10,31 @@ properties:
     type: string
   min_value:
     type: integer
+    nullable: true
   max_value:
     type: integer
+    nullable: true
   address:
     type: string
+    nullable: true
   feedback_address:
     type: string
+    nullable: true
   unit:
     type: string
+    nullable: true
   extra:
     type: string
     example: {}
+    nullable: true
   function:
     type: string
+    nullable: true
   push_enabled:
     type: string
+    nullable: true
+required:
+  - device_template_id
+  - apartment_template_id
+  - type
+  - id

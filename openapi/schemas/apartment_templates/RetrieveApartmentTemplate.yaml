@@ -4,10 +4,12 @@ properties:
     type: integer
   controller_ip:
     type: string
+    nullable: true
   controller_port:
     type: integer
   residence_id:
     type: integer
+    nullable: true
   title:
     type: string
   created_at:
@@ -20,3 +22,12 @@ properties:
     type: integer
   is_dhcp:
     type: boolean
+required:
+  - id
+  - controller_port
+  - title
+  - created_at
+  - updated_at
+  - created_user_id
+  - last_updated_user_id
+  - is_dhcp

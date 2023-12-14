@@ -41,3 +41,16 @@ properties:
         device_template_id:
           type: integer
           example: 535
+      required:
+        - scenario_template_id
+        - capability_template_id
+        - apartment_template_id
+        - value
+        - id
+
+required:
+  - title
+  - trigger_type
+  - apartment_template_id
+  - id
+

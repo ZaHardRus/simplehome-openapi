@@ -14,6 +14,8 @@ post:
             file:
               type: string
               format: binary
+          required:
+            - file
 
   responses:
     "400":

@@ -12,3 +12,11 @@ properties:
     type: string
   device_template_id:
     type: integer
+required:
+  - id
+  - apartment_template_id
+  - scenario_template_id
+  - apartment_template_id
+  - value
+  - device_template_id
+  - capability_template_id
