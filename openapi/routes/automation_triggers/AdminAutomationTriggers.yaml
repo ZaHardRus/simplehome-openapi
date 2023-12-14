@@ -33,7 +33,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "404":
       content:
         application/json:
@@ -63,7 +63,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "404":
       content:
         application/json:

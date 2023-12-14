@@ -1,0 +1,33 @@
+# Все ошибки в данном модуле не имеют значения по умолчанию атрибута message. Поэтому данные ошибки фактически не отличимы друг от друга.
+# Следует определить значения по умолчанию для каждого исключения и разнести их по разным одноименным файлам
+
+InternalError:
+  type: object
+  properties:
+    detail:
+      type: string
+
+AuthenticationError:
+  type: object
+  properties:
+    detail:
+      type: string
+
+TokenExpiredError:
+  type: object
+  properties:
+    detail:
+      type: string
+
+NotClientYet:
+  type: object
+  properties:
+    detail:
+      type: string
+
+BrokerError:
+  type: object
+  properties:
+    detail:
+      type: string
+

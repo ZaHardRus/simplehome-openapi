@@ -34,7 +34,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "404":
       content:
         application/json:
@@ -58,7 +58,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "404":
       content:
         application/json:
@@ -68,7 +68,7 @@ delete:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/core/errors/Validation Error.yaml"
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
     "204":
       description: Шаблон комнаты удален
 

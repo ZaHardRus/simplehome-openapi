@@ -15,7 +15,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "201":
       content:
         application/json:

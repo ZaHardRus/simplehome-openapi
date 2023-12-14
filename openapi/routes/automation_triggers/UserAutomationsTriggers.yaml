@@ -39,7 +39,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/core/errors/NotEnoughPermission.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "400":
       content:
         application/json:
