@@ -1,0 +1,53 @@
+get:
+  operationId: admin-apartment-templates-retrieve
+  description: Получение шаблона квартиры по id
+  tags:
+    - apartment_templates
+  parameters:
+    - $ref: "#/components/parameters/apartmentTemplateId"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplate.yaml"
+
+delete:
+  operationId: admin-apartment-templates-delete
+  description: Удаление шаблона квартиры
+  tags:
+    - apartment_templates
+  parameters:
+    - $ref: "#/components/parameters/apartmentTemplateId"
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/ValidationError.yaml"
+              - $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/errors/NotFound.yaml"
+    "204":
+      description: Шаблон квартиры удален
+    
+
+
+components:
+  parameters:
+    apartmentTemplateId:
+      in: path
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer

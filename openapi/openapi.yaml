@@ -19,6 +19,8 @@ servers:
           - v2
           - v1
 
+security:
+  - BearerAuth: []
 
 paths:
   /admin/login:
@@ -49,40 +51,92 @@ paths:
           description: Успешная авторизация
 
   /admin/automations:
-    $ref: ./paths/automations/AdminAutomationsEndpoints.yaml
+    $ref: ./routes/automations/AdminAutomationsEndpoints.yaml
 
   /admin/automations/{automation_id}:
-    $ref: ./paths/automations/AdminAutomationEndpoints.yaml
+    $ref: ./routes/automations/AdminAutomationEndpoints.yaml
     
   /admin/automations/clone/{automation_id}:
-    $ref: ./paths/automations/AdminCloneAutomationsEndpoints.yaml
+    $ref: ./routes/automations/AdminCloneAutomationsEndpoints.yaml
   
   /automations/{automation_id}:
-    $ref: ./paths/automations/UserAutomationEndpoints.yaml
+    $ref: ./routes/automations/UserAutomationEndpoints.yaml
 
   /automation_triggers:
-    $ref: ./paths/automation_triggers/UserAutomationsTriggers.yaml
+    $ref: ./routes/automation_triggers/UserAutomationsTriggers.yaml
 
   /automation_triggers/{automation_trigger_id}:
-    $ref: ./paths/automation_triggers/UserAutomationTriggers.yaml
+    $ref: ./routes/automation_triggers/UserAutomationTriggers.yaml
   
   /admin/automation_triggers:
-    $ref: ./paths/automation_triggers/AdminAutomationsTriggers.yaml
+    $ref: ./routes/automation_triggers/AdminAutomationsTriggers.yaml
 
   /admin/automation_triggers/{automation_trigger_id}:
-    $ref: ./paths/automation_triggers/AdminAutomationTriggers.yaml
+    $ref: ./routes/automation_triggers/AdminAutomationTriggers.yaml
 
   /automation_actions/{automation_action_id}:
-    $ref: ./paths/automation_actions/UserAutomationAction.yaml
+    $ref: ./routes/automation_actions/UserAutomationAction.yaml
 
   /automation_actions:
-    $ref: ./paths/automation_actions/UserAutomationsActions.yaml
+    $ref: ./routes/automation_actions/UserAutomationsActions.yaml
 
   /admin/automation_actions/{automation_action_id}:
-    $ref: ./paths/automation_actions/AdminAutomationAction.yaml
+    $ref: ./routes/automation_actions/AdminAutomationAction.yaml
 
   /admin/automation_actions:
-    $ref: ./paths/automation_actions/AdminAutomationsActions.yaml
+    $ref: ./routes/automation_actions/AdminAutomationsActions.yaml
+
+  /api/v2/admin/apartment_templates:
+    $ref: ./routes/apartment_templates/AdminApartmentTemplates.yaml
+
+  /api/v2/admin/apartment_templates/import_apartments:
+    $ref: ./routes/apartment_templates/AdminImportApartments.yaml
+
+  /api/v2/admin/apartment_templates/{apartment_template_id}:
+    $ref: ./routes/apartment_templates/AdminApartmentTemplate.yaml
+
+  /api/v2/admin/apartment_templates/controller/{apartment_template_id}:
+    $ref: ./routes/apartment_templates/AdminApartmentTemplateController.yaml
+
+  /api/v2/admin/apartment_templates/apartment/{apartment_template_id}:
+    $ref: ./routes/apartment_templates/AdminApartmentTemplateApartment.yaml
+
+  /api/v2/admin/room_templates:
+    $ref: ./routes/room_templates/AdminRoomTemplates.yaml
+
+  /api/v2/admin/room_templates/{room_template_id}:
+    $ref: ./routes/room_templates/AdminRoomTemplate.yaml
+
+  /api/v2/admin/driver_templates:
+    $ref: ./routes/driver_templates/AdminDriverTemplates.yaml
+
+  /api/v2/admin/driver_templates/{driver_template_id}:
+    $ref: ./routes/driver_templates/AdminDriverTemplate.yaml
+
+  /api/v2/admin/device_templates:
+    $ref: ./routes/device_templates/AdminDeviceTemplates.yaml
+
+  /api/v2/admin/device_templates/{device_template_id}:
+    $ref: ./routes/device_templates/AdminDeviceTemplate.yaml
+
+  /api/v2/admin/capability_templates:
+    $ref: ./routes/capability_templates/AdminCapabilityTemplates.yaml
+
+  /api/v2/admin/capability_templates/{capability_template_id}:
+    $ref: ./routes/capability_templates/AdminCapabilityTemplate.yaml
+
+  /api/v2/admin/scenario_templates:
+    $ref: ./routes/scenario_templates/AdminScenarioTemplates.yaml
+
+  /api/v2/admin/scenario_templates/{scenario_template_id}:
+    $ref: ./routes/scenario_templates/AdminScenarioTemplate.yaml
+
+  /api/v2/admin/action_templates:
+    $ref: ./routes/actions_templates/AdminActionTemplates.yaml
+
+  /api/v2/admin/action_templates/{action_template_id}:
+    $ref: ./routes/actions_templates/AdminActionTemplate.yaml
+
 
   /admin/residences/{id}:
     put:
@@ -997,7 +1051,9 @@ paths:
                 Стены выложили, ушли.
                 Нанял штукатуров, те тоже — что за пидорасы кладку делали?
               Ну, и так далее. Вот и получается,
-              что дом строили одни пидорасы… "
+              что дом строили одни пидорасы… 
+            
+            pidoras architecture pattern"
 
 
 components:
@@ -1037,6 +1093,7 @@ components:
 
     AccountApartmentPreferences2:
       $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
+
 
   securitySchemes:
     BearerAuth:

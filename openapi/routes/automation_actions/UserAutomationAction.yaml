@@ -1,0 +1,128 @@
+get:
+  operationId: user_get_automation_action
+  description: Получение действия автоматизации для пользователя
+  tags:
+    - automation_actions
+  parameters:
+    - $ref: "#/components/parameters/AutomationActionPathId"
+    - in: query
+      name: apartment_id
+      required: false
+      description: Обязательный параметр, если объект request не содержит apartment
+      schema:
+        type: integer
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Action Not Found!
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/automation_actions/RetrieveAutomationAction.yaml"
+
+delete:
+  operationId: user_delete_automation_action
+  description: Удаление действия автоматизации пользователем
+  tags:
+    - automation_actions
+  parameters:
+    - $ref: "#/components/parameters/AutomationActionPathId"
+    - in: query
+      name: apartment_id
+      required: false
+      description: Обязательный параметр, если объект request не содержит apartment
+      schema:
+        type: integer
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Action Not Found!
+    "204":
+      description: Действие удалено
+
+put:
+  operationId: user_update_automation_action
+  description: Обновление триггера автоматизации пользователем
+  tags:
+    - automation_actions
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/automation_actions/CreateAutomationAction.yaml"
+  parameters:
+    - $ref: "#/components/parameters/AutomationActionPathId"
+    - in: query
+      name: apartment_id
+      required: false
+      description: Обязательный параметр, если объект request не содержит apartment
+      schema:
+        type: integer
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Action Not Found!
+    "201":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/automation_actions/RetrieveAutomationAction.yaml"
+
+
+components:
+  parameters:
+    AutomationActionPathId:
+      in: path
+      name: automation_action_id
+      description: id действия автоматизации
+      required: true
+      schema:
+        type: integer

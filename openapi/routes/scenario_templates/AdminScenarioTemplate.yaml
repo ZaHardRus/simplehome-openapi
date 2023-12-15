@@ -1,0 +1,93 @@
+get:
+  operationId: admin-scenario-templates-retrieve
+  description: Получение шаблона сценария
+  tags:
+    - scenario_templates
+  parameters:
+    - $ref: "#/components/parameters/scenarioTemplateId"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/scenario_templates/ScenarioTemplateWithActions.yaml"
+
+put:
+  operationId: admin-scenario-templates-update
+  description: Обновление шаблона сценария
+  tags:
+    - scenario_templates
+  parameters:
+    - $ref: "#/components/parameters/scenarioTemplateId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/capabilities_templates/CreateCapabilitiesTemplates.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/scenario_templates/RetrieveScenarioTemplate.yaml"
+
+delete:
+  operationId: admin-scenario-templates-delete
+  description: Удаление шаблона сценария
+  tags:
+    - scenario_templates
+  parameters:
+    - $ref: "#/components/parameters/scenarioTemplateId"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
+    "204":
+      description: Шаблон сценария удален
+
+
+components:
+  parameters:
+    scenarioTemplateId:
+      in: path
+      name: scenario_template_id
+      description: id шаблона сценария
+      required: true
+      schema:
+        type: integer
+
+  schemas:
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!
+

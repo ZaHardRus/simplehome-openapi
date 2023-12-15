@@ -1,0 +1,23 @@
+type: object
+properties:
+  apartment_template_id:
+    type: integer
+    required: true
+  ip:
+    type: string
+    required: true
+  port:
+    type: integer
+    required: true
+  type:
+    type: string
+    required: true
+  extra:
+    type: string
+    required: false
+    example: {}
+required:
+  - apartment_template_id
+  - ip
+  - port
+  - type

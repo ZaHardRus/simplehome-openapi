@@ -1,0 +1,5 @@
+type: object
+properties:
+  id:
+    type: array
+    example: [1, 2, 3]

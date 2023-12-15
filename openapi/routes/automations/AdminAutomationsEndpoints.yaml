@@ -1,0 +1,75 @@
+get:
+  operationId: list_automations
+  description: Получение списка автоматизаций
+  tags:
+    - automations
+  parameters:
+    - in: query
+      name: apartment_id
+      required: false
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: Успешное получение списка автоматизаций
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/automations/RetrieveAutomationsSchema.yaml"
+
+    "400":
+      description: apartment_id должно быть числовым значением
+      content:
+        application/json:
+          schema:
+          $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+
+post:
+  operationId: create_automation
+  description: Создание автоматизации
+  tags:
+    - automations
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/automations/CreateAutomationsSchema.yaml"
+  responses:
+    "201":
+      description: Автоматизация успешно создана
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/automations/RetrieveAutomationsSchema.yaml"
+      links:
+        GetAutomationById:
+          #FIXME: links do not work!!
+          # operationRef: "../../paths/automations/AdminAutomationEndpoints.yaml#/{automation_id}/get"
+          operationRef: "../../openapi.yaml#/paths/~1admin~1automations~1{automation_id}/get"
+          parameters:
+            automation_id: '$response.body#/id'
+    "403":
+      content:
+        application/json:
+          schema:
+          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+          $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
+
+delete:
+  operationId: delete_multiple
+  description: Удаление нескольких автоматизаций
+  tags:
+    - automations
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+
+

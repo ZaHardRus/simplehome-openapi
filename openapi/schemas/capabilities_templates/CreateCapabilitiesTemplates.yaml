@@ -1,0 +1,29 @@
+type: object
+properties:
+  device_template_id:
+    type: integer
+  apartment_template_id:
+    type: integer
+  type:
+    type: string
+  min_value:
+    type: integer
+  max_value:
+    type: integer
+  address:
+    type: string
+  feedback_address:
+    type: string
+  unit:
+    type: string
+  extra:
+    type: string
+    example: {}
+  function:
+    type: string
+  push_enabled:
+    type: string
+required:
+  - device_template_id
+  - apartment_template_id
+  - type

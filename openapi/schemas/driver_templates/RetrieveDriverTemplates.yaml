@@ -1,0 +1,22 @@
+type: object
+properties:
+  id:
+    type: integer
+  apartment_template_id:
+    type: integer
+  ip:
+    type: string
+  port:
+    type: integer
+  type:
+    type: string
+  extra:
+    type: string
+    example: {}
+    nullable: true
+required:
+  - apartment_template_id
+  - ip
+  - port
+  - type
+  - id

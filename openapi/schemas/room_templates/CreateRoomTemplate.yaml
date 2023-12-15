@@ -1,0 +1,13 @@
+type: object
+properties:
+  apartment_template_id:
+    type: integer
+  title:
+    type: string
+  finishing_type:
+    type: string
+  image_id:
+    type: integer
+required:
+  - apartment_template_id
+  - title

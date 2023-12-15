@@ -1,0 +1,93 @@
+get:
+  operationId: admin_get_automation_triggers
+  description: Получение триггера автоматизации для админа
+  tags:
+    - automation_triggers
+  parameters:
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Trigger Not Found!
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/automation_triggers/RetrieveAutomationTriggerWithResidenceId.yaml"
+
+delete:
+  operationId: admin_delete_automation_trigger
+  description: Удаление триггера автоматизации админом
+  tags:
+    - automation_triggers
+  parameters:
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Trigger Not Found!
+    "204":
+      description: Триггер удален
+
+put:
+  operationId: admin_update_automation_trigger
+  description: Обновление триггера автоматизации админом
+  tags:
+    - automation_triggers
+  parameters:
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/automation_triggers/CreateAutomationTrigger.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Trigger Not Found!
+    "201":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
+
+
+components:
+  parameters:
+    AutomationTriggerPathId:
+      in: path
+      name: automation_trigger_id
+      description: id триггера автоматизации
+      required: true
+      schema:
+        type: integer

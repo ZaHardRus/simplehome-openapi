@@ -1,0 +1,93 @@
+get:
+  operationId: admin-capability-templates-retrieve
+  description: Получение шаблона навыка
+  tags:
+    - capability_templates
+  parameters:
+    - $ref: "#/components/parameters/capabilityTemplateId"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+
+put:
+  operationId: admin-capability-templates-update
+  description: Обновление шаблона навыка
+  tags:
+    - capability_templates
+  parameters:
+    - $ref: "#/components/parameters/capabilityTemplateId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/capabilities_templates/CreateCapabilitiesTemplates.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+
+delete:
+  operationId: admin-capability-templates-delete
+  description: Удаление шаблона навыка
+  tags:
+    - capability_templates
+  parameters:
+    - $ref: "#/components/parameters/capabilityTemplateId"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
+    "204":
+      description: Шаблон комнаты удален
+
+
+components:
+  parameters:
+    capabilityTemplateId:
+      in: path
+      name: capability_template_id
+      description: id шаблона навыка
+      required: true
+      schema:
+        type: integer
+
+  schemas:
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!
+

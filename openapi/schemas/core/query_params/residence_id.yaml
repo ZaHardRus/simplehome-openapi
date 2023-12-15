@@ -1,0 +1,15 @@
+Required:
+  in: query
+  name: residence_id
+  required: true
+  schema:
+    type: integer
+    example: 1
+
+NotRequired:
+  in: query
+  name: residence_id
+  required: false
+  schema:
+    type: integer
+    example: 1

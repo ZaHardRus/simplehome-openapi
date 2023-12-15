@@ -1,0 +1,18 @@
+type: object
+properties:
+  id:
+    type: integer
+  controller_ip:
+    type: string
+  controller_port:
+    type: integer
+  residence_id:
+    type: integer
+  title:
+    type: string
+  is_dhcp:
+    type: boolean
+required:
+  - controller_port
+  - is_dhcp
+  - title

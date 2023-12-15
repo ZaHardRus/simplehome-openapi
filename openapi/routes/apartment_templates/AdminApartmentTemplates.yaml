@@ -1,0 +1,90 @@
+get:
+  operationId: admin-apartment-templates-list
+  description: Получение списка шаблонов квартир
+  tags:
+    - apartment_templates
+  parameters:
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateAfterFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateAfterFilter"
+
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplateWithIntegratorId.yaml"
+
+post:
+  operationId: admin-apartment-templates-create
+  description: Создание шаблона квартиры
+  tags:
+    - apartment_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/apartment_templates/CreateApartmentTemplate.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
+              - $ref: "#/components/schemas/controllerIpValidationError"
+
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplate.yaml"
+
+delete:
+  operationId: admin-multiple-apartment-templates-delete
+  description: Удаление множества шаблонов квартир
+  tags:
+    - apartment_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplate.yaml"
+              deleted_rows:
+                type: integer
+                example: 1
+                description: Кол-во удаленных шаблонов квартир
+
+components:
+  schemas:
+    controllerIpValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: controller_ip required if is_dhcp is false

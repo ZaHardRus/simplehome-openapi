@@ -1,0 +1,95 @@
+get:
+  operationId: admin-driver-templates-list
+  description: Получение  списка шаблонов драйверов
+  tags:
+    - drivers_templates
+  properties:
+    - $ref: "#/components/parameters/apartmentTemplateQueryId"
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/driver_templates/RetrieveDriverTemplates.yaml"
+
+post:
+  operationId: admin-driver-templates-create
+  description: Создание шаблона драйвера
+  tags:
+    - drivers_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../schemas/driver_templates/CreateDriverTemplates.yaml"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/driver_templates/RetrieveDriverTemplates.yaml"
+
+delete:
+  operationId: admin-multiple-driver-templates-delete
+  description: Удаление множества шаблонов драйверов
+  tags:
+    - drivers_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  $ref: "../../schemas/driver_templates/RetrieveDriverTemplates.yaml"
+              deleted_rows:
+                type: integer
+                example: 1
+                description: Кол-во удаленных шаблонов драйверов
+
+components:
+  parameters:
+    apartmentTemplateQueryId:
+      in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer
+
+  schemas:
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!

@@ -1,0 +1,153 @@
+get:
+  operationId: admin-device-templates-list
+  description: Получение списка шаблонов устройств
+  tags:
+    - devices_templates
+  properties:
+    - $ref: "#/components/parameters/apartmentTemplateQueryId"
+    - $ref: "#/components/parameters/driverTemplateQueryId"
+    - $ref: "#/components/parameters/roomTemplateQueryId"
+    - $ref: "#/components/parameters/typeQueryId"
+    - $ref: "#/components/parameters/subtypeQueryId"
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/subtypeValidationError"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/device_templates/ListDeviceTemplates.yaml"
+
+post:
+  operationId: admin-device-templates-create
+  description: Создание шаблонов устройств
+  tags:
+    - devices_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../schemas/device_templates/CreateDeviceTemplates.yaml"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+              - $ref: "#/components/schemas/failToFind"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/device_templates/RetrieveDeviceTemplates.yaml"
+
+delete:
+  operationId: admin-multiple-device-templates-delete
+  description: Удаление множества шаблонов устройств
+  tags:
+    - devices_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  $ref: "../../schemas/device_templates/ListDeviceTemplates.yaml"
+              deleted_rows:
+                type: integer
+                example: 1
+                description: Кол-во удаленных шаблонов комнат
+
+
+components:
+  parameters:
+    apartmentTemplateQueryId:
+      in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: false
+      schema:
+        type: integer
+    driverTemplateQueryId:
+      in: query
+      name: driver_template_ids
+      description: id шаблона драйвера
+      required: false
+      schema:
+        type: string
+    roomTemplateQueryId:
+      in: query
+      name: room_template_ids
+      description: id шаблона комнаты
+      required: false
+      schema:
+        type: string
+    typeQueryId:
+      in: query
+      name: type
+      description: Тип устройства. Обязательный параметр, если subtype указан
+      required: false
+      schema:
+        type: string
+    subtypeQueryId:
+      in: query
+      name: type
+      description: Подтип устройства
+      required: false
+      schema:
+        type: string
+
+  schemas:
+    payloadValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Payload Type Must Be List Or Dict, Not {type(data)}
+    subtypeValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Filter 'type' required when using filter 'subtype'
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!
+    failToFind:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Fail To Find {error_message}

@@ -1,0 +1,92 @@
+get:
+  operationId: admin_list_automation_triggers
+  description: Выдача списка триггеров автоматизаций для админа
+  tags:
+    - automation_triggers
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
+
+post:
+  operationId: admin_create_automation_trigger
+  description: Создание триггера автоматизации пользователем
+  tags:
+    - automation_triggers
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/automation_triggers/CreateAutomationTrigger.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+              - $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AutomationNotFound"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
+
+delete:
+  operationId: admin_delete_multiple_automation_triggers
+  description: Удаление множества триггеров автоматизаций админом
+  tags:
+    - automation_triggers
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
+              deleted_rows:
+                type: integer
+                example: 1
+                description: Кол-во удаленных триггеров
+
+components:
+  schemas:
+    AutomationNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Automation with id {automation_id} not found

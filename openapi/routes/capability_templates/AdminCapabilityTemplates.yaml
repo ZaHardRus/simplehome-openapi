@@ -1,0 +1,96 @@
+get:
+  operationId: admin-capability-templates-list
+  description: Получение списка шаблонов навыков
+  tags:
+    - capability_templates
+  parameters:
+    - $ref: "#/components/parameters/apartmentTemplateQueryId"
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+
+post:
+  operationId: admin-capability-templates-create
+  description: Создание шаблонов навыков
+  tags:
+    - capability_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../../schemas/capabilities_templates/CreateCapabilitiesTemplates.yaml"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "201":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+
+delete:
+  operationId: admin-multiple-capability-templates-delete
+  description: Удаление множества шаблонов навыков
+  tags:
+    - capability_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  $ref: "../../schemas/capabilities_templates/RetrieveCapabilitiesTemplates.yaml"
+              deleted_rows:
+                type: integer
+                example: 1
+                description: Кол-во удаленных шаблонов комнат
+
+
+components:
+  parameters:
+    apartmentTemplateQueryId:
+      in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: false
+      schema:
+        type: integer
+
+  schemas:
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!

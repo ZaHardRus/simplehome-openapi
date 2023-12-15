@@ -1,0 +1,8 @@
+type: object
+properties:
+  residence_id:
+    type: integer
+  title:
+    type: string
+required:
+  - title
