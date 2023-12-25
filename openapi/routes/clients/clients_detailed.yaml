@@ -1,0 +1,97 @@
+get:
+  tags:
+    - user_session
+  operationId: clients_retrieve
+  parameters:
+    - in: path
+      description: id сессии
+      name: pk
+      required: true
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/clients/RetrieveClient.yaml"
+    "404":
+      description: Client not Found
+
+delete:
+  tags:
+    - user_session
+  operationId: clients_delete
+  description: удаление сессии пользователя
+  parameters:
+    - in: path
+      description: id сессии
+      name: pk
+      required: true
+      schema:
+        type: integer
+  responses:
+    "204":
+      description: success
+
+patch:
+  tags:
+    - user_session
+  operationId: clients_patch
+  description: "Обновление сессии.
+                Пользователь не может изменять 
+                  Поля:
+                   account_id
+                   os
+                   created_at
+                   updated_at
+                   unique_id
+                   device_model
+                   device_name"
+  parameters:
+    - in: path
+      description: id сессии
+      name: pk
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            # TODO: поле id должно быть неизменяемым. Вообще update не должен быть доступен
+            id:
+              type: integer
+            os_version:
+              type: string
+            push_token:
+              type: string
+            auth_token:
+              type: string
+            refresh_token:
+              type: string
+            refresh_exp_time:
+              type: float
+            auth_exp_time:
+              type: float
+            last_apartment:
+              type: string
+            source:
+              type: string
+            ip_address:
+              type: string
+            ip_location_country:
+              type: string
+            ip_location_city:
+              type: string
+  responses:
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/clients/RetrieveClient.yaml"
+    # raise EntityAlreadyExists
+    # raise NotFound('Client Not Found!', 404)

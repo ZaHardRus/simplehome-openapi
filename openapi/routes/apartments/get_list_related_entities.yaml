@@ -1,0 +1,43 @@
+get:
+  deprecated: true
+  operationId: get_list_related_entities
+  tags:
+    - apartments
+  description: Доступно с ролью инженера и выше. Возвращает связанные с 
+  properties:
+    - in: query
+      name: apartment_id
+      description: вообще, это список. Элементы разделяются символом "+"
+      schema:
+        type: string
+
+  responses:
+    '400':
+      description: Id Must Be An Integer! Ошибка валидации 
+
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              controller_ids:
+                type: integer
+                description: noqa
+
+              driver_ids:
+                type: integer
+                description: noqa
+
+              room_ids:
+                type: integer
+                description: noqa
+
+              scenario_ids:
+                type: integer
+                description: noqa
+
+              device_ids:
+                type: integer
+                description: noqa

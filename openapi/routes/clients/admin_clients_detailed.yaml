@@ -1,0 +1,25 @@
+get:
+  tags:
+    - admin_session  
+  operationId: retrieve_admin_clients
+  description: Доступно инженеру и выше.
+               Возвращает текущую сессию пользователя
+  parameters:
+    - in: path
+      name: pk
+      schema:
+        type: integer
+    - in:
+      name: unique_id
+      schema:
+        type: integer
+
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            id:
+              type: integer
+            account_id:
+              type: integer

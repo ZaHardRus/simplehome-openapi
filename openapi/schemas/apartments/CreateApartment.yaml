@@ -1,0 +1,21 @@
+type: object
+required:
+  - apartment_number
+  - floor_number
+  - residence_id
+  - apartment_type_id
+properties:
+  apartment_number:
+    type: string
+    maxLength: 128
+  floor_number:
+    type: integer
+  residence_id:
+    type: integer
+  building_id:
+    type: integer
+  comment:
+    type: string
+    maxLength: 1024
+  apartment_type_id:
+    type: integer

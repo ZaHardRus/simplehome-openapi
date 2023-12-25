@@ -1,0 +1,16 @@
+get:
+  description: Возвращает список всех номеров телефонов. Доступен инженеру и выше.
+               Данный метод не является безопасным. Постарайтесь от него избавиться
+  deprecated: true
+  operationId: all_user_phones
+  tags:
+    - users
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+              description: номера телефонов

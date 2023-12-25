@@ -1,0 +1,91 @@
+post:
+  description: Доступно с ролью администратора и выше
+  operationId: admin_user_create
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/users/CreateUser.yaml"
+  tags:
+    - users
+  responses:
+    # TODO: неподходящий статус
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/users/RetrieveUser.yaml"
+
+get:
+  description: Доступно с ролью инженера и выше
+  operationId: admin_user_list
+  tags:
+    - users
+  parameters:
+    - in: query
+      name: is_admin bool
+      schema:
+        type: boolean
+        default: false
+      
+    - in: query
+      name: has_access_to_any_residence bool
+      schema:
+        type: boolean
+        default: true
+      
+    - in: query
+      name: residence_ids
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+      
+    - in: query
+      name: integrator_ids
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+      
+    - in: query
+      name: group_ids
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+      
+    - in: query
+      name: search
+      required: false
+      schema:
+        type: string
+      
+    - in: query
+      name: page
+      required: false
+      schema:
+        type: integer
+      
+    - in: query
+      name: max_results
+      required: false
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/users/RetrieveUser.yaml'
+
+
+delete:
+  operationId: admin_user_delete_multiple

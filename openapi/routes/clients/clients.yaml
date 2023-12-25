@@ -1,0 +1,59 @@
+# TODO: админские роуты и не админские стоит объединить
+get:
+  tags:
+    - user_session
+  operationId: clients_list
+  description: Доступно саппорту и выше
+  responses:
+    "200":
+      content:
+        application/json:
+          type: array
+          items:
+            $ref: "../../schemas/clients/RetrieveClient.yaml"
+
+post:
+  tags:
+    - user_session
+  operationId: clients_create
+  description:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/clients/ClientsCreateSchema.yaml"
+  responses:
+    "201":
+      content:
+        application/json:
+          $ref: "../../schemas/clients/RetrieveClient.yaml"
+
+delete:
+  tags:
+    - user_session
+  operationId: clients_multiple_delete
+  requestBody:
+    content:
+      application/json:
+        type: object
+        properties:
+          id:
+            type: array
+            description: список с id удаляемый сессий
+            items:
+              type: string
+  responses:
+    "200":
+      description: success
+      content:
+        application/json:
+          type: array
+          items:
+            description: сколько клиентов было удалено
+            type: integer
+
+    "403":
+      description: Not enoth permisssions!
+
+    "400":
+      description: Id Must Be An Integer!

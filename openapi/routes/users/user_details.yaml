@@ -1,0 +1,23 @@
+get:
+  operationId: user_details
+  description: Доступен для пользователя и выше.
+               По сути retrieve метод на самого себя.
+  tags:
+    - users
+  properties:
+    - in: query
+      name: apartment_id
+      description: id апартаментов
+  responses:
+    # TODO: на данный момент retrieve метод не отдаёт
+    # всю необходимую информацию. Есть разница между спецификацией и кодом
+    '200':
+      description: Отдаёт информацию
+      # TODO: в каких случаях мы не можем получить инфу о пооользователе ?
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/users/RetrieveUser.yaml"
+
+    # raise NotFound('User Not Found!', 404)
+

@@ -1,0 +1,71 @@
+# TODO: конченная логика ба бэке. Что тут забыла авторизация ?
+get:
+  operationId: retrieve_user_apartment
+  tags:
+    - apartments
+    - preferences
+  description:
+  parameters:
+
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: "../../schemas/apartments/RetrieveApartmentDublicate1.yaml"
+              - $ref: "../../schemas/apartments/RetrieveApartments.yaml"
+            properties:
+              etag:
+                description: без понятия
+              owners:
+                description: люди у которых есть доступ до апартамента
+                type: array
+                items:
+                  type: object
+                  properties:
+                    owner_id:
+                      type: integer
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    middle_name:
+                      type: string
+              residence_title:
+                type: string
+              drivers:
+                type: array
+                items:
+                  
+              meta:
+                type: objects
+                properties:
+                  apartments_count:
+                    type: string
+                  global_security_order:
+                    type: array
+                    items:
+                      type: string
+                  broker_remote_access:
+                    type: object
+                    properties:
+                      host:
+                        type: string
+                        example: "dev.cloud.simple-home.liis.su"
+                      access_token:
+                        type: string
+                        example: "bGlpcy1icm9rZXI6cGVyaW9kaWNhbGx5X2dlbmVyYXRlX2NvbXBsaWNhdGVkX3Bhc3N3b3Jk"
+
+              # global_security_order:
+              #   type: array
+              #   description: хз чё
+              #   items:
+              #     type: string
+
+              # owners:
+                # example: 
+
+  # /apartments/{pk:\d+}

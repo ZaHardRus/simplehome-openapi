@@ -1,0 +1,29 @@
+# TODO:
+# то же самое, что и user_login.
+# Точно должно быть одним эндпоинтом
+# Так же из этого следует лделать get метод
+
+post:
+  operationId: login_using_email
+  description: Авторизация пользователя при помощи email.
+               Отправляем код подтверждения
+  tags:
+    - auth
+  requestBody:
+    content:
+      application/json:
+        type: object
+        required: true
+        properties:
+          email:
+            type: string
+            maxLength: 256
+
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/auth/SuccessLoginResponse.yaml'
+    # TODO:
+    # APIError('Message was not send! Internal server error', 500)

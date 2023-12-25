@@ -1,0 +1,27 @@
+# название метода не подходит под то, что метод делает
+get:
+  operationId: get_allowed_auth_method
+  description: получить список всех доступным способов авторизации
+  tags:
+    - users
+    - auth
+  responses:
+    '200':
+      content:
+        application/json:
+          type: object
+          properties:
+            country_name:
+              type: string
+            city_name:
+              type: string
+            country_code:
+              type: integer
+            allowed_countries_codes:
+              description: список с поддерживаемыми номерами стран по стандарту iso
+              type: array
+              items:
+                schema: integer
+            is_sms_auth_allowed:
+              type: boolean
+              description: разрешёны ли в стране того, кто запрашивает смс сообщения.

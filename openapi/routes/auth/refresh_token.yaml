@@ -1,0 +1,32 @@
+post:
+  operationId: refresh_token_new
+  description: 
+  tags:
+    - auth
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          description: Предыдущий refresh token
+          parameters:
+            refresh_token:
+              type: string          
+  responses:
+    '200':
+      description: Данные пользователя
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              prefix:
+                type: string
+              token:
+                type: string
+              exp_time:
+                type: string
+                description: время жизни токена
+              accessible_schemas:
+                type: string
+                description: []

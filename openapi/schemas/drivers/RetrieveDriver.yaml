@@ -1,0 +1,30 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  ip:
+    type: string
+    example: "192.168.0.74"
+  port:
+    type: integer
+    example: 1883
+  type:
+    type: string
+    example: "mqtt"
+  controller_id:
+    type: integer
+    example: 1
+  created_at:
+    type: string
+    format: date-time
+    example: "2021-02-01T13:43:38.838000+00:00"
+  updated_at:
+    type: string
+    format: date-time
+    example: "2021-02-01T13:43:39.549000+00:00"
+  residence_id:
+    type: integer
+    example: 1
+  extra:
+    type: object

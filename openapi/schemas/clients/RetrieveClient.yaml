@@ -1,0 +1,47 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 887
+  account_id:
+    type: integer
+    example: 491
+  os:
+    type: string
+    example: "iOS"
+  os_version:
+    type: string
+    example: "14.4"
+  device_name:
+    type: string
+    example: "iPhone 8"
+  device_model:
+    type: string
+    example: "iPhone 8"
+  unique_id:
+    type: string
+    example: "4C02CCCA-49A7-4207-A81A-F84A8C72849A"
+  push_token:
+    type: string
+    example: "eun7vXvWuUIMg0Ow7v82ns:APA91bHK8rwcRiBT1SFOyrILQEOS2zbu9J34znI28Dv2k0MGAeXVoK_gCODtjynmpy9f1oJqX3eQbBrr98qe-NEoFYBnIDcO547DlTXN0o21dQ9sTWI3t2nxOmqB4K03Ukm67cBiq8vH"
+  created_at:
+    type: string
+    example: "2021-05-06T20:59:00.584597+00:00"
+  updated_at:
+    type: string
+    example: "2021-09-10T09:37:01.756590+00:00"
+  last_apartment:
+    type: integer
+    example: 51
+  source:
+    type: string
+    example: "mobile_app"
+  ip_address:
+    type: string
+    example: "81.95.25.94"
+  ip_location_country:
+    type: string
+    example: "Россия"
+  ip_location_city:
+    type: string
+    example: "Санкт-Петербург"

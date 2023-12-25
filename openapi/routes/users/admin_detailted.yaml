@@ -1,0 +1,58 @@
+  get:
+    operationId: admin_user_retrieve
+    description: доступен инженеру и выше
+    tags:
+      - users
+    parameters:
+      - in: path
+        name: pk
+        type: integer
+        description: id пользователя
+        example: 1
+    responses:
+      '200':
+        content:
+          application/json:
+            schema:
+              # на данный момент нейминг не полностью совпадает,
+              # но эту проблему надо решать по ходу
+              $ref: "../../schemas/users/RetrieveUser.yaml"
+      '404':
+        description: Not found
+
+  delete:
+    description: Доступен администратору и выше.
+    tags:
+      - users
+    operationId: admin_user_delete
+    parameters:
+      - in: path
+        name: pk
+        type: integer
+        description: id пользователя
+        example: 1
+    responses:
+      '204':
+        description: Успешное удаление
+      '403':
+        description: В доступе отказанно
+
+  patch:
+    description: доступно инженеру и выше
+    operationId: admin_user_update
+    tags:
+      - users
+    parameters:
+      - in: path
+        name: pk
+        type: integer
+        description: id пользователя
+        example: 1
+    responses:
+      '201':
+        description: success
+        content:
+          application/json:
+            schema:
+              $ref: '../../schemas/users/RetrieveUser.yaml'
+

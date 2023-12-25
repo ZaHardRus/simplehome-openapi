@@ -1,0 +1,83 @@
+get:
+  operationId: admin_clients_retrieve
+  description: 
+  parameters:
+    - in: path
+      name: pk
+      schema:
+        type: integer
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/clients/RetrieveClient.yaml"
+    # raise NotFound('Not Found!', 404)
+
+delete:
+  operationId: admin_clients_delete
+  description: удаляет сессию пользователя. Доступно саппорту и выше
+  parameters:
+    - in: path
+      name: pk
+      schema:
+        type: integer
+  responses:
+    "204":
+      description: success
+    # raise NotFound(message='Not Found!', status=404)
+
+patch:
+  operationId: admin_clients_patch
+  description: Доступно саппорту и выше
+  parameters:
+    - in: path
+      name: pk
+      schema:
+        type: integer
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - account_id
+            - unique_id
+          properties:
+            account_id:
+              type: integer
+            push_token:
+              type: string
+              maxLength: 256
+            os:
+              type: string
+              maxLength: 32
+            os_version:
+              type: string
+              maxLength: 32
+            device_name:
+              type: string
+              maxLength: 64
+            device_model:
+              type: string
+              maxLength: 64
+            unique_id:
+              type: string
+              maxLength: 64
+            auth_token:
+              type: string
+              maxxLength: 256
+            refresh_token:
+              type: string
+              maxLength: 25
+  responses:
+    "201":
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/clients/RetrieveClient.yaml"
+
+  # raise ValidationError
+  # raise EntityAlreadyExists
+  # raise NotFound('Not Found!', 404)

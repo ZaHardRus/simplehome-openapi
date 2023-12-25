@@ -1,0 +1,24 @@
+delete:
+  tags:
+    - admin_session
+  operationId: multiple_delete_client_session_admin
+  description:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: array
+              items:
+                type: integer
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            # TODO: не понял, что происходит. Нужно 
+            # уточнить
+            description: кол-во удалённого дерьма
+            type: integer
