@@ -1,0 +1,13 @@
+type: object
+properties:
+  # TODO: нахрена тут поле status ?
+  status:
+    example: OK
+
+  expire:
+    description: время жизни смс кода (2 минуты)
+    example: 120
+
+  user_id:
+    type: integer
+    description: id пользователя под которым был произведён вход

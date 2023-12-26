@@ -1,0 +1,4 @@
+post:
+  operationId: admin_login
+  tags:
+    - users

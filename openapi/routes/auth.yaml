@@ -1,0 +1,42 @@
+/api/v2/admin/login:
+  post:
+
+/api/v2/admin/refresh_token:
+  post:
+
+/api/v2/users/registration:
+  post:
+
+/api/v2/users/registration/check_email_and_phone':
+  post:
+
+/api/v2/users/get_allowed_auth_method:
+  get:
+
+/api/v2/users/registration/confirm:
+  post:
+
+/api/v2/users/login:
+  post:
+
+/api/v2/users/login_email:
+  post:
+
+/api/v2/users/confirm:
+  post:
+
+/api/v2/users/token:
+  post:
+
+/api/v2/users/confirm_code:
+  post:
+
+/api/v2/users/confirm_email_code:
+  post:
+
+
+/api/v2/users/refresh_token:
+  post:
+
+/api/v2/users/refresh_token_new:
+  post:

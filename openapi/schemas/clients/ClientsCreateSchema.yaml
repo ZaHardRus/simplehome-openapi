@@ -1,0 +1,36 @@
+type: object
+required:
+  - unique_id
+  - account_id
+  - email
+properties:
+  email:
+    type: string
+    minLength: 8
+    maxLength: 64
+  account_id:
+    type: integer
+  push_token:
+    type: string
+    maxLength: 256
+  os:
+    type: string
+    maxLength: 32
+  os_version:
+    type: string
+    maxLength: 32
+  device_name:
+    type: string
+    maxLength: 32
+  device_model:
+    type: string
+    maxLength: 32
+  unique_id:
+    type: string
+    maxLength: 64
+  auth_token:
+    type: string
+    maxLength: 256
+  refresh_token:
+    type: string
+    maxLength: 256

@@ -1,0 +1,35 @@
+# TODO: должно быть частью логики обновления
+post:
+  deprecated: true
+  operationId: change_residence_id
+  description: Доступно инжденеру и выше.
+               Должно быть частью логики обновления апартаментов.
+               Привязывает апартаменты и связанные данные к новой резиденции
+  tags:
+    - apartments
+  parameters:
+    - in: path
+      description: id апартоментов, чью резиденцию меняем
+      name: pk
+      schema:
+        type: integer
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - residence_id
+          properties:
+            residence_id:
+              description: id новой резиденции
+              type: integer
+  responses:
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/apartments/RetrieveApartmentDublicate1.yaml"
+

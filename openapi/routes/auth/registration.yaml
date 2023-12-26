@@ -1,0 +1,39 @@
+post:
+  operationId: registration
+  description: Регистрирует нового пользователя.
+               Сервис sh отправляет код подтверждения регистрации
+               сообщением на email
+  tags:
+    - auth
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - email
+            - phone_number
+          properties:
+            email:
+              type: string
+            phone_number:
+              type: string
+            language:
+              type: string
+              enum:
+                - ru
+                - en
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                default: OK
+              expire:
+                type: integer 
+                description: время жизни кода подтверждения

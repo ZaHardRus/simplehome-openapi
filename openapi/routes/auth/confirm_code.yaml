@@ -1,0 +1,32 @@
+post:
+  operationId: confirm_code
+  tags:
+    - auth
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - phone_number
+            - sms_code
+            - client_unique_id
+          properties:
+            phone_number:
+              type: string
+              minLength: 11
+              maxLength: 16
+            sms_code:
+              type: integer
+              minimum: 1000
+              maximum: 9999
+            client_unique_id:
+              type: string
+              maxLength: 64
+  responses:
+    '200':
+      content:
+        # TODO: надо возвращать только токены
+        application/json:
+          schema:
+            $ref: "../../schemas/auth/ConfirmCode.yaml"

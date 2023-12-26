@@ -1,0 +1,65 @@
+type: object
+properties:
+  prefix:
+    type: string
+    example: Bearer
+  token:
+    type: string
+  exp_time:
+    type: integer
+  refresh_token:
+    type: string
+  refresh_exp_time:
+    type: string
+  previous_apartment:
+    $ref: '../../schemas/apartments/RetrieveApartmentDublicate1.yaml'
+  apartmetns:
+    type: array
+    items:
+      $ref: '../../schemas/apartments/RetrieveApartmentDublicate1.yaml'
+  user_id:
+    type: integer
+  language:
+    type: string
+    enum:
+      - en
+      - ru
+  username:
+    type: string
+
+# {
+#     "apartments": [
+#         {
+#             "id": 1,
+#             "apartment_number": 4,
+#             "floor_number": 2,
+#             "residence_id": 1,
+#             "created_at": null,
+#             "updated_at": "2022-10-12T12:33:56.197878+00:00",
+#             "building_id": 26,
+#             "comment": "keksus"
+#         }
+#     ],
+#     "user_id": 8,
+#     "language": "rus",
+#     "username": {
+#         "first_name": "kek",
+#         "last_name": "pek",
+#         "middle_name": "Ъ"
+#     },
+#     "prefix": "Bearer",
+#     "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIrNzkxMTE0MDc4MDkiLCJleHAiOjE2NzkzNTI2NzMsImFwYXJ0bWVudF9pZCI6bnVsbCwic2NoZW1hIjoicHVibGljIn0.MxnGtWSnw5ZlR_lMZpZqs6aaLV8_CNcVNXiWAaCUNB0",
+#     "exp_time": 1679352673,
+#     "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIrNzkxMTE0MDc4MDkiLCJleHAiOjE2ODE5NDEwNzMsImFwYXJ0bWVudF9pZCI6bnVsbCwic2NoZW1hIjoicHVibGljIn0.hkJZW7tfu9cJfUkhCfESwDkr2dN-hp3b4GTAHIk4Jtg",
+#     "refresh_exp_time": 1681941073,
+#     "previous_apartment": {
+#         "id": 1,
+#         "apartment_number": 4,
+#         "floor_number": 2,
+#         "residence_id": 1,
+#         "created_at": null,
+#         "updated_at": "2022-10-12T12:33:56.197878+00:00",
+#         "building_id": 26,
+#         "comment": "keksus"
+#     }
+# }

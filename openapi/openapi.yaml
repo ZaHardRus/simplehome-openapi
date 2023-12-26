@@ -23,33 +23,6 @@ security:
   - BearerAuth: []
 
 paths:
-  /admin/login:
-    post:
-      operationId: admin_login
-      tags:
-        - login
-      parameters:
-        - in: header
-          name: X-Schema
-          schema:
-            type: string
-            example: public
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                password:
-                  type: string
-                email:
-                  type: string
-                client_unique_id:
-                  type: string
-      responses:
-        "200":
-          description: Успешная авторизация
-
   /admin/automations:
     $ref: ./routes/automations/AdminAutomationsEndpoints.yaml
 
@@ -995,7 +968,6 @@ paths:
         '404':
           description: Account Apartment Default Preferences Not Found!
 
-
   /admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}:
     put:
       operationId: update_room_groups_order
@@ -1054,6 +1026,133 @@ paths:
               что дом строили одни пидорасы… 
             
             pidoras architecture pattern"
+
+  # # apartments ---------------------------------------------------------------------------
+  /admin/apartments/{pk:\d+}:
+    $ref: './routes/apartments/detailed.yaml'
+
+  /admin/apartments:
+    $ref: './routes/apartments/apartmets.yaml'
+
+  /admin/apartments/get_list_related_entities:
+    $ref: './routes/apartments/get_list_related_entities.yaml'
+
+  /admin/apartments/change_residence_id/{pk:\d+}:
+    $ref: './routes/apartments/change_residence_id.yaml'
+
+  # # пользовательская апишка на апартаменты
+  /apartments/{pk:\d+}:
+    $ref: './routes/apartments/user_apartments_detailed.yaml'
+
+  /apartments:
+    $ref: "./routes/apartments/user_apartments.yaml"
+
+  # # /api/v2/admin/apartments_types/list:
+  #   # get:
+
+  # # users ------------------------------------------------------------------------------
+
+  # /admin/get_accessible_schemas:
+  #   $ref: "./routes/users/admin_get_accessible_schemas.yaml"
+
+  # /users/get_accessible_schemas:
+  #   $ref: "./routes/users/admin_get_accessible_schemas.yaml"
+  # TODO:
+  /admin/users:
+    $ref: "./routes/users/admin_users.yaml"
+
+  /admin/users/{pk:\d+}:
+    $ref: "./routes/users/admin_detailted.yaml"
+
+  /admin/login:
+    post:
+      operationId: admin_login
+      tags:
+        - auth
+      parameters:
+        - in: header
+          name: X-Schema
+          schema:
+            type: string
+            example: public
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                email:
+                  type: string
+                client_unique_id:
+                  type: string
+      responses:
+        "200":
+          description: Успешная авторизация
+  # TODO:
+  /admin/users/all_user_phones:
+    $ref: "./routes/users/all_user_phones.yaml"
+
+  /users/registration:
+    $ref: "./routes/auth/registration.yaml"
+
+  /users/get_allowed_auth_method:
+    $ref: "./routes/auth/get_allowed_auth_method.yaml"
+
+  /users/registration/confirm:
+    $ref: "./routes/auth/confirm.yaml"
+
+  /users/login:
+    $ref: "./routes/auth/user_login.yaml"
+
+  /users/login_email:
+    $ref: "./routes/auth/user_login_using_email.yaml"
+  
+  # TODO:
+  /users/confirm_code:
+    $ref: "./routes/auth/confirm_code.yaml"
+
+  /users/confirm_email_code:
+    $ref: "./routes/auth/confirm_email_code.yaml"
+
+  # /users/refresh_token_new:
+  #   $ref: "./routes/auth/refresh_token.yaml"
+
+  /user_details:
+    $ref: "./routes/users/user_details.yaml"
+
+  /users/{pk:\d+}:
+    $ref: "./routes/users/delete.yaml"
+
+  /user_info:
+    $ref: "./routes/users/user_info.yaml"
+
+  /user_by_phone_number:
+    $ref: "./routes/users/get_or_create_by_phone_number.yaml"
+
+  # clients for users
+  /clients:
+    $ref: "./routes/clients/clients.yaml"
+
+  /clients/{pk:\d+}:
+    $ref: "./routes/clients/clients_detailed.yaml"
+
+  /client_by_unique_id:
+    $ref: "./routes/clients/client_by_unique_id.yaml"
+
+  #clients for admin
+  /admin/clients:
+    $ref: "./routes/clients/admin_clients.yaml"
+
+  /admin/clients/{pk:\d+}:
+    $ref: "./routes/clients/admin_clients_other.yaml"
+
+  /admin/admin-clients/{pk:\d+}:
+    $ref: "./routes/clients/admin_clients_detailed.yaml"
+
+  /admin/client_by_unique_id:
+    $ref: "./routes/clients/admin_client_by_unique_id.yaml"
 
 
 components:

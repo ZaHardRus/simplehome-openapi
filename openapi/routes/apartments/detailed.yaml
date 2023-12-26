@@ -1,0 +1,108 @@
+  get:
+    operationId: apartments_retrieve
+    tags:
+      - apartments
+    description: По сути retrieve метод на получение апартаментов и всего,
+                 что в них имеется.
+                 Нужно вынести в отдельный роут инфу о контроллере, овнерах и тп
+    
+    responses:
+      '200':
+        description: success
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                  - $ref: "../../schemas/apartments/RetrieveApartments.yaml"
+              properties:
+                owners:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      owner_id:
+                        type: integer
+                        example: 1
+                      first_name:
+                        type: string
+                        example: "Владислав"
+                      last_name:
+                        type: string
+                        example: "Быков"
+                      middle_name:
+                        type: string
+                        example: "Чел"
+                residence_title:
+                  type: string
+                  description: название  резиденции, которой принадлежат данные апартаменты
+                  example: "ЖК Зло"
+                drivers:
+                  description: набор драйверов апартаментов
+                  type: array
+                  items:
+                    $ref: '../../schemas/drivers/RetrieveDriver.yaml'
+                controller:
+                  $ref: '../../schemas/controllers/RetrieveController.yaml'
+
+
+
+  delete:
+    description: удаляет апартаменты.
+                 Метод доступен с ролью админа и выше.
+                 Апартаменты можно удалить только в случае, 
+                 если у пользователя есть доступ до апартаментов
+    operationId: apartments_delete
+    tags:
+      - apartments
+    parameters:
+      - in: path
+        name: pk
+        description: id удаляемых апартаментов
+        required: true
+        schema:
+          type: integer
+          example: 1
+    responses:
+      '204':
+        description: успешное удаление
+      '404':
+        description: апартаменты не найдены
+      # TODO: raise UserPermissionError
+
+  # TODO: должно быть просто id
+  put:
+    operationId: apartments_update
+    description: Доступно с ролью админа и выше.
+    tags:
+      - apartments
+    responses:
+      '201':
+        content:
+          application/json:
+            schema:
+              type: object
+              allOf:
+                - $ref: "../../schemas/apartments/RetrieveApartmentDublicate1.yaml"
+              properties:
+                accounts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      first_name:
+                        type:   string
+                      last_name:
+                        type: string
+                      middle_name:
+                        type: string
+                      is_owner:
+                        type: boolean
+                      account_apartment_id:
+                        type: integer
+
+      # raise UserPermissionError
+      # raise EntityAlreadyExists
+      # raise NotFound('Not Found!', 404)

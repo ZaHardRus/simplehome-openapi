@@ -6,7 +6,6 @@ properties:
     type: integer
   extra:
     type: string
-    required: false
     example: {}
   residence_id:
     type: integer
@@ -14,8 +13,6 @@ properties:
     type: string
   icon_tag:
     type: string
-    required: false
     example: toy
   time_offset:
     type: integer
-    required: false

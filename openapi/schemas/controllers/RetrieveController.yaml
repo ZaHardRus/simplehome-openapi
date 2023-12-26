@@ -1,0 +1,33 @@
+type: object
+parameters:
+  id:
+    type: integer
+    example: 1
+  serial_number:
+    type: string
+    example: "123"
+  uid:
+    type: string
+    example: "wirenboard-AVP3C5Z5"
+  ip:
+    type: string
+    example: "192.168.0.72"
+  port:
+    type: integer
+    example: 5000
+  apartment_id:
+    type: integer
+    example: 1
+  created_at:
+    type: string
+    format: date-time
+    example: "2020-11-26T17:04:17.798601+00:00"
+  updated_at:
+    type: string
+    format: date-time
+    example: "2021-09-01T13:26:40.970440+00:00"
+  residence_id:
+    type: integer
+    example: 1
+  extra:
+    type: object

@@ -1,0 +1,32 @@
+post:
+  operationId: confirm_registration
+  tags:
+    - auth
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - email
+            - email_code
+          properties:
+            email:
+              type: string
+              maxLength: 256
+              format: "email"
+              pattern: "\\.[Ii][Oo]$"
+            email_code:
+              type: integer
+              minimum: 1000
+              maximum: 9999
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/users/RetrieveUser.yaml"
+    '401':
+      description: code not found
+    # AuthenticationError("Code not found!")

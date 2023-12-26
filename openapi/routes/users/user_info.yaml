@@ -1,0 +1,21 @@
+get:
+  operationId: user_info
+  tags:
+    - users
+  deprecated: true
+  description: Дубликат метода user_details.
+               Логику методов требуется объекдинить
+  parameters:
+    - in: query
+      name: user_id
+      required: true
+      description: id пользователя по которому достаём инфу
+      schema:
+        type: integer
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            # TODO: несоответствие с текущей схемой
+            $ref: "../../schemas/users/RetrieveUser.yaml"

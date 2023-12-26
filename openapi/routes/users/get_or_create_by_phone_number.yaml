@@ -1,0 +1,18 @@
+# TODO: метод 100000% нужно удалить. Он не безопасен
+post:
+  operationId: get_or_create_by_phone_number
+  description: Метод находит пользователя по номеру
+               телефона, возвращает. Если пользователя
+               не существует - создаёт его ._.
+  deprecated: true
+  parameters:
+    - in: query
+      name: phone_number
+
+  responses:
+    '200':  
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/users/RetrieveUser.yaml'

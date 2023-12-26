@@ -1,0 +1,78 @@
+/api/v2/admin/get_accessible_schemas:
+  post:
+
+/api/v2/users/get_accessible_schemas:
+  post:
+
+
+/admin/refresh_token:
+  post:
+    operationId: admin_login_view.refresh_token
+
+/users/registration:
+  post:
+    operationId: login_view.registration
+
+/users/registration/check_email_and_phone:
+  post:
+    operationId: login_view.check_email_and_phone
+
+/users/get_allowed_auth_method:
+  get:
+    operationId: login_view.get_allowed_auth_method
+
+/users/registration/confirm:
+  post:
+    operationId: login_view.confirm_registration
+
+/users/login:
+  post:
+    operationId: login_view.login
+
+/users/login_email:
+  post:
+    operationId: login_view.login_using_email
+
+/users/confirm:
+  post:
+    operationId: login_view.confirm_code_legacy
+
+/users/token:
+  post:
+    operationId: login_view.token_obtain_legacy
+
+/users/confirm_code:
+  post:
+    operationId: login_view.confirm_code_and_token_obtain
+
+/users/confirm_email_code:
+  post:
+    operationId: login_view.confirm_email_code
+
+/users/refresh_token:
+  post:
+    operationId: login_view.refresh_token_legacy
+
+/users/refresh_token_new:
+  post:
+    operationId: login_view.refresh_token
+
+/api/v2/user_details:
+  get:
+    operationId: user_view.retrieve
+
+/api/v2/users/{pk:\d+}:
+  patch:
+    operationId: user_view.update
+
+  delete:
+    operationId: user_view.delete
+
+
+/api/v2/user_info:
+  get:
+    operationId: user_view.get_user_info_by_user_id
+
+/api/v2/user_by_phone_number:
+  post:
+    operationId: user_view.get_or_create_by_phone_number

@@ -1,0 +1,22 @@
+delete:
+  operationId: users_delete
+  tags:
+    - users
+  # todo: идея метода требует уточнений
+  description: Доступно пользователю и выше.
+               Данный метод позволяет удалить пользователя,
+               который вызвал данный метод ._.
+  parameters:
+    - in: path
+      name: pk
+      required: true
+      schema:
+        type: integer
+
+  responses:
+    '204':
+      description: success
+    '404':
+      description: невозможно, но это же симплхом.
+                   На бэкенде эта логика прописана
+    # TODO: raise UserPermissionErro

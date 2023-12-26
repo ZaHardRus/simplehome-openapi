@@ -1,0 +1,21 @@
+type: object
+properties:
+# TODO: добавить type_label
+  id:
+    type: integer
+  apartment_number:
+    description: номер апартоментов
+    type: integer
+  residence_id:
+    type: integer
+  floor_number:
+    type: integer
+  created_at:
+    type: string
+  updated_at:
+    type: string
+    format: date-time
+  building_id:
+    type: integer
+  comment:
+    type: string
