@@ -1,0 +1,25 @@
+post:
+  operationId: admin-fileservice-create-dir
+  description: Создание папки в файловом хранилище
+  tags:
+    - images
+    - fileservice
+  properties:
+    - in: query
+      name: path
+      type: string
+      required: true
+      example: "images/residences/52/rooms/templates/Классика/"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: string
+            example: "Directory created"
+    "409":
+      content:
+        application/json:
+          schema:
+            type: string
+            example: "Directory not created"

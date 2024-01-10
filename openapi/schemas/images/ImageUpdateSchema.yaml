@@ -1,0 +1,7 @@
+type: object
+properties:
+    url:
+      type: string
+      example: 'api/v2/images/hash/7aead86346e6a96620ff0b8c4661d2da'
+required:
+  - url

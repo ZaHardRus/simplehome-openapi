@@ -1,0 +1,27 @@
+get:
+  operationId: admin-fileservice-resources
+  description: Получение списка изображений по роуту из файлового хранилища
+  tags:
+    - images
+    - fileservice
+  parameters:
+    - in: query
+      name: path
+      required: false
+      description: Отражает путь к папке в файловом хранилище, в которой будет сохранено изображение
+      schema:
+        type: string
+        example: 'images/residences/1'
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/NotFound.yaml'
+    "200":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../schemas/images/FileServiceResourcesList.yaml'
+              - type: object

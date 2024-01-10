@@ -1,0 +1,50 @@
+type: object
+properties:
+  items:
+    type: array
+    items:
+      type: object
+      properties:
+        path:
+          type: string
+          example: "/images/residences/1/3dda8598a9c2805ff0d73ec58bbcbe0a.png"
+        name:
+          type: string
+          example: "3dda8598a9c2805ff0d73ec58bbcbe0a.png"
+        size:
+          type: integer
+          example: 316000
+        extension:
+          type: string
+          example: ".png"
+        modified:
+          type: string
+          example: "2021-05-17T05:56:24Z"
+        mode:
+          type: integer
+          example: 493
+        isDir:
+          type: boolean
+          example: false
+        isSymlink:
+          type: boolean
+          example: false
+        type:
+          type: string
+          example: "image"
+        hash:
+          type: string
+          example: "3dda8598a9c2805ff0d73ec58bbcbe0a"
+        api_url:
+          type: string
+          example: "/api/v2/images/hash/3dda8598a9c2805ff0d73ec58bbcbe0a"
+      required:
+        - path
+        - name
+        - size
+        - extension
+        - modified
+        - mode
+        - isDir
+        - isSymlink
+        - type

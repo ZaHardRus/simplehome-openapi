@@ -1,0 +1,59 @@
+get:
+  operationId: fileservice-download-by-intermediate
+  description: скачивание изображения с помощью intermediate токена
+  tags:
+    - images
+  parameters:
+    - in: patch
+      name: hash
+      required: true
+      description: Хеш изображения из таблицы Image
+      schema:
+        type: string
+        example: '7aead86346e6a96620ff0b8c4661d2da'
+    - in: query
+      name: intermediate_token
+      required: true
+      schema:
+        type: string
+        example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIrNzkxMTE0MDc4MDkiLCJleHAiOjE2NzgxMjE4NjIuOTU0MzM3NCwiYXBhcnRtZW50X2lkIjpudWxsLCJzY2hlbWEiOm51bGx9.cfIMZviJq2g5aT21FJQ5zRkNYkyUIhtH7ro6JBjMAHU'
+  responses:
+    "401":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../schemas/core/errors/InvalidToken.yaml'
+              - $ref: '../../schemas/core/errors/IntermediateTokenExpired.yaml'
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InvalidImageHash'
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImageNotFound'
+    "200":
+      description: Возвращает изображение
+      content:
+        image/*:
+          schema:
+            type: string
+            format: binary
+
+components:
+  schemas:
+    InvalidImageHash:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Invalid Image Hash!
+    ImageNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Image Not Found!

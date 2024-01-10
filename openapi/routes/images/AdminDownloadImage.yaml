@@ -1,0 +1,47 @@
+get:
+  operationId: admin-fileservice-download
+  description: скачивание изображения
+  tags:
+    - images
+  parameters:
+    - in: patch
+      name: hash
+      required: true
+      description: Хеш изображения из таблицы Image
+      schema:
+        type: string
+        example: '7aead86346e6a96620ff0b8c4661d2da'
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/UserPermissionError.yaml'
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/InvalidImageHash'
+              - $ref: '../../schemas/core/errors/IdMustBeAnInteger.yaml'
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/NotFound.yaml'
+    "200":
+      description: Возвращает изображение
+      content:
+        image/*:
+          schema:
+            type: string
+            format: binary
+
+components:
+  schemas:
+    InvalidImageHash:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Invalid Image Hash!

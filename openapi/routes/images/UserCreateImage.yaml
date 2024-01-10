@@ -1,0 +1,64 @@
+post:
+  operationId: image-create
+  description: загрузка изображений
+  tags:
+    - images
+  parameters:
+    - in: query
+      name: room_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: account_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: residence_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: account_residence_ordering_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: support_chat_room_id
+      required: false
+      schema:
+        type: integer
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+            required:
+              - file
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../schemas/core/errors/ValidationError.yaml'
+              - $ref: '../../schemas/core/errors/IdMustBeAnInteger.yaml'
+              - $ref: '../../schemas/core/errors/EntityAlreadyExists.yaml'
+    "200":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../schemas/images/ImageSchema.yaml'
+              - type: array
+                items: 
+                  $ref: '../../schemas/images/ImageSchema.yaml'
+
+              

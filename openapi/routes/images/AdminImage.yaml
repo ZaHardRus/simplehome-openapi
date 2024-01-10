@@ -1,0 +1,85 @@
+get:
+  operationId: admin-image-retrieve
+  description: Получение изображения
+  tags:
+    - images
+  parameters:
+    - $ref: '#/components/parameters/imageId'
+responses:
+  "404":
+    content:
+      application/json:
+        schema:
+        type: object
+  "200":
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/images/ImageSchema.yaml"
+
+delete:
+  operationId: admin-image-delete
+  description: Удаление изображения
+  tags:
+    - images
+  parameters:
+    - $ref: '#/components/parameters/imageId'
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "204":
+      description: изображение удалено
+
+put:
+  operationId: admin-image-update
+  description: Изменение изображения
+  tags:
+    - images
+  parameters:
+    - $ref: '#/components/parameters/imageId'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/images/ImageUpdateSchema.yaml"
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/images/ImageSchema.yaml"
+
+
+
+components:
+  parameters:
+    imageId:
+      in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer
