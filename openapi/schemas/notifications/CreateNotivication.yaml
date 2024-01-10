@@ -1,0 +1,22 @@
+type: object
+properties:
+  title:
+    type: string
+  body:
+    type: string
+  title_eng:
+    type: string
+  body_eng:
+    type: string
+  account_ids:
+    type: array
+    items:
+      type: integer
+  send_date:
+    type: string
+required:
+  - title
+  - body
+  - title_eng
+  - body_eng
+  - send_date

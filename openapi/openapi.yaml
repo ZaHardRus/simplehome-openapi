@@ -23,6 +23,24 @@ security:
   - BearerAuth: []
 
 paths:
+  /admin/notifications:
+    $ref: './routes/notifications/AdminNotifications.yaml'
+
+  /admin/notifications/{notification_id}:
+    $ref: './routes/notifications/AdminNotification.yaml'
+
+  /notifications:
+    $ref: './routes/notifications/UserNotifications.yaml'
+
+  /notifications/read_all_notifications:
+    $ref: './routes/notifications/ReadAllNotifications.yaml'
+
+  /notifications/count_unread:
+    $ref: './routes/notifications/CountUnread.yaml'
+
+  /notifications/{notification_id}:
+    $ref: './routes/notifications/UserNotification.yaml'
+
   /admin/automations:
     $ref: ./routes/automations/AdminAutomationsEndpoints.yaml
 

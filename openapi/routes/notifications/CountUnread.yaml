@@ -1,0 +1,14 @@
+get:
+  operationId: notifications-count-unread
+  description: Выдача количества непрочитанных уведомлений
+  tags:
+    - notifications
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer

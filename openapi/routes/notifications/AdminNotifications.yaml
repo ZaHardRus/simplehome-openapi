@@ -1,0 +1,99 @@
+get:
+  operationId: admin-notifications-list
+  description: Получение списка уведомлений
+  tags: 
+    - notifications
+  parameters:
+    - in: query
+      name: apartment_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: account_id
+      required: false
+      schema:
+        type: integer   
+    - in: query
+      name: send_dt_from
+      required: false
+      schema:
+        type: string
+    - in: query
+      name: send_dt_to
+      required: false
+      schema:
+        type: string
+
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/notifications/LocalizedNotificationWithUserNotification.yaml'
+
+post:
+  operationId: admin-notifications-create
+  description: Создание уведомления
+  tags: 
+    - notifications
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/notifications/CreateNotivication.yaml'
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/notifications/LocalizedNotificationWithUserNotification.yaml"
+
+delete:
+  operationId: admin-multiple-notifications-delete
+  description: Удаление множества уведомлений
+  tags:
+    - notifications
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "204":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  type: string
+                  example: "Хер его, что он возвращает. Там обращение происходит к несуществующей таблице..."
+              deleted_rows:
+                type: integer
+                example: 1
+                description: Кол-во удаленных шаблонов действий

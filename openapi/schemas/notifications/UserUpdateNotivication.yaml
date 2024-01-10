@@ -1,0 +1,12 @@
+type: object
+properties:
+  is_read:
+    type: boolean
+  account_id:
+    type: integer
+  notification_id:
+    type: integer
+required:
+  - notification_id
+  - account_id
+  - is_read

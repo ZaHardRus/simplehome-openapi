@@ -1,0 +1,27 @@
+type: object
+properties:
+  id:
+    type: integer
+  title:
+    type: string
+  body:
+    type: string
+  type:
+    type: string
+  apartment_id:
+    type: integer
+  send_date:
+    type: string
+  extra:
+    type: string
+    example: {}
+  created_at:
+    type: string
+  updated_at:
+    type: string
+  device_type:
+    type: string
+  device_subtype:
+    type: string
+  user_notifications:
+    $ref: '../../schemas/notifications/UserNotification.yaml'

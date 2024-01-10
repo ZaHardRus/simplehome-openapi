@@ -1,0 +1,85 @@
+get:
+  operationId: admin-notifications-retrieve
+  description: Получение уведомления
+  tags:
+    - notifications
+  parameters:
+    - $ref: "#/components/parameters/notificationId"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/notifications/LocalizedNotificationWithUserNotification.yaml"
+
+delete:
+  operationId: admin-notifications-delete
+  description: Удаление уведомления
+  tags:
+    - notifications
+  parameters:
+    - $ref: "#/components/parameters/notificationId"
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "204":
+      description: Уведомление удалено
+
+patch:
+  operationId: admin-notifications-update
+  description: Обновление уведомления
+  tags:
+    - notifications
+  parameters:
+    - $ref: "#/components/parameters/notificationId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/notifications/CreateNotivication.yaml'
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/notifications/LocalizedNotificationWithUserNotification.yaml"
+
+
+
+components:
+  parameters:
+    notificationId:
+      in: path
+      name: notification_id
+      description: id уведомления
+      required: true
+      schema:
+        type: integer
