@@ -23,6 +23,10 @@ security:
   - BearerAuth: []
 
 paths:
+
+  /api/v2/get_weather:
+    $ref: './routes/weather/GetWeather.yaml'
+
   /images:
     $ref: './routes/images/UserCreateImage.yaml'
   
