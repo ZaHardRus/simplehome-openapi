@@ -1,0 +1,20 @@
+get:
+  operationId: list-supported-subjects
+  description: Получение списка поддерживаемых тем обращений в поддержку
+  tags:
+    - customers_support
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                eng:
+                  type: string
+                  example: The app crashes or works incorrectly
+                rus:
+                  type: string
+                  example: Приложение вылетает или работает неправильно

@@ -24,6 +24,12 @@ security:
 
 paths:
 
+  /support/create_report:
+    $ref: './routes/customers_support/SupportRequestCreate.yaml'
+
+  /support/list_subjects:
+    $ref: './routes/customers_support/GetSupportedSubjects.yaml'
+
   /api/v2/get_weather:
     $ref: './routes/weather/GetWeather.yaml'
 
