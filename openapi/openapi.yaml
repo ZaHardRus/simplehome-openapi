@@ -1177,8 +1177,8 @@ paths:
   /users/confirm_email_code:
     $ref: "./routes/auth/confirm_email_code.yaml"
 
-  # /users/refresh_token_new:
-  #   $ref: "./routes/auth/refresh_token.yaml"
+  /users/refresh_token_new:
+    $ref: "./routes/auth/refresh_token.yaml"
 
   /user_details:
     $ref: "./routes/users/user_details.yaml"

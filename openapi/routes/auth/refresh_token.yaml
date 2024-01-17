@@ -9,9 +9,10 @@ post:
         schema:
           type: object
           description: Предыдущий refresh token
-          parameters:
+          properties:
             refresh_token:
-              type: string          
+              type: string
+                   
   responses:
     '200':
       description: Данные пользователя
