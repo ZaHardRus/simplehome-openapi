@@ -23,6 +23,8 @@ post:
             properties:
               prefix:
                 type: string
+              refresh_token:
+                type: string
               token:
                 type: string
               exp_time:
