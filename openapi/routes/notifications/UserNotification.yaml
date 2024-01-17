@@ -1,0 +1,98 @@
+get:
+  operationId: notifications-retrieve
+  description: Получение уведомления
+  tags: 
+    - notifications
+  parameters:
+    - $ref: "#/components/parameters/notificationId"
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotificationNotFound'
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/notifications/LocalizedNotificationResponse.yaml'
+
+delete:
+  operationId: notifications-delete
+  description: Удаление уведомления
+  tags:
+    - notifications
+  parameters:
+    - $ref: "#/components/parameters/notificationId"
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/UserPermissionError.yaml'
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotificationNotFound'
+    "204":
+      description: уведомление удалено
+
+patch:
+  operationId: notifications-update
+  description: Удаление уведомления
+  tags:
+    - notifications
+  parameters:
+    - $ref: "#/components/parameters/notificationId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/notifications/UserUpdateNotivication.yaml'
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/UserPermissionError.yaml'
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/NotFound.yaml'
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/notifications/UserNotification.yaml'
+
+components:
+  parameters:
+    notificationId:
+      in: path
+      name: notification_id
+      description: id уведомления
+      required: true
+      schema:
+        type: integer
+  schemas:
+    NotificationNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Notification Not Found!
+    ValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: apartment_id Must Be An Integer!

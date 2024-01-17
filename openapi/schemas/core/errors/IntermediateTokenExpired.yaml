@@ -1,0 +1,5 @@
+type: object
+properties:
+  detail:
+    type: string
+    example: Intermediate Token Expired!

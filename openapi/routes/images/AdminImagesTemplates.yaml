@@ -1,0 +1,43 @@
+post:
+  operationId: admin-image-template-create
+  description: Загрузка изображения в шаблон комнаты (как я понял)
+  tags:
+    - images
+  parameters:
+    - in: patch
+      name: path
+      required: true
+      description: Отражает путь к папке в файловом хранилище, в которой будет сохранено изображение
+      schema:
+        type: string
+        example: '%2Fimages%2Fresidences%2F4%2Frooms%2Ftemplates%2FАр деко'
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            file:
+              type: string
+              format: binary
+          required:
+            - file
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
+              - $ref: "../../schemas/core/errors/ValidationError.yaml"
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+    "201":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/images/ImageSchema.yaml"

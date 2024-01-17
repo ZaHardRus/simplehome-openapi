@@ -1,0 +1,8 @@
+post:
+  operationId: notifications-read-all
+  description: Пометить все уведомления как прочитанные
+  tags: 
+    - notifications
+  responses:
+    "200":
+      description: Все уведомления прочитаны

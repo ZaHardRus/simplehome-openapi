@@ -23,6 +23,67 @@ security:
   - BearerAuth: []
 
 paths:
+
+  /support/create_report:
+    $ref: './routes/customers_support/SupportRequestCreate.yaml'
+
+  /support/list_subjects:
+    $ref: './routes/customers_support/GetSupportedSubjects.yaml'
+
+  /api/v2/get_weather:
+    $ref: './routes/weather/GetWeather.yaml'
+
+  /images:
+    $ref: './routes/images/UserCreateImage.yaml'
+  
+  /images/intermediate/hash/{hash}:
+    $ref: './routes/images/UserDownloadImage.yaml'
+
+  /api/v2/images/intermediate/hash/{hash}:
+    $ref: './routes/images/UserDownloadImageByIntermediateToken.yaml'
+
+  /images/{image_id}:
+    $ref: './routes/images/UserDeleteImage.yaml'
+
+  /admin/images:
+    $ref: './routes/images/AdminImages.yaml'
+
+  /admin/images/templates:
+    $ref: './routes/images/AdminImagesTemplates.yaml'
+
+  /admin/images/{image_id}:
+    $ref: './routes/images/AdminImage.yaml'
+
+  /admin/resources:
+    $ref: './routes/images/AdminFileserviceResorces.yaml'
+
+  /admin/images/hash/{hash}:
+    $ref: './routes/images/AdminDownloadImage.yaml'
+
+  /api/v2/admin/images/create_dir:
+    $ref: './routes/images/AdminCreateFileserviceDir.yaml'
+
+  /admin/images/search:
+    $ref: './routes/images/AdminFileserviceSearch.yaml'
+
+  /admin/notifications:
+    $ref: './routes/notifications/AdminNotifications.yaml'
+
+  /admin/notifications/{notification_id}:
+    $ref: './routes/notifications/AdminNotification.yaml'
+
+  /notifications:
+    $ref: './routes/notifications/UserNotifications.yaml'
+
+  /notifications/read_all_notifications:
+    $ref: './routes/notifications/ReadAllNotifications.yaml'
+
+  /notifications/count_unread:
+    $ref: './routes/notifications/CountUnread.yaml'
+
+  /notifications/{notification_id}:
+    $ref: './routes/notifications/UserNotification.yaml'
+
   /admin/automations:
     $ref: ./routes/automations/AdminAutomationsEndpoints.yaml
 

@@ -1,0 +1,24 @@
+type: object
+properties:
+    id:
+      type: integer
+    url:
+      type: string
+      example: 'api/v2/images/hash/7aead86346e6a96620ff0b8c4661d2da'
+    file_path:
+      type: string
+      example: '/images/account_residence_ordering/3/7aead86346e6a96620ff0b8c4661d2da.jpg'
+    hash:
+      type: string
+      example: '7aead86346e6a96620ff0b8c4661d2da'
+    residence_id:
+      type: integer
+    updated_at:
+      type: string
+      example: '2021-05-05T05:32:34.598281+00:00'
+required:
+  - id
+  - url
+  - file_path
+  - hash
+  - updated_at

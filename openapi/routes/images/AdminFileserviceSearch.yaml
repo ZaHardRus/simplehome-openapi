@@ -1,0 +1,39 @@
+get:
+  operationId: admin-fileservice-search
+  description:  Поиск файла в файловом сервисе
+  tags:
+    - images
+    - fileservice
+  properties:
+    - in: query
+      name: query
+      type: string
+      description: "Поисковой запрос. Принимает имя файла или папки"
+      example: "3335b78e86fd5343d31b2867fc7036b5.pdf"
+    - in: query
+      name: type
+      type: string
+      description: "Тип файла: image/audio/video/pdf"
+      example: "pdf"
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/ValidationError.yaml"
+              - $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                dir:
+                  type: boolean
+                  example: false
+                path:
+                  type: string
+                  example: "controller_temp/wirenboard-AQM5XQ53/3335b78e86fd5343d31b2867fc7036b5.pdf"

@@ -1,0 +1,82 @@
+get:
+  operationId: admin-image-list
+  description: Получение списка изображений
+  tags:
+    - images
+  parameters:
+    - $ref: '../../schemas/core/filters/sorting_query.yaml'
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/images/ImageSchema.yaml"
+
+post:
+  operationId: admin-image-create
+  description: Загрузка изображения
+  tags:
+    - images
+  parameters:
+    - in: query
+      name: room_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: account_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: residence_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: account_residence_ordering_id
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: support_chat_room_id
+      required: false
+      schema:
+        type: integer
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            file:
+              type: string
+              format: binary
+          required:
+            - file
+  responses:
+    "400":
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../schemas/core/errors/ValidationError.yaml'
+              - $ref: '../../schemas/core/errors/IdMustBeAnInteger.yaml'
+              - $ref: '../../schemas/core/errors/EntityAlreadyExists.yaml'
+    "403":
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/UserPermissionError.yaml'
+    "200":
+      description: Изображение уже существует в файловом хранилище. Изображение записано в БД
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/images/ImageSchema.yaml'
+    "201":
+      description: Изображение загружено в файловое хранилище и записано в БД
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/images/ImageSchema.yaml'

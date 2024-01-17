@@ -1,0 +1,22 @@
+get:
+  operationId: notifications-list
+  description: Получение списка уведомлений
+  tags: 
+    - notifications
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/notifications/LocalizedNotificationResponse.yaml'
+
+delete:
+  operationId: notifications-delete-all
+  description: Удаление всех уведомлений
+  tags:
+    - notifications
+  responses:
+    "204":
+      description: все уведомления удалены

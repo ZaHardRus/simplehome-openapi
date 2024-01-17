@@ -1,0 +1,32 @@
+delete:
+  operationId: image-delete
+  description: удаление изображения
+  tags:
+    - images
+  parameters:
+    - $ref: '#/components/parameters/imageId'
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
+    "400":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/ValidationError.yaml"
+    "204":
+      description: Изображение удалено
+
+
+
+components:
+  parameters:
+    imageId:
+      in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer
