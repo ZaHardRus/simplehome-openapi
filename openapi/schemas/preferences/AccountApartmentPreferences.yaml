@@ -20,7 +20,7 @@ properties:
         - cleaning_mod
 
   room_groups:
-    type: list
+    type: array
     items:
       type: object
       properties:

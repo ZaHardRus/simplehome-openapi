@@ -41,7 +41,7 @@ get:
                 items:
                   
               meta:
-                type: objects
+                type: object
                 properties:
                   apartments_count:
                     type: string
