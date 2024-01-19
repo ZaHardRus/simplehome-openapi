@@ -17,8 +17,11 @@ get:
     "200":
       content:
         application/json:
-          id:
-            type: integer
-          push_token:
-            type: string
-            description: без понятия что это. Возможно токен для пуш нотификаций
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              push_token:
+                type: string
+                description: без понятия что это. Возможно токен для пуш нотификаций

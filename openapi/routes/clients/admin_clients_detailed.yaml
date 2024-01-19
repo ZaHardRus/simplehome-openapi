@@ -7,9 +7,11 @@ get:
   parameters:
     - in: path
       name: pk
+      required: true
       schema:
         type: integer
-    - in:
+        required: true
+    - in: query
       name: unique_id
       schema:
         type: integer
@@ -19,7 +21,9 @@ get:
       content:
         application/json:
           schema:
-            id:
-              type: integer
-            account_id:
-              type: integer
+            type: object
+            properties:
+              id:
+                type: integer
+              account_id:
+                type: integer

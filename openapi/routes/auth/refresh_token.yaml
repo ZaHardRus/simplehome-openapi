@@ -32,4 +32,3 @@ post:
                 description: время жизни токена
               accessible_schemas:
                 type: string
-                description: []

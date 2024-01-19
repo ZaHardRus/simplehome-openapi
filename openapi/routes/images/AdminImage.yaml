@@ -5,17 +5,17 @@ get:
     - images
   parameters:
     - $ref: '#/components/parameters/imageId'
-responses:
-  "404":
-    content:
-      application/json:
-        schema:
-        type: object
-  "200":
-    content:
-      application/json:
-        schema:
-          $ref: "../../schemas/images/ImageSchema.yaml"
+  responses:
+    "404":
+      content:
+        application/json:
+          schema:
+          type: object
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/images/ImageSchema.yaml"
 
 delete:
   operationId: admin-image-delete

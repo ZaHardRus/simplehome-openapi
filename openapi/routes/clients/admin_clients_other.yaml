@@ -4,6 +4,7 @@ get:
   parameters:
     - in: path
       name: pk
+      required: true
       schema:
         type: integer
   responses:
@@ -20,6 +21,7 @@ delete:
   parameters:
     - in: path
       name: pk
+      required: true
       schema:
         type: integer
   responses:
@@ -33,6 +35,7 @@ patch:
   parameters:
     - in: path
       name: pk
+      required: true
       schema:
         type: integer
   requestBody:
@@ -66,7 +69,7 @@ patch:
               maxLength: 64
             auth_token:
               type: string
-              maxxLength: 256
+              maxLength: 256
             refresh_token:
               type: string
               maxLength: 25

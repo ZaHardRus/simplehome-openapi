@@ -24,7 +24,7 @@ get:
       content:
         application/json:
           schema:
-          $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
+            $ref: "../../schemas/core/errors/IdMustBeAnInteger.yaml"
 
 post:
   operationId: create_automation
@@ -54,12 +54,12 @@ post:
       content:
         application/json:
           schema:
-          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "400":
       content:
         application/json:
           schema:
-          $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
+            $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
 
 delete:
   operationId: delete_multiple
@@ -71,5 +71,8 @@ delete:
       application/json:
         schema:
           $ref: "../../schemas/core/schemas/listOfIds.yaml"
+  responses:
+    '204':
+      description: "Автоматизации удалены"
 
 

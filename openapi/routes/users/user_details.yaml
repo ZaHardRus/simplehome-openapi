@@ -4,10 +4,12 @@ get:
                По сути retrieve метод на самого себя.
   tags:
     - users
-  properties:
+  parameters:
     - in: query
       name: apartment_id
       description: id апартаментов
+      schema:
+        type: integer
   responses:
     # TODO: на данный момент retrieve метод не отдаёт
     # всю необходимую информацию. Есть разница между спецификацией и кодом

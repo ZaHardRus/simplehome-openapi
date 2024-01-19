@@ -4,7 +4,7 @@ post:
   tags:
     - images
   parameters:
-    - in: patch
+    - in: path
       name: path
       required: true
       description: Отражает путь к папке в файловом хранилище, в которой будет сохранено изображение

@@ -5,7 +5,9 @@ properties:
   account_id:
     type: integer
   updated_at:
-    type: date-time
+    type: string
+    format: date-time
+    example: "2022-02-14T11:59:37.945Z"
   preferences:
     type: object
     # типы преференсов, скорее всего требуется описать

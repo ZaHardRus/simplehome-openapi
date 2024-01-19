@@ -60,7 +60,7 @@ put:
       content:
         application/json:
           schema:
-          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "201":
       description: Автоматизация успешно обновлена
       content:
@@ -81,7 +81,6 @@ components:
       required: true
       schema:
         type: integer
-
   schemas:
     AutomationNotFound:
       type: object

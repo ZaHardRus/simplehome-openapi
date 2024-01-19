@@ -74,9 +74,9 @@ patch:
             refresh_token:
               type: string
             refresh_exp_time:
-              type: float
+              type: number
             auth_exp_time:
-              type: float
+              type: number
             last_apartment:
               type: string
             source:
