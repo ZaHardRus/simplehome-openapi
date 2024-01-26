@@ -1,0 +1,40 @@
+type: object
+required:
+  - title
+  - trigger_type
+  - apartment_id
+properties:
+  id:
+    type: integer
+  title:
+    type: string
+    maxLength: 128
+  trigger_type:
+    type: string
+    maxLength: 10
+    enum:
+      - auto
+      - date
+  icon_tag:
+    type: string
+    maxLength: 512
+  apartment_id:
+    type: integer
+  room_id:
+    type: integer
+  residence_id:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  created_at:
+    type: string
+    format: date-time
+  is_predefined:
+    type: boolean
+  is_confirmation_required:
+    type: boolean
+  description:
+    type: text
+  

@@ -8,9 +8,10 @@ get:
     "200":
       content:
         application/json:
-          type: array
-          items:
-            $ref: "../../schemas/clients/RetrieveClient.yaml"
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/clients/RetrieveClient.yaml"
 
 post:
   tags:
@@ -26,7 +27,8 @@ post:
     "201":
       content:
         application/json:
-          $ref: "../../schemas/clients/RetrieveClient.yaml"
+          schema:
+            $ref: "../../schemas/clients/RetrieveClient.yaml"
 
 delete:
   tags:
@@ -35,22 +37,24 @@ delete:
   requestBody:
     content:
       application/json:
-        type: object
-        properties:
-          id:
-            type: array
-            description: список с id удаляемый сессий
-            items:
-              type: string
+        schema:
+          type: object
+          properties:
+            id:
+              type: array
+              description: список с id удаляемый сессий
+              items:
+                type: string
   responses:
     "200":
       description: success
       content:
         application/json:
-          type: array
-          items:
-            description: сколько клиентов было удалено
-            type: integer
+          schema:
+            type: array
+            items:
+              description: сколько клиентов было удалено
+              type: integer
 
     "403":
       description: Not enoth permisssions!
