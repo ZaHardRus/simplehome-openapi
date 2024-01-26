@@ -1,0 +1,54 @@
+get:
+  tags:
+    - scenarios
+  operationId: admin_scenarios_retrieve
+  parameters:
+    - in: path
+      required: true
+      name: pk
+      description: id сценария, над которым производится действие
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: "success"
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/scenarios/RetrieveScenarioWithActions.yaml"
+
+delete:
+  tags:
+    - scenarios
+  operationId: admin_scenarios_delete
+  parameters:
+    - in: path
+      required: true
+      name: pk
+      description: id сценария, над которым производится действие
+      schema:
+        type: integer
+  responses:
+    '204':
+      description: "success"
+    '403':
+      description: "not allowed"
+
+put:
+  tags:
+    - scenarios
+  operationId: admin_scenarios_update
+  parameters:
+    - in: path
+      required: true
+      name: pk
+      description: id сценария, над которым производится действие
+      schema:
+        type: integer
+  responses:
+    '201':
+      description: 'success'
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/scenarios/RetrieveScenario.yaml'

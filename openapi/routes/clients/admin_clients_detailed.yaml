@@ -6,10 +6,11 @@ get:
                Возвращает текущую сессию пользователя
   parameters:
     - in: path
+      required: true
       name: pk
       schema:
         type: integer
-    - in:
+    - in: query
       name: unique_id
       schema:
         type: integer

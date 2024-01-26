@@ -4,6 +4,7 @@ get:
   parameters:
     - in: path
       name: pk
+      required: true
       schema:
         type: integer
   responses:
@@ -20,6 +21,7 @@ delete:
   parameters:
     - in: path
       name: pk
+      required: true
       schema:
         type: integer
   responses:
@@ -32,6 +34,7 @@ patch:
   description: Доступно саппорту и выше
   parameters:
     - in: path
+      required: true
       name: pk
       schema:
         type: integer
@@ -66,7 +69,7 @@ patch:
               maxLength: 64
             auth_token:
               type: string
-              maxxLength: 256
+              maxLength: 256
             refresh_token:
               type: string
               maxLength: 25
