@@ -4,7 +4,7 @@ get:
   tags:
     - apartments
   description: Доступно с ролью инженера и выше. Возвращает связанные с 
-  properties:
+  parameters:
     - in: query
       name: apartment_id
       description: вообще, это список. Элементы разделяются символом "+"

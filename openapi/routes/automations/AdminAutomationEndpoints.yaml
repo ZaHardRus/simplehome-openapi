@@ -54,21 +54,19 @@ put:
       description: Не найдено
       content:
         application/json:
-          schemas:
+          schema:
             $ref: "#/components/schemas/AutomationNotFound"
     "403":
       content:
         application/json:
           schema:
-          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "201":
       description: Автоматизация успешно обновлена
       content:
         application/json:
           schema:
             $ref: "../../schemas/automations/RetrieveAutomationsSchema.yaml"
-
-  
 
 
 

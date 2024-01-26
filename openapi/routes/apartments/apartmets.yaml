@@ -1,7 +1,6 @@
 get:
   # TODO: в методе кривая пагинация
   operationId: apartments_list
-  description:
   tags:
     - apartments 
   parameters:
@@ -62,13 +61,13 @@ get:
 
     - in: query
       name: apartment_number
-      description: 
+      description: noqa
       schema:
-        type:
+        type: integer
 
     - in: query
       name: apartment_type_ids
-      description: 
+      description: noqa
       schema:
         type: array
         items:
@@ -76,28 +75,28 @@ get:
 
     - in: query
       name: created_after_date
-      description: 
+      description: noqa
       schema:
         type: string
         format: date-time
 
     - in: query
       name: updated_after_date
-      description: 
+      description: noqa
       schema:
         type: string
         format: date-time
 
     - in: query
       name: created_before_date      
-      description: 
+      description: noqa
       schema:
         type: string
         format: date-time
 
     - in: query
       name: updated_before_date
-      description: 
+      description: noqa
       schema:
         type: string
         format: date-time

@@ -3,7 +3,7 @@ get:
   description: Получение  списка шаблонов драйверов
   tags:
     - drivers_templates
-  properties:
+  parameters:
     - $ref: "#/components/parameters/apartmentTemplateQueryId"
     - $ref: "../../schemas/core/filters/sorting_query.yaml"
   responses:
@@ -60,7 +60,8 @@ delete:
     "403":
       content:
         application/json:
-          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "200":
       content:
         application/json:

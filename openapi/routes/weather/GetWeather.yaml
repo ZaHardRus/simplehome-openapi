@@ -6,7 +6,8 @@ get:
   parameters:
     - in: query
       name: apartment_id
-      type: integer
+      schema:
+        type: integer
       example: 1
   responses:
     "400":
