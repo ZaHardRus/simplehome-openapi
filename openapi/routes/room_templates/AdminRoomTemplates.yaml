@@ -3,7 +3,7 @@ get:
   description: Получение списка шаблонов комнат
   tags:
     - rooms_templates
-  properties:
+  parameters:
     - $ref: "#/components/parameters/apartmentTemplateQueryId"
     - $ref: "../../schemas/core/filters/sorting_query.yaml"
   responses:
@@ -31,7 +31,8 @@ post:
     "400":
       content:
         application/json:
-          $ref: "#/components/schemas/payloadValidationError"
+          schema:
+            $ref: "#/components/schemas/payloadValidationError"
     "200":
       content:
         application/json:
@@ -54,7 +55,8 @@ delete:
     "403":
       content:
         application/json:
-          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "200":
       content:
         application/json:

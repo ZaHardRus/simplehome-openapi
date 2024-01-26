@@ -3,7 +3,7 @@ get:
   description: Получение списка шаблонов устройств
   tags:
     - devices_templates
-  properties:
+  parameters:
     - $ref: "#/components/parameters/apartmentTemplateQueryId"
     - $ref: "#/components/parameters/driverTemplateQueryId"
     - $ref: "#/components/parameters/roomTemplateQueryId"
@@ -71,7 +71,8 @@ delete:
     "403":
       content:
         application/json:
-          $ref: "../../schemas/core/errors/UserPermissionError.yaml"
+          schema:
+            $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "200":
       content:
         application/json:

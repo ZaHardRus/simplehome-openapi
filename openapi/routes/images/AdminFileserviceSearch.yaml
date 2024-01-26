@@ -4,15 +4,17 @@ get:
   tags:
     - images
     - fileservice
-  properties:
+  parameters:
     - in: query
       name: query
-      type: string
+      schema:
+        type: string
       description: "Поисковой запрос. Принимает имя файла или папки"
       example: "3335b78e86fd5343d31b2867fc7036b5.pdf"
     - in: query
       name: type
-      type: string
+      schema:
+        type: string
       description: "Тип файла: image/audio/video/pdf"
       example: "pdf"
   responses:

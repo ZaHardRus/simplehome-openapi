@@ -3,7 +3,7 @@ get:
   description: Получение шаблона драйвера
   tags:
     - drivers_templates
-  properties:
+  parameters:
     - $ref: "#/components/parameters/driverTemplateId"
   responses:
     "404":
@@ -22,7 +22,7 @@ put:
   description: Обновление шаблона драйвера
   tags:
     - drivers_templates
-  properties:
+  parameters:
     - $ref: "#/components/parameters/driverTemplateId"
   requestBody:
     content:
@@ -51,7 +51,7 @@ delete:
   description: Удаление шаблона драйвера
   tags:
     - drivers_templates
-  properties:
+  parameters:
   - $ref: "#/components/parameters/driverTemplateId"
   responses:
     "403":

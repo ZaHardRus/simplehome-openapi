@@ -33,10 +33,10 @@ delete:
               - $ref: "../../schemas/core/errors/ValidationError.yaml"
               - $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "404":
-    content:
-      application/json:
-        schema:
-          $ref: "../../schemas/core/errors/NotFound.yaml"
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/core/errors/NotFound.yaml"
     "204":
       description: Шаблон квартиры удален
     

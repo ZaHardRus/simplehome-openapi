@@ -4,8 +4,8 @@ get:
   tags:
     - apartments
     - preferences
-  description:
-  parameters:
+  # description:
+  # parameters:
 
   responses:
     '200':
@@ -39,6 +39,7 @@ get:
               drivers:
                 type: array
                 items:
+                  type: object
                   
               meta:
                 type: object
