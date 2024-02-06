@@ -24,6 +24,9 @@ security:
 
 paths:
 
+  # /api/v2/admin/buildings:
+  #   $ref: './routes/buildings/Buildings.yaml'
+    
   /support/create_report:
     $ref: './routes/customers_support/SupportRequestCreate.yaml'
 

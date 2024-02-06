@@ -1,0 +1,20 @@
+delete:
+  operationId: admin-buildings-delete
+  description: Удаляет здание
+  tags:
+    - buildings
+  parameters:
+    - in: path
+      name: id
+      type: integer
+      description: id здания
+      example: 1
+  responses:
+    '204':
+      description: Успешное удаление
+    '404':
+      description: NotFound (Building not found!)
+    '400':
+      description: ValidationError (Id Must Be An Integer!)
+    '403':
+      description: UserPermissionError (Нет доступа!)
