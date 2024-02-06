@@ -12,16 +12,19 @@ post:
             $ref: '../../schemas/buildings/BuildingSchema.yaml'
   responses:
     "400":
+      description: некорректные данные в запросе
       content:
         application/json:
           schema:
             $ref: '../../schemas/core/errors/EntityAlreadyExists.yaml'
     "403":
+      description: недостаточно прав доступа
       content:
         application/json:
           schema:
             $ref: '../../schemas/core/errors/UserPermissionError.yaml'
     "201":
+      description: успешно создано
       content:
         application/json:
           schema:
@@ -44,35 +47,26 @@ delete:
           properties:
             id: 
               type: array
-              items: integer
+              items:
+                type: integer
   responses:
     '200':
       description: Успешное удаление
     '404':
+      description: здание не найдено
       content:
         application/json:
           schema:
             $ref: '../../schemas/core/errors/NotFound.yaml'
     '400':
+      description: некорректные данные в запросе
       content:
         application/json:
           schema:
             $ref: '../../schemas/core/errors/ValidationError.yaml'
     '403':
+      description: недостаточно прав доступа
       content:
         application/json:
           schema:
             $ref: '../../schemas/core/errors/UserPermissionError.yaml'
-
-
-
-          
-
-
-
-# components:
-#   schemas:
-#     listOfBuildings:
-#       type: array
-#         items:
-#           $ref: '../../schemas/buildings/BuildingSchema.yaml'
