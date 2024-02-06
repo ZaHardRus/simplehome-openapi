@@ -1,0 +1,77 @@
+delete:
+  operationId: admin-buildings-delete
+  description: Удаляет здание
+  tags:
+    - buildings
+  parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      description: id здания
+      example: 1
+  responses:
+    '204':
+      description: Успешное удаление
+    '404':
+      description: здание не найдено
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/NotFound.yaml'
+    '400':
+      description: некорректные данные в запросе
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/ValidationError.yaml'
+    '403':
+      description: недостаточно прав доступа
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/UserPermissionError.yaml'
+
+put:
+  operationId: admin-buildings-update
+  description: обновляет название здания
+  tags:
+    - buildings
+  parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      description: id здания
+      example: 1
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title: 
+              type: string
+  responses:
+    '204':
+        description: Успешное удаление
+    '400':
+      description: некорректные данные в запросе
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/ValidationError.yaml'
+    '404':
+      description: здание не найдено
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/NotFound.yaml'
+    '403':
+      description: недостаточно прав доступа
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/UserPermissionError.yaml'
