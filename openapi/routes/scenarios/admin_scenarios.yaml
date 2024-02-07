@@ -1,0 +1,103 @@
+get:
+  tags:
+    - scenarios
+  operationId: admin_list_scenarios
+  description: возвращает пагинированный список сценариев
+  parameters:
+    - in: query
+      name: search
+      description: производится поиск по имени сценария
+      schema:
+        type: string
+    
+    - in: query
+      name: type
+      description: тип сценария, глобальный или локальный (что бы это не значило)
+      schema:
+        type: string
+        enum:
+          - global
+          - local
+    
+    - in: query
+      name: created_before_date
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+
+    - in: query
+      name: created_after_date
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+
+    - in: query
+      name: updated_before_date
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+
+    - in: query
+      name: updated_after_date
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+    # TODO: пагинация
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/scenarios/RetrieveScenarioWithActions.yaml"
+    '404':
+      description: not found
+
+
+post:
+  tags:
+    - scenarios
+  operationId: admin_scenario_create
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/scenarios/CreateScenario.yaml'
+  responses:
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/scenarios/RetrieveScenarioWithActions.yaml'
+
+delete:
+  tags:
+    - scenarios
+  operationId: admin_multiple_delete
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            type:
+              type: array
+              description: id удаляемых сценариев
+              items:
+                type: integer
+  responses:                
+    '200':
+      description: успешное удаление
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../schemas/scenarios/RetrieveScenario.yaml'

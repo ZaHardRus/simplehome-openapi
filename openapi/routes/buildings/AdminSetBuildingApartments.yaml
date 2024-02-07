@@ -1,0 +1,53 @@
+put:
+  operationId: admin-set-building-apartments
+  description: Привязывает аппартаменты к зданию
+  tags:
+    - buildings
+  parameters:
+    - in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+      description: id здания
+      example: 1
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            apartments: 
+              type: array
+              items:
+                type: integer
+  responses:
+    '201':
+      description: список привязанных апартаментов
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              updated_apartments: 
+                type: array
+                items: 
+                  type: integer
+    '400':
+      description: некорректные данные в запросе
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/ValidationError.yaml'
+    '404':
+      description: здание не найдено
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/NotFound.yaml'
+    '403':
+      description: недостаточно прав доступа
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/core/errors/UserPermissionError.yaml'

@@ -1,0 +1,30 @@
+type: object
+required:
+  - title
+  - trigger_type
+  - apartment_id
+properties:
+  title:
+    type: string
+    example: "Test5"
+  trigger_type:
+    type: string
+    example: "auto"
+  icon_tag:
+    type: string
+    example: "night"
+  residence_id:
+    type: integer
+    example: 1
+  apartment_id:
+    type: integer
+    example: 1
+  room_id:
+    type: integer
+    example: 1
+  is_confirmation_required:
+    type: boolean
+    example: true
+  description:
+    type: string
+    example: "very"

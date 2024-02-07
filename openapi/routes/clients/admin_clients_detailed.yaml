@@ -6,6 +6,7 @@ get:
                Возвращает текущую сессию пользователя
   parameters:
     - in: path
+      required: true
       name: pk
       required: true
       schema:

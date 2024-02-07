@@ -24,6 +24,15 @@ security:
 
 paths:
 
+  /api/v2/admin/buildings/{pk:\d+}/set_apartments:
+    $ref: './routes/buildings/AdminSetBuildingApartments.yaml'
+
+  /api/v2/admin/buildings/{pk:\d+}:
+    $ref: './routes/buildings/AdminBuilding.yaml'
+
+  /api/v2/admin/buildings:
+    $ref: './routes/buildings/Buildings.yaml'
+    
   /support/create_report:
     $ref: './routes/customers_support/SupportRequestCreate.yaml'
 
@@ -188,14 +197,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateResidence"
+              $ref: './schemas/residences/UpdateResidence.yaml'
       responses:
         '201':
           description: Успешное получение данных
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RetrieveResidence"
+                $ref: './schemas/residences/RetrieveResidence.yaml'
 
         '404':
           description: Резиденция не найдена
@@ -223,7 +232,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RetrieveResidence"
+                $ref: './schemas/residences/RetrieveResidence.yaml'
 
     delete:
       operationId: delete
@@ -290,7 +299,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RetrieveResidence"
+                  $ref: './schemas/residences/RetrieveResidence.yaml'
 
     post:
       operationId: create
@@ -301,14 +310,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateResidence"
+              $ref: './schemas/residences/CreateResidence.yaml'
       responses:
         '201':
           description: Резиденция успешно создана
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RetrieveResidence"
+                $ref: './schemas/residences/RetrieveResidence.yaml'
 
     delete:
       operationId: delete_multiple
@@ -333,7 +342,7 @@ paths:
               schema:
                 type: array
                 items:
-                    $ref: "#/components/schemas/RetrieveResidence"
+                    $ref: './schemas/residences/RetrieveResidence.yaml'
 
   /admin/residences_and_apartments:
     get:
@@ -349,7 +358,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RetrieveResidenceWithApartments"
+                $ref: "./schemas/residences/RetrieveResidenceWithApartments.yaml"
 
 # этого метода не должно быть. Удалить его
 # фронтенд получает эти данные, чтобы считать кол-во удаляемых объектов и выводить в модалке
@@ -378,7 +387,7 @@ paths:
               schema:
                 type: object
                 allOf:
-                  - $ref: "#/components/schemas/RetrieveResidence"
+                  - $ref: './schemas/residences/RetrieveResidence.yaml'
                 properties:
                   controller_ids:
                     type: array
@@ -456,7 +465,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChangeResidenceAccess'
+              $ref: './schemas/residences/ChangeResidenceAccess.yaml'
 
       responses:
         "201":
@@ -503,7 +512,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveIntegrator'
+                $ref: './schemas/integrators/RetrieveIntegrator.yaml'
 
     get:
       operationId: get_integrator
@@ -528,7 +537,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RetrieveIntegrator"
+                $ref: './schemas/integrators/RetrieveIntegrator.yaml'
 
     delete:
       operationId: delete_integrator
@@ -548,7 +557,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RetrieveIntegrator"
+                $ref: './schemas/integrators/RetrieveIntegrator.yaml'
       
 
   /admin/integrators:
@@ -565,7 +574,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RetrieveIntegrator"
+                  $ref: './schemas/integrators/RetrieveIntegrator.yaml'
 
     patch:
       description: Обновление полей интегратора. Метод доступен только суперпользователям
@@ -602,7 +611,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RetrieveIntegrator"
+                  $ref: './schemas/integrators/RetrieveIntegrator.yaml'
 
   # TODO: переименование данных методов
   #  преференсы-----------------------------------------------------------------------------------------------------------------
@@ -656,7 +665,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountApartmentListDisplayPreferences"
+                $ref: './schemas/preferences/AccountApartmentListDisplayPreferences.yaml'
         # TODO: какой статус код ?
         # UserPermissionError
 
@@ -736,7 +745,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountApartmentListDisplayPreferences"
+                $ref: './schemas/preferences/AccountApartmentListDisplayPreferences.yaml'
         '404':
           description: 0_0
 
@@ -781,14 +790,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountApartmentPreferences'
+              $ref: './schemas/preferences/AccountApartmentPreferences.yaml'
       responses:
         '201':
           description: Успешное создание чего-то
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
 
     get:
       operationId: retrieve_account_apartment_preferences
@@ -813,7 +822,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountApartmentPreferences2"
+                $ref: "./schemas/preferences/AccountApartmentPreferences2.yaml"
           
         '400':
           description: type of apartment_id must be integer
@@ -835,14 +844,17 @@ paths:
           schema:
             type: boolean
       requestBody:
-        $ref: '#/components/schemas/AccountApartmentPreferences2'
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
       responses:
         '200':
           description: успешное обновление преференсов
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountApartmentPreferences2"
+                $ref: "./schemas/preferences/AccountApartmentPreferences2.yaml"
 
     delete:
       operationId: delete_account_apartment_preferences
@@ -885,7 +897,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
         '404':
           description: Account Apartment Preferences Not Found!
 
@@ -906,14 +918,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref:  "#/components/schemas/AccountApartmentPreferences"
+              $ref:  "./schemas/preferences/AccountApartmentPreferences.yaml"
       responses:
         '200':
           description: успешное изменение порядка преференсов
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
 
   /account_apartment_preferences/set_default:
     post:
@@ -931,7 +943,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
         # NotFound(f"Default preference for apartment with id {apartment_id} not found")
 
   /account_apartment_preferences/get_default:
@@ -951,7 +963,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
 
   /admin/account_apartment_default_preferences:
     post:
@@ -962,7 +974,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref:  "#/components/schemas/AccountApartmentPreferences"
+              $ref:  "./schemas/preferences/AccountApartmentPreferences.yaml"
       responses:
         # TODO: должно быть 200.
         '201':
@@ -970,7 +982,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
 
     get:
       operationId: retrieve_account_apartment_default_preferences
@@ -987,7 +999,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
 
   /admin/account_apartment_default_preferences/{pk:\d+}:
     put:
@@ -1010,7 +1022,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
                 # NotFound('Account Apartment Default Preferences Not Found!', 404)
 
     delete:
@@ -1044,14 +1056,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref:  "#/components/schemas/AccountApartmentPreferences"
+              $ref:  "./schemas/preferences/AccountApartmentPreferences.yaml"
       responses:
         '200':
           description: success
           content:
             application/json:
               schema:
-                $ref:  "#/components/schemas/AccountApartmentPreferences2"
+                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
         '404':
           description: Account Apartment Default Preferences Not Found!
 
@@ -1070,7 +1082,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AccountApartmentPreferences2"
+              $ref: "./schemas/preferences/AccountApartmentPreferences2.yaml"
       responses:
         '200':
           description: "
@@ -1216,48 +1228,492 @@ paths:
     $ref: "./routes/clients/admin_client_by_unique_id.yaml"
 
 
-components:
-  schemas:
-    UpdateResidence:
-      $ref: './schemas/residences/UpdateResidence.yaml'
+  # scenarios
+  /admin/scenarios:
+    $ref: "./routes/scenarios/admin_scenarios.yaml"
 
-    CreateResidence:
-      $ref: './schemas/residences/CreateResidence.yaml'
+  /admin/scenarios/{pk:\d+}:
+    $ref: "./routes/scenarios/admin_scenarios_detailed.yaml"
 
-    RetrieveResidence:
-      $ref: './schemas/residences/RetrieveResidence.yaml'
+  /admin/scenarios/set_room_relations:
+    post: 
+      tags:
+        - scenarios
+      operationId: set_room_relations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room_id:
+                  type: integer
+                  example:  50
+                scenario_ids:
+                  type: array
+                  example:  [11, 13]
+                  items:
+                    type: integer
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                description: кол-во обновлённых объектов
+                type: integer
 
-    ChangeResidenceAccess:
-      $ref: './schemas/residences/ChangeResidenceAccess.yaml'
+  
+  /admin/scenarios/set_global:
+    post:
+      operationId: scenarios_set_global
+      tags:
+        - scenarios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - scenario_ids
+              properties:
+                scenario_ids:
+                  type: array
+                  example: [11, 13]
+                  items:
+                    type: integer
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                description: кол-во обновлённых объектов
+                type: integer
 
-    RetrieveResidenceWithApartments:
-      $ref: "./schemas/residences/RetrieveResidenceWithApartments.yaml"
+  /admin/scenarios/set_apartment_relations:
+    post:
+      operationId: scenarios_set_apartment_relations
+      tags:
+        - scenario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                  - apartment_id
+                  - scenario_ids
+              properties:
+                apartment_id:
+                  type: integer
+                  example: 1
+                scenario_ids:
+                  type: array
+                  example: [39]
+                  items:
+                    type: integer
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                description: кол-во обновлённых объектов
+                type: integer  
 
+  /admin/scenarios/get_action_ids:
+    get:
+      operationId:  scenarios_get_action_ids
+      tags:
+        - scenario
+      parameters:
+        - in: query
+          name: scenario_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  action_ids:
+                    type: array
+                    items:
+                      type: integer
+
+  /admin/scenarios/clone/{pk:\d+}:
+    post:
+      operationId: scenario_clone
+      description: доступно инженеру и выше
+      tags:
+        - scenario
+      parameters:
+        - in: path
+          required: true
+          name: pk
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/scenarios/RetrieveScenarioWithActions.yaml'
+        '404':
+          description: Not found
+
+  # сценарии. Пользователь
+  /scenarios:
+    get:
+      operationId: scenario_list
+      tags:
+        - scenario
+      parameters:
+        - in: query
+          name: global
+          schema:
+            type: boolean
+            example: true
+
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/scenarios/RetrieveScenarioWithActions.yaml"
+
+    post:
+      operationId: scenario_create
+      tags:
+        - scenario
+      parameters:
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      requestBody:
+        $ref: "./schemas/scenarios/CreateScenario.yaml"
+      responses:
+          "201":
+            description: success
+            content:
+              application/json:
+                schema:
+                  $ref: "./schemas/scenarios/RetrieveScenario.yaml"
+
+    delete:
+      operationId: multiple-scenario-delete
+      tags:
+        - scenario
+      parameters:
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: array
+                  example: [1, 2]
+                  items:
+                    type: integer
+      responses:
+        "204":
+          description: success
+
+  /scenarios/{pk:\d+}:
+    get:
+      operationId: scenario_retrieve
+      tags:
+        - scenario
+      parameters:
+        - in: path
+          required: true
+          name: scenario_id
+          schema:
+            type: integer
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/scenarios/RetrieveScenarioWithActions.yaml'
+
+    delete:
+      operationId: scenario_delete
+      tags:
+        - scenario
+      parameters:
+        - in: path
+          name: apartment_id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: scenario_id
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: success
+
+    put:
+      operationId: scenario-update
+      tags:
+        - scenario
+      parameters:
+        - in: path
+          required: true
+          name: scenario_id
+          schema:
+            type: integer
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/scenarios/RetrieveScenarioWithActions.yaml'
+
+  /scenarios/activate/{pk:\d+}:
+    post:
+      operationId: run-scenario
+      tags:
+        - scenario
+      parameters:
+        - in: path
+          required: true
+          name: scenario_id
+          schema:
+            type: integer
+        - in: query
+          name: apartment_id
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: success
+
+  /scenarios/set_actions/{pk:\d+}:
+    post:
+      operationId: set-actions
+      tags:
+        - scenario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  capability_id:
+                    type: integer
+                    example: 19
+                  value:
+                    type: string
+                    example: "1"
+                  residence_id:
+                    type: integer
+                    example: 1
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 104
+                    scenario_id:
+                      type: integer
+                      example: 31
+                    capability_id:
+                      type: integer
+                      example: 19
+                    value:
+                      type: string
+                      example: "1"
+                    residence_id:
+                      type: integer
+                      example: 1
+                    updated_at:
+                      type: string
+                      format: date-time
+                      example: "2021-02-19T09:56:27.866057+00:00"
+
+  # actions
+  /admin/actions:
+    get:
+      operationId: admin_actions_list
+      tags:
+        - actions
+      parameters:
+        - in: query
+          name: scenario_id
+          schema:
+            type: integer
+        - in: query
+          name: sort
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: max_results
+          schema:
+            type: integer
+        - in: query
+          name: get_all
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "./schemas/actions/RetrieveAction.yaml"
+
+    post:
+      operationId: admin_actions_create
+      tags:
+        - actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - scenario_id
+                - capability_id
+                - value
+                - residence_id
+              allOf:
+                - $ref: "./schemas/actions/RetrieveAction.yaml"
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/actions/RetrieveAction.yaml'
+
+    delete:
+      operationId: multiple_admin_actions_delete
+      tags:
+        - actions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '204':
+          description: success
+            
+  /admin/actions/{pk:\d+}:
+    get:
+      operationId: admin_actions_retrieve
+      tags:
+        - actions
+      parameters:
+        - in: path
+          required: true
+          name: pk
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/actions/RetrieveAction.yaml'
+
+    delete:
+      operationId: admin_actions_delete
+      tags:
+        - actions
+      parameters:
+        - in: path
+          required: true
+          name: pk
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: success
+    
+    put:
+      operationId: admin_actions_update
+      tags:
+        - actions
+      parameters:
+        - in: path
+          required: true
+          name: pk
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              # TODO: поставить update
+              $ref: "./schemas/actions/RetrieveAction.yaml"
+      responses:
+        '':
+        
+
+# components:
+#   schemas:
     # апартаменты
-    RetrieveApartments:
-      $ref: './schemas/apartments/RetrieveApartments.yaml'
+    # RetrieveApartments:
+    #   $ref: './schemas/apartments/RetrieveApartments.yaml'
 
-    # интеграторы
-    RetrieveIntegrator:
-      $ref: './schemas/integrators/RetrieveIntegrator.yaml'
-
-    # преференсы
-    AccountApartmentListDisplayPreferences:
-      $ref: './schemas/preferences/AccountApartmentListDisplayPreferences.yaml'
-
-    Preference:
-      $ref: './schemas/preferences/Preference.yaml'
-
-    AccountApartmentPreferences:
-      $ref: './schemas/preferences/AccountApartmentPreferences.yaml'
-
-    AccountApartmentPreferences2:
-      $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
+    # Preference:
+    #   $ref: './schemas/preferences/Preference.yaml'
 
 
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+  # securitySchemes:
+  #   BearerAuth:
+  #     type: http
+  #     scheme: bearer
+  #     bearerFormat: JWT
       

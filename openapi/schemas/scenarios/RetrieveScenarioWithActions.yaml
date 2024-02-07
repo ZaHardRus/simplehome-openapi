@@ -1,0 +1,8 @@
+type: object
+allOf:
+  - $ref: "./RetrieveScenario.yaml"
+properties:
+  actions:
+    type: array
+    items:
+      $ref: "../actions/RetrieveAction.yaml"

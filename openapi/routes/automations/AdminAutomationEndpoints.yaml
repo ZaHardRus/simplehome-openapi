@@ -54,7 +54,7 @@ put:
       description: Не найдено
       content:
         application/json:
-          schemas:
+          schema:
             $ref: "#/components/schemas/AutomationNotFound"
     "403":
       content:
@@ -67,8 +67,6 @@ put:
         application/json:
           schema:
             $ref: "../../schemas/automations/RetrieveAutomationsSchema.yaml"
-
-  
 
 
 

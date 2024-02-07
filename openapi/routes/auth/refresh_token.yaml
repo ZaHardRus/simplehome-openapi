@@ -30,5 +30,8 @@ post:
               exp_time:
                 type: string
                 description: время жизни токена
+              refresh_exp_time:
+                type: string
+                description: время жизни рефреш токена
               accessible_schemas:
                 type: string
