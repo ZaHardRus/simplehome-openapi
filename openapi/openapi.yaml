@@ -24,10 +24,10 @@ security:
 
 paths:
 
-  /api/v2/admin/buildings/{pk:\d+}/set_apartments:
+  /api/v2/admin/buildings/{building_id}/set_apartments:
     $ref: './routes/buildings/AdminSetBuildingApartments.yaml'
 
-  /api/v2/admin/buildings/{pk:\d+}:
+  /api/v2/admin/buildings/{building_id}:
     $ref: './routes/buildings/AdminBuilding.yaml'
 
   /api/v2/admin/buildings:

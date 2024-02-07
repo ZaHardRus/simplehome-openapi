@@ -19,7 +19,7 @@ servers:
 security:
   - BearerAuth: []
 paths:
-  '/api/v2/admin/buildings/{pk:\d+}/set_apartments':
+  '/api/v2/admin/buildings/{building_id}/set_apartments':
     put:
       operationId: admin-set-building-apartments
       description: Привязывает аппартаменты к зданию
@@ -27,7 +27,7 @@ paths:
         - buildings
       parameters:
         - in: path
-          name: id
+          name: building_id
           required: true
           schema:
             type: integer
@@ -73,7 +73,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/paths/~1admin~1resources/get/responses/404/content/application~1json/schema'
-  '/api/v2/admin/buildings/{pk:\d+}':
+  '/api/v2/admin/buildings/{building_id}':
     delete:
       operationId: admin-buildings-delete
       description: Удаляет здание
