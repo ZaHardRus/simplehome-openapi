@@ -8,7 +8,6 @@ get:
     - in: path
       required: true
       name: pk
-      required: true
       schema:
         type: integer
         required: true

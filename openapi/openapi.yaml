@@ -348,7 +348,7 @@ paths:
     get:
       operationId: get_residences_and_apartments
       description: WARNING! GOVNOROUTE.
-                   Этот роут возвращаеет все резиденты доступные пользователю с апартаментами.
+                   Этот роут возвращает все резиденты доступные пользователю с апартаментами.
                    Логика выдачи апартаментов - тайна за семью печатями
       tags:
         - residences
@@ -451,7 +451,7 @@ paths:
   /admin/residences_accesses/{pk}:
     post:
       operationId: multiple_create
-      description: Множественное добавление досутпов до резиденции
+      description: Множественное добавление доступов до резиденции
       tags:
         - residences
       parameters:
@@ -474,7 +474,7 @@ paths:
 
     delete:
       operationId: multiple_delete
-      description: Множественное удаление досутпов до резиденции
+      description: Множественное удаление доступов до резиденции
       tags:
         - residences
       parameters:
