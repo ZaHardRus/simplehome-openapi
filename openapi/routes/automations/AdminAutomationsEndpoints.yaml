@@ -72,6 +72,6 @@ delete:
         schema:
           $ref: "../../schemas/core/schemas/listOfIds.yaml"
   responses:
-    "204":
-      description: No content
+    '204':
+      description: "Автоматизации удалены"
 

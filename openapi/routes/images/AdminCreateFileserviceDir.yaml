@@ -7,9 +7,10 @@ post:
   parameters:
     - in: query
       name: path
-      type: string
-      required: true
-      example: "images/residences/52/rooms/templates/Классика/"
+      schema:
+        type: string
+        required: true
+        example: "images/residences/52/rooms/templates/Классика/"
   responses:
     "200":
       content:

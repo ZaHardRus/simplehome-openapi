@@ -35,4 +35,3 @@ post:
                 description: время жизни рефреш токена
               accessible_schemas:
                 type: string
-                description: ""

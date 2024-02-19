@@ -8,7 +8,7 @@ get:
       name: apartment_id
       schema:
         type: integer
-      example: 1
+        example: 1
   responses:
     "400":
       content:

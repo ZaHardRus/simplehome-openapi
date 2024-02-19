@@ -8,6 +8,8 @@ post:
   parameters:
     - in: query
       name: phone_number
+      schema:
+        type: string
 
   responses:
     '200':  

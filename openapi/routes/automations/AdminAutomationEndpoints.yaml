@@ -79,7 +79,6 @@ components:
       required: true
       schema:
         type: integer
-
   schemas:
     AutomationNotFound:
       type: object
