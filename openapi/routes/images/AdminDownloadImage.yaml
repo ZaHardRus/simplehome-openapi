@@ -22,7 +22,11 @@ get:
         application/json:
           schema:
             oneOf:
-              - $ref: '#/components/schemas/InvalidImageHash'
+              - type: object
+                properties:
+                  detail:
+                    type: string
+                    example: Invalid Image Hash!
               - $ref: '../../schemas/core/errors/IdMustBeAnInteger.yaml'
     "404":
       content:
@@ -37,11 +41,11 @@ get:
             type: string
             format: binary
 
-components:
-  schemas:
-    InvalidImageHash:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Invalid Image Hash!
+# components:
+#   schemas:
+#     InvalidImageHash:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Invalid Image Hash!

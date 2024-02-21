@@ -4,7 +4,12 @@ get:
   tags:
     - automations
   parameters:
-    - $ref: "#/components/parameters/AutomationPathId"
+    - in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
   responses:
     "200":
       description: Успешное получение автоматизации
@@ -18,7 +23,11 @@ get:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/AutomationNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Not Found!
 
 delete:
   operationId: delete_one
@@ -26,14 +35,23 @@ delete:
   tags:
     - automations
   parameters:
-    - $ref: "#/components/parameters/AutomationPathId"
+    - in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
   responses:
     "404":
       description: Не найдено
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/AutomationNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Not Found!
     "204":
       description: Автоматизация удалена
 
@@ -43,7 +61,12 @@ put:
   tags:
     - automations
   parameters:
-    - $ref: "#/components/parameters/AutomationPathId"
+    - in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
   requestBody:
     content:
       application/json:
@@ -55,7 +78,11 @@ put:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/AutomationNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Not Found!
     "403":
       content:
         application/json:
@@ -70,19 +97,19 @@ put:
 
 
 
-components:
-  parameters:
-    AutomationPathId:
-      in: path
-      name: automation_id
-      description: id автоматизации
-      required: true
-      schema:
-        type: integer
-  schemas:
-    AutomationNotFound:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Automation Not Found!
+# components:
+#   parameters:
+#     AutomationPathId:
+#       in: path
+#       name: automation_id
+#       description: id автоматизации
+#       required: true
+#       schema:
+#         type: integer
+#   schemas:
+#     AutomationNotFound:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Automation Not Found!

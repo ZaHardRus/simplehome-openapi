@@ -4,7 +4,12 @@ get:
   tags:
     - notifications
   parameters:
-    - $ref: "#/components/parameters/notificationId"
+    - in: path
+      name: notification_id
+      description: id уведомления
+      required: true
+      schema:
+        type: integer
   responses:
     "404":
       content:
@@ -23,7 +28,12 @@ delete:
   tags:
     - notifications
   parameters:
-    - $ref: "#/components/parameters/notificationId"
+    - in: path
+      name: notification_id
+      description: id уведомления
+      required: true
+      schema:
+        type: integer
   responses:
     "400":
       content:
@@ -49,7 +59,12 @@ patch:
   tags:
     - notifications
   parameters:
-    - $ref: "#/components/parameters/notificationId"
+    - in: path
+      name: notification_id
+      description: id уведомления
+      required: true
+      schema:
+        type: integer
   requestBody:
     content:
       application/json:
@@ -74,12 +89,12 @@ patch:
 
 
 
-components:
-  parameters:
-    notificationId:
-      in: path
-      name: notification_id
-      description: id уведомления
-      required: true
-      schema:
-        type: integer
+# components:
+#   parameters:
+#     notificationId:
+#       in: path
+#       name: notification_id
+#       description: id уведомления
+#       required: true
+#       schema:
+#         type: integer

@@ -4,7 +4,12 @@ get:
   tags:
     - images
   parameters:
-    - $ref: '#/components/parameters/imageId'
+    - in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer
   responses:
     "404":
       content:
@@ -23,7 +28,12 @@ delete:
   tags:
     - images
   parameters:
-    - $ref: '#/components/parameters/imageId'
+    - in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer
   responses:
     "400":
       content:
@@ -49,7 +59,12 @@ put:
   tags:
     - images
   parameters:
-    - $ref: '#/components/parameters/imageId'
+    - in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer
   requestBody:
     content:
       application/json:
@@ -74,12 +89,12 @@ put:
 
 
 
-components:
-  parameters:
-    imageId:
-      in: path
-      name: image_id
-      description: id изображения
-      required: true
-      schema:
-        type: integer
+# components:
+#   parameters:
+#     imageId:
+#       in: path
+#       name: image_id
+#       description: id изображения
+#       required: true
+#       schema:
+#         type: integer

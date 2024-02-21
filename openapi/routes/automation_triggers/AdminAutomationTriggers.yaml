@@ -4,7 +4,12 @@ get:
   tags:
     - automation_triggers
   parameters:
-    - $ref: "#/components/parameters/AutomationTriggerPathId"
+    - in: path
+      name: automation_trigger_id
+      description: id триггера автоматизации
+      required: true
+      schema:
+        type: integer
   responses:
     "404":
       content:
@@ -27,7 +32,12 @@ delete:
   tags:
     - automation_triggers
   parameters:
-    - $ref: "#/components/parameters/AutomationTriggerPathId"
+    - in: path
+      name: automation_trigger_id
+      description: id триггера автоматизации
+      required: true
+      schema:
+        type: integer
   responses:
     "403":
       content:
@@ -52,7 +62,12 @@ put:
   tags:
     - automation_triggers
   parameters:
-    - $ref: "#/components/parameters/AutomationTriggerPathId"
+    - in: path
+      name: automation_trigger_id
+      description: id триггера автоматизации
+      required: true
+      schema:
+        type: integer
   requestBody:
     content:
       application/json:
@@ -82,12 +97,12 @@ put:
               $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
 
 
-components:
-  parameters:
-    AutomationTriggerPathId:
-      in: path
-      name: automation_trigger_id
-      description: id триггера автоматизации
-      required: true
-      schema:
-        type: integer
+# components:
+#   parameters:
+#     AutomationTriggerPathId:
+#       in: path
+#       name: automation_trigger_id
+#       description: id триггера автоматизации
+#       required: true
+#       schema:
+#         type: integer

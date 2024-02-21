@@ -4,9 +4,26 @@ get:
   tags:
     - scenario_templates
   parameters:
-    - $ref: "#/components/parameters/apartmentTemplateQueryId"
-    - $ref: "#/components/parameters/type"
-    - $ref: "#/components/parameters/roomTemplateIds"
+    - in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: false
+      schema:
+        type: integer
+    - in: query
+      name: type
+      description: Тип сценария. Может быть либо global либо local
+      required: false
+      schema:
+        type: string
+        example: global
+    - in: query
+      name: room_template_ids
+      description: ids шаблонов сценариев
+      required: false
+      schema:
+        type: string
+        example: 1, 2, 3
   responses:
     "200":
       content:
@@ -33,7 +50,11 @@ post:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: ApartmentTemplates With id {apartment_template_id} Not Found!
     "403":
       content:
         application/json:
@@ -79,36 +100,36 @@ delete:
                 description: Кол-во удаленных шаблонов сценариев
 
 
-components:
-  parameters:
-    apartmentTemplateQueryId:
-      in: query
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: false
-      schema:
-        type: integer
-    roomTemplateIds:
-      in: query
-      name: room_template_ids
-      description: ids шаблонов сценариев
-      required: false
-      schema:
-        type: string
-        example: 1, 2, 3
-    type:
-      in: query
-      name: type
-      description: Тип сценария. Может быть либо global либо local
-      required: false
-      schema:
-        type: string
-        example: global
+# components:
+#   parameters:
+#     apartmentTemplateQueryId:
+#       in: query
+#       name: apartment_template_id
+#       description: id шаблона квартиры
+#       required: false
+#       schema:
+#         type: integer
+#     roomTemplateIds:
+#       in: query
+#       name: room_template_ids
+#       description: ids шаблонов сценариев
+#       required: false
+#       schema:
+#         type: string
+#         example: 1, 2, 3
+#     type:
+#       in: query
+#       name: type
+#       description: Тип сценария. Может быть либо global либо local
+#       required: false
+#       schema:
+#         type: string
+#         example: global
 
-  schemas:
-    ApartmentTemplatesNotFound:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: ApartmentTemplates With id {apartment_template_id} Not Found!
+#   schemas:
+#     ApartmentTemplatesNotFound:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: ApartmentTemplates With id {apartment_template_id} Not Found!
