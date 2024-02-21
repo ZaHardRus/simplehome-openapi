@@ -10,7 +10,7 @@ get:
       content:
         application/json:
           schema:
-          type: object
+            $ref: "../../schemas/core/errors/NotFound.yaml"
     "200":
       content:
         application/json:

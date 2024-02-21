@@ -87,5 +87,6 @@ get:
               $ref: '../../schemas/users/RetrieveUser.yaml'
 
 
-delete:
-  operationId: admin_user_delete_multiple
+# нужно дописать
+# delete:
+#   operationId: admin_user_delete_multiple

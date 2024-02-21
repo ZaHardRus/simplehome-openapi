@@ -60,7 +60,7 @@ delete:
     "403":
       content:
         application/json:
-          delete:
+          schema:
             $ref: "../../schemas/core/errors/UserPermissionError.yaml"
     "200":
       content:

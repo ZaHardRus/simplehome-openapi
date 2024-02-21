@@ -3,51 +3,26 @@ properties:
   id:
     type: integer
     example: 10518
-  port:
-    type: integer
-    example: 1883
-  ip:
-    type: string
-    example: "192.168.0.74"
-  driver_id:
-    type: integer
-    example: 4
-  name:
-    type: string
-    example: "Кондиционер"
-  capability_type:
-    type: string
-    example: "toggle"
-  icon_tag:
-    type: string
-    example: "CoolerIcon"
-  type:
-    type: string
-    example: "climate"
-  subtype:
-    type: string
-    example: "cooler"
-  address:
-    type: string
-    example: "/devices/conditioner_stand/controls/clim_condition_power/on"
-  feedback_address:
-    type: string
-    example: "/devices/conditioner_stand/controls/clim_condition_power_fb"
-  value:
-    type: string
-    example: "1"
-  capability_id:
-    type: integer
-    example: 181
   scenario_id:
     type: integer
-    example: 12
-  device_id:
+    example: 1
+  capability_id:
     type: integer
-    example: 176
-  room_id:
-    type: integer
-    example: 50
-  title:
+    example: 1
+  value:
     type: string
-    example: "Прихожая"
+    maxLength: 12
+    example: "1"
+  residence_id:
+    type: integer
+  created_at:
+    type: string
+    example: "2023-11-28T08:01:22.713972+00:00"
+  updated_at:
+    type: string
+    example: "2023-11-28T08:01:22.713972+00:00"
+required:
+  - id
+  - scenario_id
+  - capability_id
+  - value

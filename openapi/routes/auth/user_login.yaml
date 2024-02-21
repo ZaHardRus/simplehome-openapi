@@ -7,10 +7,11 @@ post:
   requestBody:
     content:
       application/json:
-        type: object
-        properties:
-          phone_number:
-            type: string
+        schema:
+          type: object
+          properties:
+            phone_number:
+              type: string
 
   responses:
     '203':

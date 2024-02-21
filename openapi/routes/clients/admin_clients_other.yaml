@@ -1,6 +1,6 @@
 get:
   operationId: admin_clients_retrieve
-  description: 
+  description: Получение списка клиентов
   parameters:
     - in: path
       name: pk

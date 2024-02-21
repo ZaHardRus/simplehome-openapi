@@ -66,7 +66,7 @@ put:
       description: Не найдено
       content:
         application/json:
-          schemas:
+          schema:
             $ref: "#/components/schemas/AutomationNotFound"
     "403":
       description: Not enough permissions

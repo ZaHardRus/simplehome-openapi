@@ -5,11 +5,11 @@ post:
     - images
     - fileservice
   parameters:
-    - in: query
-      name: path
+    - name: path
+      in: query
+      required: true
       schema:
         type: string
-        required: true
         example: "images/residences/52/rooms/templates/Классика/"
   responses:
     "200":

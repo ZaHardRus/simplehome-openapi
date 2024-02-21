@@ -17,7 +17,7 @@ post:
   tags:
     - user_session
   operationId: clients_create
-  description:
+  description: Создание клиента
   requestBody:
     content:
       application/json:

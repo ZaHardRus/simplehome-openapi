@@ -747,7 +747,7 @@ paths:
               schema:
                 $ref: './schemas/preferences/AccountApartmentListDisplayPreferences.yaml'
         '404':
-          description: 0_0
+          description: "Не могу найти >_<"
 
     delete:
       operationId: delete_list_display_preferences
@@ -1117,8 +1117,9 @@ paths:
   /apartments/{pk:\d+}:
     $ref: './routes/apartments/user_apartments_detailed.yaml'
 
-  /apartments:
-    $ref: "./routes/apartments/user_apartments.yaml"
+  # Нужно дописать
+  # /apartments:
+  #   $ref: "./routes/apartments/user_apartments.yaml"
 
   # # /api/v2/admin/apartments_types/list:
   #   # get:
@@ -1131,8 +1132,8 @@ paths:
   # /users/get_accessible_schemas:
   #   $ref: "./routes/users/admin_get_accessible_schemas.yaml"
   # TODO:
-  /admin/users:
-    $ref: "./routes/users/admin_users.yaml"
+  # /admin/users:
+  #   $ref: "./routes/users/admin_users.yaml"
 
   /admin/users/{pk:\d+}:
     $ref: "./routes/users/admin_detailted.yaml"
@@ -1402,7 +1403,10 @@ paths:
           schema:
             type: integer
       requestBody:
-        $ref: "./schemas/scenarios/CreateScenario.yaml"
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas/scenarios/CreateScenario.yaml"
       responses:
           "201":
             description: success
@@ -1698,7 +1702,11 @@ paths:
               # TODO: поставить update
               $ref: "./schemas/actions/RetrieveAction.yaml"
       responses:
-        '':
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/actions/RetrieveAction.yaml'
         
 
 # components:
