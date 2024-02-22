@@ -11871,7 +11871,7 @@
         }
       }
     },
-    "/admin/residences/{pk:\\d+}/buildings": {
+    "/admin/residences/{pk}/buildings": {
       "get": {
         "operationId": "retrieve_buildings",
         "description": "Отдаёт список строений принадлежащих резиденции. Доступно инженеру и выше",
@@ -12351,7 +12351,7 @@
         }
       }
     },
-    "/account_apartment_list_display_preferences/{pk:\\d+}": {
+    "/account_apartment_list_display_preferences/{pk}": {
       "put": {
         "operationId": "update_list_display_preferences",
         "description": "Доступно юзеру и выше. Достаёт доступные апартаменты. Проверяет может ли пользователь изменить преференсы (может, если ему доступна резиденция). иначе выплёвывает UserPermissionError. В случае успеха обновляет json поле preferences в AccountApartmentListDisplayPreferences",
@@ -12623,7 +12623,7 @@
         }
       }
     },
-    "/account_apartment_preferences/{pk:\\d+}": {
+    "/account_apartment_preferences/{pk}": {
       "put": {
         "operationId": "update_account_apartment_preferences",
         "tags": [
@@ -12731,7 +12731,7 @@
         }
       }
     },
-    "/account_apartment_preferences/update_room_group_order/{pk:\\d+}": {
+    "/account_apartment_preferences/update_room_group_order/{pk}": {
       "put": {
         "operationId": "update_room_groups_order",
         "parameters": [
@@ -12790,7 +12790,7 @@
         }
       }
     },
-    "/account_apartment_preferences/delete_room_groups/{pk:\\d+}": {
+    "/account_apartment_preferences/delete_room_groups/{pk}": {
       "delete": {
         "operationId": "delete_room_groups",
         "description": "доступно с ролью пользователя и выше",
@@ -13124,7 +13124,7 @@
         }
       }
     },
-    "/admin/account_apartment_default_preferences/{pk:\\d+}": {
+    "/admin/account_apartment_default_preferences/{pk}": {
       "put": {
         "operationId": "update_account_apartment_default_preferences",
         "tags": [
@@ -13203,7 +13203,7 @@
         }
       }
     },
-    "/admin/account_apartment_default_preferences/update_room_groups_order/{pk:\\d+}": {
+    "/admin/account_apartment_default_preferences/update_room_groups_order/{pk}": {
       "put": {
         "operationId": "update_room_groups_order",
         "tags": [
@@ -13308,7 +13308,7 @@
         }
       }
     },
-    "/admin/account_apartment_default_preferences/delete_room_groups/{pk:\\d+}": {
+    "/admin/account_apartment_default_preferences/delete_room_groups/{pk}": {
       "delete": {
         "operationId": "delete_room_groups",
         "tags": [
@@ -13358,7 +13358,7 @@
         }
       }
     },
-    "/admin/apartments/{pk:\\d+}": {
+    "/admin/apartments/{pk}": {
       "get": {
         "operationId": "apartments_retrieve",
         "tags": [
@@ -13862,13 +13862,6 @@
                                 },
                                 "integrator_id": {
                                   "type": "integer"
-                                },
-                                "user_residences": {
-                                  "type": "array",
-                                  "description": "список id резиденций доступных пользователю",
-                                  "items": {
-                                    "type": "integer"
-                                  }
                                 }
                               }
                             }
@@ -14066,7 +14059,7 @@
         }
       }
     },
-    "/admin/apartments/change_residence_id/{pk:\\d+}": {
+    "/admin/apartments/change_residence_id/{pk}": {
       "post": {
         "deprecated": true,
         "operationId": "change_residence_id",
@@ -14145,7 +14138,7 @@
         }
       }
     },
-    "/apartments/{pk:\\d+}": {
+    "/apartments/{pk}": {
       "get": {
         "operationId": "retrieve_user_apartment",
         "tags": [
@@ -14284,7 +14277,140 @@
         }
       }
     },
-    "/admin/users/{pk:\\d+}": {
+    "/admin/retrieve_user_by_contact": {
+      "get": {
+        "operationId": "retrieve_user_by_contact",
+        "tags": [
+          "users"
+        ],
+        "description": "Получение пользователя по email или phone_number. Используется в форме предоставления прав доступа.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "description": "Email пользователя. Обязательный, если phone_number не был передан.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "test1@liis.su"
+            }
+          },
+          {
+            "in": "query",
+            "name": "phone_number",
+            "description": "Phone_number пользователя. Обязательный, если email не был передан. Номер телефона должен должен начинаться либо с символа '+', либо с символа '8'",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "+71234567891"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Пользователь найден",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "phone_number": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "middle_name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "image_id": {
+                      "type": "integer"
+                    },
+                    "group_id": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "enum": [
+                        "rus",
+                        "eng"
+                      ]
+                    },
+                    "integrator_id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string",
+                          "example": "Neither phone_number or email was provided!"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string",
+                          "example": "Wrong phone number format"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string",
+                          "example": "Wrong phone number format"
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "detail": {
+                          "type": "string",
+                          "example": "User not exists!"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{pk}": {
       "get": {
         "operationId": "admin_user_retrieve",
         "description": "доступен инженеру и выше",
@@ -14352,11 +14478,45 @@
                     "integrator_id": {
                       "type": "integer"
                     },
-                    "user_residences": {
+                    "account_residences": {
                       "type": "array",
-                      "description": "список id резиденций доступных пользователю",
+                      "description": "список резиденций доступных пользователю",
                       "items": {
-                        "type": "integer"
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "city": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "image_id": {
+                            "type": "integer"
+                          },
+                          "integrator_id": {
+                            "type": "integer"
+                          },
+                          "customer_support_email": {
+                            "type": "string"
+                          }
+                        }
                       }
                     }
                   }
@@ -14463,13 +14623,6 @@
                     },
                     "integrator_id": {
                       "type": "integer"
-                    },
-                    "user_residences": {
-                      "type": "array",
-                      "description": "список id резиденций доступных пользователю",
-                      "items": {
-                        "type": "integer"
-                      }
                     }
                   }
                 }
@@ -14730,13 +14883,6 @@
                     },
                     "integrator_id": {
                       "type": "integer"
-                    },
-                    "user_residences": {
-                      "type": "array",
-                      "description": "список id резиденций доступных пользователю",
-                      "items": {
-                        "type": "integer"
-                      }
                     }
                   }
                 }
@@ -15254,13 +15400,6 @@
                     },
                     "integrator_id": {
                       "type": "integer"
-                    },
-                    "user_residences": {
-                      "type": "array",
-                      "description": "список id резиденций доступных пользователю",
-                      "items": {
-                        "type": "integer"
-                      }
                     }
                   }
                 }
@@ -15270,7 +15409,7 @@
         }
       }
     },
-    "/users/{pk:\\d+}": {
+    "/users/{pk}": {
       "delete": {
         "operationId": "users_delete",
         "tags": [
@@ -15364,13 +15503,6 @@
                     },
                     "integrator_id": {
                       "type": "integer"
-                    },
-                    "user_residences": {
-                      "type": "array",
-                      "description": "список id резиденций доступных пользователю",
-                      "items": {
-                        "type": "integer"
-                      }
                     }
                   }
                 }
@@ -15443,13 +15575,6 @@
                     },
                     "integrator_id": {
                       "type": "integer"
-                    },
-                    "user_residences": {
-                      "type": "array",
-                      "description": "список id резиденций доступных пользователю",
-                      "items": {
-                        "type": "integer"
-                      }
                     }
                   }
                 }
@@ -15726,7 +15851,7 @@
         }
       }
     },
-    "/clients/{pk:\\d+}": {
+    "/clients/{pk}": {
       "get": {
         "tags": [
           "user_session"
@@ -16067,7 +16192,7 @@
         }
       }
     },
-    "/admin/clients/{pk:\\d+}": {
+    "/admin/clients/{pk}": {
       "get": {
         "operationId": "admin_clients_retrieve",
         "description": "Получение списка клиентов",
@@ -16313,7 +16438,7 @@
         }
       }
     },
-    "/admin/admin-clients/{pk:\\d+}": {
+    "/admin/admin-clients/{pk}": {
       "get": {
         "tags": [
           "admin_session"
@@ -16840,7 +16965,7 @@
         }
       }
     },
-    "/admin/scenarios/{pk:\\d+}": {
+    "/admin/scenarios/{pk}": {
       "get": {
         "tags": [
           "scenarios"
@@ -17257,7 +17382,7 @@
         }
       }
     },
-    "/admin/scenarios/clone/{pk:\\d+}": {
+    "/admin/scenarios/clone/{pk}": {
       "post": {
         "operationId": "scenario_clone",
         "description": "доступно инженеру и выше",
@@ -17696,7 +17821,7 @@
         }
       }
     },
-    "/scenarios/{pk:\\d+}": {
+    "/scenarios/{pk}": {
       "get": {
         "operationId": "scenario_retrieve",
         "tags": [
@@ -18000,7 +18125,7 @@
         }
       }
     },
-    "/scenarios/activate/{pk:\\d+}": {
+    "/scenarios/activate/{pk}": {
       "post": {
         "operationId": "run-scenario",
         "tags": [
@@ -18030,7 +18155,7 @@
         }
       }
     },
-    "/scenarios/set_actions/{pk:\\d+}": {
+    "/scenarios/set_actions/{pk}": {
       "post": {
         "operationId": "set-actions",
         "tags": [
@@ -18340,7 +18465,7 @@
         }
       }
     },
-    "/admin/actions/{pk:\\d+}": {
+    "/admin/actions/{pk}": {
       "get": {
         "operationId": "admin_actions_retrieve",
         "tags": [
@@ -18533,6 +18658,15 @@
             }
           }
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

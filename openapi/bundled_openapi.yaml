@@ -7658,7 +7658,7 @@ paths:
                       type: integer
         '400':
           description: Id Must Be An Integer!
-  '/admin/residences/{pk:\d+}/buildings':
+  '/admin/residences/{pk}/buildings':
     get:
       operationId: retrieve_buildings
       description: Отдаёт список строений принадлежащих резиденции. Доступно инженеру и выше
@@ -7964,7 +7964,7 @@ paths:
                           type: integer
                         displayed_title:
                           type: string
-  '/account_apartment_list_display_preferences/{pk:\d+}':
+  '/account_apartment_list_display_preferences/{pk}':
     put:
       operationId: update_list_display_preferences
       description: 'Доступно юзеру и выше. Достаёт доступные апартаменты. Проверяет может ли пользователь изменить преференсы (может, если ему доступна резиденция). иначе выплёвывает UserPermissionError. В случае успеха обновляет json поле preferences в AccountApartmentListDisplayPreferences'
@@ -8138,7 +8138,7 @@ paths:
                     type: object
         '400':
           description: type of apartment_id must be integer
-  '/account_apartment_preferences/{pk:\d+}':
+  '/account_apartment_preferences/{pk}':
     put:
       operationId: update_account_apartment_preferences
       tags:
@@ -8206,7 +8206,7 @@ paths:
           description: успешное удаление
         '404':
           description: успешное удаление AccountApartmentPreferences
-  '/account_apartment_preferences/update_room_group_order/{pk:\d+}':
+  '/account_apartment_preferences/update_room_group_order/{pk}':
     put:
       operationId: update_room_groups_order
       parameters:
@@ -8243,7 +8243,7 @@ paths:
                     type: object
         '404':
           description: Account Apartment Preferences Not Found!
-  '/account_apartment_preferences/delete_room_groups/{pk:\d+}':
+  '/account_apartment_preferences/delete_room_groups/{pk}':
     delete:
       operationId: delete_room_groups
       description: доступно с ролью пользователя и выше
@@ -8454,7 +8454,7 @@ paths:
                     format: date-time
                   preferences:
                     type: object
-  '/admin/account_apartment_default_preferences/{pk:\d+}':
+  '/admin/account_apartment_default_preferences/{pk}':
     put:
       operationId: update_account_apartment_default_preferences
       tags:
@@ -8503,7 +8503,7 @@ paths:
           description: success
         '404':
           description: Account Apartment Default Preferences Not Found!
-  '/admin/account_apartment_default_preferences/update_room_groups_order/{pk:\d+}':
+  '/admin/account_apartment_default_preferences/update_room_groups_order/{pk}':
     put:
       operationId: update_room_groups_order
       tags:
@@ -8570,7 +8570,7 @@ paths:
                     type: object
         '404':
           description: Account Apartment Default Preferences Not Found!
-  '/admin/account_apartment_default_preferences/delete_room_groups/{pk:\d+}':
+  '/admin/account_apartment_default_preferences/delete_room_groups/{pk}':
     delete:
       operationId: delete_room_groups
       tags:
@@ -8603,7 +8603,7 @@ paths:
           description: |2-
              — Кто тебе дом строил? Здорово получилось… — Да пидорасы! — ?? — Нанял рабочих залить фундамент. Выкопали, залили, ушли. Нанял каменщиков, те пришли спрашивают: Какие пидорасы фундамент заливали? Стены выложили, ушли. Нанял штукатуров, те тоже — что за пидорасы кладку делали? Ну, и так далее. Вот и получается, что дом строили одни пидорасы… 
             pidoras architecture pattern
-  '/admin/apartments/{pk:\d+}':
+  '/admin/apartments/{pk}':
     get:
       operationId: apartments_retrieve
       tags:
@@ -8946,11 +8946,6 @@ paths:
                                   - eng
                               integrator_id:
                                 type: integer
-                              user_residences:
-                                type: array
-                                description: список id резиденций доступных пользователю
-                                items:
-                                  type: integer
                         properties:
                           is_owner:
                             type: boolean
@@ -9071,7 +9066,7 @@ paths:
                     description: noqa
         '400':
           description: Id Must Be An Integer! Ошибка валидации
-  '/admin/apartments/change_residence_id/{pk:\d+}':
+  '/admin/apartments/change_residence_id/{pk}':
     post:
       deprecated: true
       operationId: change_residence_id
@@ -9122,7 +9117,7 @@ paths:
                     type: integer
                   comment:
                     type: string
-  '/apartments/{pk:\d+}':
+  '/apartments/{pk}':
     get:
       operationId: retrieve_user_apartment
       tags:
@@ -9211,7 +9206,90 @@ paths:
                           access_token:
                             type: string
                             example: bGlpcy1icm9rZXI6cGVyaW9kaWNhbGx5X2dlbmVyYXRlX2NvbXBsaWNhdGVkX3Bhc3N3b3Jk
-  '/admin/users/{pk:\d+}':
+  /admin/retrieve_user_by_contact:
+    get:
+      operationId: retrieve_user_by_contact
+      tags:
+        - users
+      description: Получение пользователя по email или phone_number. Используется в форме предоставления прав доступа.
+      parameters:
+        - in: query
+          name: email
+          description: 'Email пользователя. Обязательный, если phone_number не был передан.'
+          required: false
+          schema:
+            type: string
+            example: test1@liis.su
+        - in: query
+          name: phone_number
+          description: 'Phone_number пользователя. Обязательный, если email не был передан. Номер телефона должен должен начинаться либо с символа ''+'', либо с символа ''8'''
+          required: false
+          schema:
+            type: string
+            example: '+71234567891'
+      responses:
+        '200':
+          description: Пользователь найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  phone_number:
+                    type: string
+                  email:
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  middle_name:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  image_id:
+                    type: integer
+                  group_id:
+                    type: integer
+                  language:
+                    type: string
+                    enum:
+                      - rus
+                      - eng
+                  integrator_id:
+                    type: integer
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: Neither phone_number or email was provided!
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: Wrong phone number format
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: Wrong phone number format
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: User not exists!
+  '/admin/users/{pk}':
     get:
       operationId: admin_user_retrieve
       description: доступен инженеру и выше
@@ -9261,11 +9339,34 @@ paths:
                       - eng
                   integrator_id:
                     type: integer
-                  user_residences:
+                  account_residences:
                     type: array
-                    description: список id резиденций доступных пользователю
+                    description: список резиденций доступных пользователю
                     items:
-                      type: integer
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        address:
+                          type: string
+                        city:
+                          type: string
+                        description:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+                        image_id:
+                          type: integer
+                        integrator_id:
+                          type: integer
+                        customer_support_email:
+                          type: string
         '404':
           description: Not found
     delete:
@@ -9336,11 +9437,6 @@ paths:
                       - eng
                   integrator_id:
                     type: integer
-                  user_residences:
-                    type: array
-                    description: список id резиденций доступных пользователю
-                    items:
-                      type: integer
   /admin/login:
     post:
       operationId: admin_login
@@ -9509,11 +9605,6 @@ paths:
                       - eng
                   integrator_id:
                     type: integer
-                  user_residences:
-                    type: array
-                    description: список id резиденций доступных пользователю
-                    items:
-                      type: integer
         '401':
           description: code not found
   /users/login:
@@ -9851,12 +9942,7 @@ paths:
                       - eng
                   integrator_id:
                     type: integer
-                  user_residences:
-                    type: array
-                    description: список id резиденций доступных пользователю
-                    items:
-                      type: integer
-  '/users/{pk:\d+}':
+  '/users/{pk}':
     delete:
       operationId: users_delete
       tags:
@@ -9923,11 +10009,6 @@ paths:
                       - eng
                   integrator_id:
                     type: integer
-                  user_residences:
-                    type: array
-                    description: список id резиденций доступных пользователю
-                    items:
-                      type: integer
   /user_by_phone_number:
     post:
       operationId: get_or_create_by_phone_number
@@ -9975,11 +10056,6 @@ paths:
                       - eng
                   integrator_id:
                     type: integer
-                  user_residences:
-                    type: array
-                    description: список id резиденций доступных пользователю
-                    items:
-                      type: integer
   /clients:
     get:
       tags:
@@ -10166,7 +10242,7 @@ paths:
           description: Id Must Be An Integer!
         '403':
           description: Not enoth permisssions!
-  '/clients/{pk:\d+}':
+  '/clients/{pk}':
     get:
       tags:
         - user_session
@@ -10393,7 +10469,7 @@ paths:
               schema:
                 description: кол-во удалённого дерьма
                 type: integer
-  '/admin/clients/{pk:\d+}':
+  '/admin/clients/{pk}':
     get:
       operationId: admin_clients_retrieve
       description: Получение списка клиентов
@@ -10564,7 +10640,7 @@ paths:
                   ip_location_city:
                     type: string
                     example: Санкт-Петербург
-  '/admin/admin-clients/{pk:\d+}':
+  '/admin/admin-clients/{pk}':
     get:
       tags:
         - admin_session
@@ -10918,7 +10994,7 @@ paths:
                       type: boolean
                     description:
                       type: string
-  '/admin/scenarios/{pk:\d+}':
+  '/admin/scenarios/{pk}':
     get:
       tags:
         - scenarios
@@ -11191,7 +11267,7 @@ paths:
                     type: array
                     items:
                       type: integer
-  '/admin/scenarios/clone/{pk:\d+}':
+  '/admin/scenarios/clone/{pk}':
     post:
       operationId: scenario_clone
       description: доступно инженеру и выше
@@ -11487,7 +11563,7 @@ paths:
       responses:
         '204':
           description: success
-  '/scenarios/{pk:\d+}':
+  '/scenarios/{pk}':
     get:
       operationId: scenario_retrieve
       tags:
@@ -11691,7 +11767,7 @@ paths:
                         - scenario_id
                         - capability_id
                         - value
-  '/scenarios/activate/{pk:\d+}':
+  '/scenarios/activate/{pk}':
     post:
       operationId: run-scenario
       tags:
@@ -11709,7 +11785,7 @@ paths:
       responses:
         '204':
           description: success
-  '/scenarios/set_actions/{pk:\d+}':
+  '/scenarios/set_actions/{pk}':
     post:
       operationId: set-actions
       tags:
@@ -11916,7 +11992,7 @@ paths:
       responses:
         '204':
           description: success
-  '/admin/actions/{pk:\d+}':
+  '/admin/actions/{pk}':
     get:
       operationId: admin_actions_retrieve
       tags:
@@ -12049,3 +12125,9 @@ paths:
                   - scenario_id
                   - capability_id
                   - value
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

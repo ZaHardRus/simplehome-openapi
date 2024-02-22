@@ -18,7 +18,7 @@
             schema:
               # на данный момент нейминг не полностью совпадает,
               # но эту проблему надо решать по ходу
-              $ref: "../../schemas/users/RetrieveUser.yaml"
+              $ref: "../../schemas/users/RetrieveUserWithAccountResidence.yaml"
       '404':
         description: Not found
 
@@ -61,4 +61,3 @@
           application/json:
             schema:
               $ref: '../../schemas/users/RetrieveUser.yaml'
-

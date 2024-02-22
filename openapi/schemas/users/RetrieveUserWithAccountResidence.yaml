@@ -40,3 +40,9 @@ properties:
 
   integrator_id:
     type: integer
+
+  account_residences:
+    type: array
+    description: список резиденций доступных пользователю
+    items:
+      $ref: "../../schemas/residences/RetrieveResidence.yaml"
