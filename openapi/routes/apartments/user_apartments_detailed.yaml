@@ -69,4 +69,4 @@ get:
               # owners:
                 # example: 
 
-  # /apartments/{pk:\d+}
+  # /apartments/{pk}

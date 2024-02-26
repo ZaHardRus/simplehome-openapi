@@ -3,7 +3,7 @@ get:
   tags:
     - admin_session
   operationId: admin_clients_client_by_unique_id
-  description: 
+  description: Получение клиента по unique_id
   parameters:
     - in: query
       name: email

@@ -28,17 +28,29 @@ get:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/NotAuthorized'
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Not Authorized!
     "400":
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/InvalidImageHash'
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Invalid Image Hash!
     "404":
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ImageNotFound'
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Image Not Found!
     "200":
       description: Возвращает изображение
       content:
@@ -47,23 +59,23 @@ get:
             type: string
             format: binary
 
-components:
-  schemas:
-    NotAuthorized:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Not Authorized!
-    InvalidImageHash:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Invalid Image Hash!
-    ImageNotFound:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Image Not Found!
+# components:
+#   schemas:
+#     NotAuthorized:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Not Authorized!
+#     InvalidImageHash:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Invalid Image Hash!
+#     ImageNotFound:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Image Not Found!

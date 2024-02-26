@@ -6,13 +6,8 @@ get:
                Возвращает текущую сессию пользователя
   parameters:
     - in: path
-      required: true
       name: pk
-      schema:
-        type: integer
-        required: true
-    - in: query
-      name: unique_id
+      required: true
       schema:
         type: integer
 

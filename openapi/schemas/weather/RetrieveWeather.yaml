@@ -1,0 +1,32 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 228
+  temperature:
+    type: number
+    example: -5.0
+  condition_text:
+    type: string
+    example: "Blowing snow"
+  condition_icon:
+    type: string
+    example: "//cdn.weatherapi.com/weather/64x64/day/227.png"
+  condition_code:
+    type: integer 
+    example: 1114
+  wind_speed:
+    type: number 
+    example: 29.9
+  wind_direction:
+    type: string 
+    example: "N"
+  pressure:
+    type: number 
+    example: 1007.0
+  humidity:
+    type: number 
+    example: 68.0
+  city:
+    type: string
+    example: "Санкт-Петербург"

@@ -12,12 +12,14 @@ post:
   requestBody:
     content:
       application/json:
-        type: object
-        required: true
-        properties:
-          email:
-            type: string
-            maxLength: 256
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              maxLength: 256
+          required:
+            - email
 
   responses:
     '200':

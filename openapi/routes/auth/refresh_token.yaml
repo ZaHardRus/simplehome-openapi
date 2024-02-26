@@ -1,6 +1,6 @@
 post:
   operationId: refresh_token_new
-  description: 
+  description: Запрос нового  токена доступа используя токен обновления
   tags:
     - auth
   requestBody:

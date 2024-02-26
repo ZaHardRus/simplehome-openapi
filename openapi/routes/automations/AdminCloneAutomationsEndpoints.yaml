@@ -4,7 +4,12 @@ post:
   tags:
     - automations
   parameters:
-    - $ref: "#/components/parameters/AutomationPathId"
+    - in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
   responses:
     "200":
       description: Успешное получение автоматизации
@@ -18,23 +23,27 @@ post:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/AutomationNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Not Found!
 
 
-components:
-  parameters:
-    AutomationPathId:
-      in: path
-      name: automation_id
-      description: id автоматизации
-      required: true
-      schema:
-        type: integer
+# components:
+#   parameters:
+#     AutomationPathId:
+#       in: path
+#       name: automation_id
+#       description: id автоматизации
+#       required: true
+#       schema:
+#         type: integer
 
-  schemas:
-    AutomationNotFound:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Automation Not Found!
+#   schemas:
+#     AutomationNotFound:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Automation Not Found!

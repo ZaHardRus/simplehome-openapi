@@ -4,7 +4,12 @@ get:
   tags:
     - rooms_templates
   parameters:
-    - $ref: "#/components/parameters/apartmentTemplateQueryId"
+    - in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer
     - $ref: "../../schemas/core/filters/sorting_query.yaml"
   responses:
     "200":
@@ -32,7 +37,11 @@ post:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/payloadValidationError"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Payload Type Must Be List Or Dict, Not {type(data)}
     "200":
       content:
         application/json:
@@ -73,21 +82,21 @@ delete:
                 description: Кол-во удаленных шаблонов комнат
 
 
-components:
-  parameters:
-    apartmentTemplateQueryId:
-      in: query
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: true
-      schema:
-        type: integer
+# components:
+#   parameters:
+#     apartmentTemplateQueryId:
+#       in: query
+#       name: apartment_template_id
+#       description: id шаблона квартиры
+#       required: true
+#       schema:
+#         type: integer
 
-  schemas:
-    payloadValidationError:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Payload Type Must Be List Or Dict, Not {type(data)}
+#   schemas:
+#     payloadValidationError:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Payload Type Must Be List Or Dict, Not {type(data)}
 

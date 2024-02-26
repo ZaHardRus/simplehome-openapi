@@ -4,7 +4,12 @@ get:
   tags:
     - automations
   parameters:
-    - $ref: "#/components/parameters/AutomationPathId"
+    - in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
     - in: query
       name: apartment_id
       required: false
@@ -24,7 +29,11 @@ get:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/AutomationNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Not Found!
     "400":
       description: Id must be an integer
 
@@ -34,14 +43,24 @@ delete:
   tags:
     - automations
   parameters:
-    - $ref: "#/components/parameters/AutomationPathId"
+    - in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
+
   responses:
     "404":
       description: Не найдено
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/AutomationNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Not Found!
     "400":
       description: Id must be an integer
     "403":
@@ -55,7 +74,13 @@ put:
   tags:
     - automations
   parameters:
-    - $ref: "#/components/parameters/AutomationPathId"
+    - in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
+
   requestBody:
     content:
       application/json:
@@ -66,8 +91,12 @@ put:
       description: Не найдено
       content:
         application/json:
-          schemas:
-            $ref: "#/components/schemas/AutomationNotFound"
+          schema:
+            type: object
+            properties:
+              detail:
+                type: string
+                example: Automation Not Found!
     "403":
       description: Not enough permissions
     "201":
@@ -79,20 +108,20 @@ put:
 
 
 
-components:
-  parameters:
-    AutomationPathId:
-      in: path
-      name: automation_id
-      description: id автоматизации
-      required: true
-      schema:
-        type: integer
+# components:
+#   parameters:
+#     AutomationPathId:
+#       in: path
+#       name: automation_id
+#       description: id автоматизации
+#       required: true
+#       schema:
+#         type: integer
 
-  schemas:
-    AutomationNotFound:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Automation Not Found!
+#   schemas:
+#     AutomationNotFound:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: Automation Not Found!

@@ -4,7 +4,12 @@ get:
   tags:
     - capability_templates
   parameters:
-    - $ref: "#/components/parameters/capabilityTemplateId"
+    - in: path
+      name: capability_template_id
+      description: id шаблона навыка
+      required: true
+      schema:
+        type: integer
   responses:
     "404":
       content:
@@ -23,7 +28,12 @@ put:
   tags:
     - capability_templates
   parameters:
-    - $ref: "#/components/parameters/capabilityTemplateId"
+    - in: path
+      name: capability_template_id
+      description: id шаблона навыка
+      required: true
+      schema:
+        type: integer
   requestBody:
     content:
       application/json:
@@ -39,7 +49,11 @@ put:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
+            type: object
+            properties:
+              detail:
+                type: string
+                example: ApartmentTemplates With id {apartment_template_id} Not Found!
     "201":
       content:
         application/json:
@@ -52,7 +66,12 @@ delete:
   tags:
     - capability_templates
   parameters:
-    - $ref: "#/components/parameters/capabilityTemplateId"
+    - in: path
+      name: capability_template_id
+      description: id шаблона навыка
+      required: true
+      schema:
+        type: integer
   responses:
     "403":
       content:
@@ -73,21 +92,21 @@ delete:
       description: Шаблон комнаты удален
 
 
-components:
-  parameters:
-    capabilityTemplateId:
-      in: path
-      name: capability_template_id
-      description: id шаблона навыка
-      required: true
-      schema:
-        type: integer
+# components:
+#   parameters:
+#     capabilityTemplateId:
+#       in: path
+#       name: capability_template_id
+#       description: id шаблона навыка
+#       required: true
+#       schema:
+#         type: integer
 
-  schemas:
-    ApartmentTemplatesNotFound:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: ApartmentTemplates With id {apartment_template_id} Not Found!
+#   schemas:
+#     ApartmentTemplatesNotFound:
+#       type: object
+#       properties:
+#         detail:
+#           type: string
+#           example: ApartmentTemplates With id {apartment_template_id} Not Found!
 

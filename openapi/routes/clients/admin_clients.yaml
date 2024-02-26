@@ -2,7 +2,7 @@ delete:
   tags:
     - admin_session
   operationId: multiple_delete_client_session_admin
-  description:
+  description: Удаление множества клиентов (сессий пользователей) админом
   requestBody:
     content:
       application/json:

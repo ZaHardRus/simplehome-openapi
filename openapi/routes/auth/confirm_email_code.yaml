@@ -1,24 +1,27 @@
 post:
+  operationId: confirm_email_code
   tags:
     - auth
   requestBody:
     content:
       application/json:
-        properties:
-          email:
-            type: string
-            example: test1@liis.su
-          email_code:
-            type: integer
-            example: 8888
-          client_unique_id:
-            # TODO: нужно самим определять что это за клиент, исходя из хедеров
-            # и ещё вопрос. Нужны ли нам эти клиенты
-            type: string
-            example: "0e63081028d455931"
+        schema:
+          properties:
+            email:
+              type: string
+              example: test1@liis.su
+            email_code:
+              type: integer
+              example: 8888
+            client_unique_id:
+              # TODO: нужно самим определять что это за клиент, исходя из хедеров
+              # и ещё вопрос. Нужны ли нам эти клиенты
+              type: string
+              example: "0e63081028d455931"
   responses:
     "200":
       description: success
       content:
         application/json:
-          $ref: "../../schemas/auth/ConfirmCode.yaml"
+          schema:
+            $ref: "../../schemas/auth/ConfirmCode.yaml"

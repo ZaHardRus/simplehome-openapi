@@ -5,7 +5,7 @@ install_npm_dependencies:
 	npm i -g swagger-cli
 
 bundle_openapi:
-	swagger-cli bundle $(source_openapi_dest) --outfile "$(bundled_openapi_dest).yaml" --type yaml -d
+	swagger-cli bundle $(source_openapi_dest) --outfile "$(bundled_openapi_dest).yaml" --type yaml -d -r
 
 bundle_openapi_json:
-	swagger-cli bundle $(source_openapi_dest) --outfile "$(bundled_openapi_dest).json" --type json -d
+	swagger-cli bundle $(source_openapi_dest) --outfile "$(bundled_openapi_dest).json" --type json -d -r

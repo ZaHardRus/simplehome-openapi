@@ -6,9 +6,11 @@
     parameters:
       - in: path
         name: pk
-        type: integer
         description: id пользователя
-        example: 1
+        required: true
+        schema:
+          type: integer
+          example: 1
     responses:
       '200':
         content:
@@ -16,7 +18,7 @@
             schema:
               # на данный момент нейминг не полностью совпадает,
               # но эту проблему надо решать по ходу
-              $ref: "../../schemas/users/RetrieveUser.yaml"
+              $ref: "../../schemas/users/RetrieveUserWithAccountResidence.yaml"
       '404':
         description: Not found
 
@@ -28,9 +30,11 @@
     parameters:
       - in: path
         name: pk
-        type: integer
         description: id пользователя
-        example: 1
+        required: true
+        schema:
+          type: integer
+          example: 1
     responses:
       '204':
         description: Успешное удаление
@@ -45,9 +49,11 @@
     parameters:
       - in: path
         name: pk
-        type: integer
+        required: true
         description: id пользователя
-        example: 1
+        schema:
+          type: integer
+          example: 1
     responses:
       '201':
         description: success
@@ -55,4 +61,3 @@
           application/json:
             schema:
               $ref: '../../schemas/users/RetrieveUser.yaml'
-

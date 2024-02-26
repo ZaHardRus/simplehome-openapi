@@ -61,7 +61,7 @@
   get:
     operationId: user_view.retrieve
 
-/api/v2/users/{pk:\d+}:
+/api/v2/users/{pk}:
   patch:
     operationId: user_view.update
 

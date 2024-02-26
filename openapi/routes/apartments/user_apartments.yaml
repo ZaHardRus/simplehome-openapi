@@ -1,4 +1,6 @@
-get:
-  operationId: list_user_apartments
-  tags:
-    - apartments
+# get:
+  # operationId: list_user_apartments
+  # tags:
+    # - apartments
+# 
+# Саня, допиши плиз ендпоинт
