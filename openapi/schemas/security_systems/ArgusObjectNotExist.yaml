@@ -1,0 +1,8 @@
+type: object
+properties:
+  detail:
+    type: string
+    example: Argus object not exist!
+  error_type:
+    type: string
+    example: ARGUS_OBJECT_NOT_EXIST

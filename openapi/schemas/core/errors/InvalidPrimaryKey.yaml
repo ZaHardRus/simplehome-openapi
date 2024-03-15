@@ -1,0 +1,8 @@
+type: object
+properties:
+  detail:
+    type: string
+    example: Invalid Primary Key!
+  error_type:
+    type: string
+    example: INVALID_PRIMARY_KEY

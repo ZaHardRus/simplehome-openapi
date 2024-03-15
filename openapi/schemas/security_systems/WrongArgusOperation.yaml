@@ -1,0 +1,15 @@
+type: object
+properties:
+    error_type:
+      type: string
+      example: "VALIDATION_ERROR"
+    supported_operations:
+      type: array 
+      example: [
+        "reset_faults",
+        "retake_security",
+        "off_security",
+        "on_security"]
+    detail:
+      type: string
+      example: Wrong segment operation!
