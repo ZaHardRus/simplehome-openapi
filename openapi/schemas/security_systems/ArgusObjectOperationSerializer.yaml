@@ -1,0 +1,8 @@
+type: object
+properties:
+  object_id:
+    type: string
+    example: 658e96f79560b13da4c390sd
+  operation:
+    type: string
+    example: reset_faults

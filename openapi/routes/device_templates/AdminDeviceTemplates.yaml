@@ -29,7 +29,7 @@ get:
       schema:
         type: string
     - in: query
-      name: type
+      name: subtype
       description: Подтип устройства
       required: false
       schema:

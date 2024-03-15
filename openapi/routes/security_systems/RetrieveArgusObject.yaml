@@ -1,0 +1,31 @@
+get:
+  operationId: retrieve_argus_object
+  tags:
+    - argus
+  parameters:
+    - in: path
+      name: argus_object_id
+      required: true
+      schema:
+        type: string
+        example: k4jf3kelkrjffle53934d434
+        description: id объекта в системе Аргус-спектр
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/security_systems/ArgusObject.yaml"
+    '400':
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/core/errors/InvalidPrimaryKey.yaml"
+              - $ref: "../../schemas/security_systems/ArgusObjectNotExist.yaml"
+              - $ref: "../../schemas/security_systems/ArgusHttpRequestError.yaml"
+    '401':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/security_systems/ArgusAuthorizationError.yaml"

@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: string
+    example: k4jf3kelkrjffle53934d434
+  name:
+    type: string
+    example: Раздел
+  class_id:
+    type: integer
+    example: 10104
+  state_id:
+    type: integer
+    example: 10004
+  state:
+    type: string
+    example: Снят. Норма.
+  state_type:
+    type: string
+    example: NORMAL
+  description:
+    type: string
+    example: Комната 1
+  

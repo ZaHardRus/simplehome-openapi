@@ -1,0 +1,16 @@
+type: object
+properties:
+  detail:
+    type: string
+    example: Fail to execute Argus HTTP request
+  error_type:
+    type: string
+    example: ARGUS_HTTP_REQUEST_ERROR
+  argus_status_code:
+    type: integer
+    example: 404
+    description: Код ошибки, полученное от сервиса аргуса
+  argus_response:
+    type: string
+    example: пук пук пук
+    description: Сообщение об ошибке, полученное от сервиса аргуса

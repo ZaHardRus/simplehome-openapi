@@ -1,0 +1,8 @@
+type: object
+properties:
+  detail:
+    type: string
+    example: Fail to authorize in Argus service!
+  error_type:
+    type: string
+    example: ARGUS_AUTHORIZATION_ERROR

@@ -19,6 +19,144 @@ servers:
 security:
   - BearerAuth: []
 paths:
+  '/api/v2/argus/object/{argus_object_id}':
+    get:
+      operationId: retrieve_argus_object
+      tags:
+        - argus
+      parameters:
+        - in: path
+          name: argus_object_id
+          required: true
+          schema:
+            type: string
+            example: k4jf3kelkrjffle53934d434
+            description: id объекта в системе Аргус-спектр
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: k4jf3kelkrjffle53934d434
+                  name:
+                    type: string
+                    example: Раздел
+                  class_id:
+                    type: integer
+                    example: 10104
+                  state_id:
+                    type: integer
+                    example: 10004
+                  state:
+                    type: string
+                    example: Снят. Норма.
+                  state_type:
+                    type: string
+                    example: NORMAL
+                  description:
+                    type: string
+                    example: Комната 1
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: Invalid Primary Key!
+                      error_type:
+                        type: string
+                        example: INVALID_PRIMARY_KEY
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: Argus object not exist!
+                      error_type:
+                        type: string
+                        example: ARGUS_OBJECT_NOT_EXIST
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: Fail to execute Argus HTTP request
+                      error_type:
+                        type: string
+                        example: ARGUS_HTTP_REQUEST_ERROR
+                      argus_status_code:
+                        type: integer
+                        example: 404
+                        description: 'Код ошибки, полученное от сервиса аргуса'
+                      argus_response:
+                        type: string
+                        example: пук пук пук
+                        description: 'Сообщение об ошибке, полученное от сервиса аргуса'
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: Fail to authorize in Argus service!
+                  error_type:
+                    type: string
+                    example: ARGUS_AUTHORIZATION_ERROR
+  /api/v2/argus/object/operation:
+    post:
+      operationId: send_argus_object_operation
+      tags:
+        - argus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                object_id:
+                  type: string
+                  example: 658e96f79560b13da4c390sd
+                operation:
+                  type: string
+                  example: reset_faults
+      responses:
+        '200':
+          description: Операция выполнена
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      error_type:
+                        type: string
+                        example: VALIDATION_ERROR
+                      supported_operations:
+                        type: array
+                        example:
+                          - reset_faults
+                          - retake_security
+                          - off_security
+                          - on_security
+                      detail:
+                        type: string
+                        example: Wrong segment operation!
+                  - type: object
+                    properties:
+                      detail:
+                        type: string
+                        example: Argus object not exist!
+                      error_type:
+                        type: string
+                        example: ARGUS_OBJECT_NOT_EXIST
   '/api/v2/admin/buildings/{building_id}/set_apartments':
     put:
       operationId: admin-set-building-apartments
@@ -5448,7 +5586,7 @@ paths:
           schema:
             type: string
         - in: query
-          name: type
+          name: subtype
           description: Подтип устройства
           required: false
           schema:

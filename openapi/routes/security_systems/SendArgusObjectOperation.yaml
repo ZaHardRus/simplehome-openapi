@@ -1,0 +1,19 @@
+post:
+  operationId: send_argus_object_operation
+  tags:
+    - argus
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/security_systems/ArgusObjectOperationSerializer.yaml"
+  responses:
+    '200':
+      description: Операция выполнена
+    '400':
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "../../schemas/security_systems/WrongArgusOperation.yaml"
+              - $ref: "../../schemas/security_systems/ArgusObjectNotExist.yaml"
