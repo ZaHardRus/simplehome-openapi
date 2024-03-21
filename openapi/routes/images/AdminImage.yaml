@@ -59,12 +59,7 @@ put:
   tags:
     - images
   parameters:
-    - in: path
-      name: image_id
-      description: id изображения
-      required: true
-      schema:
-        type: integer
+    - in: "#/components/parameters/imageId"
   requestBody:
     content:
       application/json:
@@ -89,12 +84,12 @@ put:
 
 
 
-# components:
-#   parameters:
-#     imageId:
-#       in: path
-#       name: image_id
-#       description: id изображения
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    imageId:
+      in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer
