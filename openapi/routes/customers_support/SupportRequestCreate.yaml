@@ -7,51 +7,13 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            subject:
-              type: string
-              example: Приложение вылетает или работает неправильно
-            message:
-              type: string
-              example: Говно ваш симпл хоум, а не умный дом!
-            apartment_id:
-              type: integer
-              example: 1
-            email:
-              type: string
-              example: angry_customer@email.com
-            app_version:
-              type: string
-              example: simplehome v 2.20.1
-            device_brand:
-              type: string
-              example: Apple
-            device_model:
-              type: string
-              example: SE (2-nd generation)
-            device_operational_system:
-              type: string
-              example: IOS
-            device_operational_system_version:
-              type: string
-              example: 16.7
-            is_anonymous:
-              type: boolean
-              example: false
-            is_response_required:
-              type: boolean
-              example: true
+          $ref: "#/components/schemas/SupportRequestSchema"
   responses:
     "400":
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: Subject "Kekus Pekus" Is Unknown!
+            $ref: "#/components/schemas/UnknownSubject"
     "200":
       content:
         application/json:
@@ -65,47 +27,47 @@ post:
 
 
 
-# components:
-#   schemas:
-#     UnknownSubject:
-#       type: object
-#       properties:
-#         detail:
-#           type: string
-#           example: Subject "Kekus Pekus" Is Unknown!
-#     SupportRequestSchema:
-#       type: object
-#       properties:
-#         subject:
-#           type: string
-#           example: Приложение вылетает или работает неправильно
-#         message:
-#           type: string
-#           example: Говно ваш симпл хоум, а не умный дом!
-#         apartment_id:
-#           type: integer
-#           example: 1
-#         email:
-#           type: string
-#           example: angry_customer@email.com
-#         app_version:
-#           type: string
-#           example: simplehome v 2.20.1
-#         device_brand:
-#           type: string
-#           example: Apple
-#         device_model:
-#           type: string
-#           example: SE (2-nd generation)
-#         device_operational_system:
-#           type: string
-#           example: IOS
-#         device_operational_system_version:
-#           type: string
-#           example: 16.7
-#         is_anonymous:
-#           type: boolean
-#           example: false
-#         is_response_required:
-#           type: boolean
-#           example: true
+components:
+  schemas:
+    UnknownSubject:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Subject "Kekus Pekus" Is Unknown!
+    SupportRequestSchema:
+      type: object
+      properties:
+        subject:
+          type: string
+          example: Приложение вылетает или работает неправильно
+        message:
+          type: string
+          example: Говно ваш симпл хоум, а не умный дом!
+        apartment_id:
+          type: integer
+          example: 1
+        email:
+          type: string
+          example: angry_customer@email.com
+        app_version:
+          type: string
+          example: simplehome v 2.20.1
+        device_brand:
+          type: string
+          example: Apple
+        device_model:
+          type: string
+          example: SE (2-nd generation)
+        device_operational_system:
+          type: string
+          example: IOS
+        device_operational_system_version:
+          type: string
+          example: 16.7
+        is_anonymous:
+          type: boolean
+          example: false
+        is_response_required:
+          type: boolean
+          example: true

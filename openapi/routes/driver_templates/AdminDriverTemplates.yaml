@@ -4,12 +4,7 @@ get:
   tags:
     - drivers_templates
   parameters:
-    - in: query
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/apartmentTemplateQueryId"
     - $ref: "../../schemas/core/filters/sorting_query.yaml"
   responses:
     "200":
@@ -37,11 +32,7 @@ post:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: ApartmentTemplates With id {apartment_template_id} Not Found!
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
     "403":
       content:
         application/json:
@@ -86,20 +77,20 @@ delete:
                 example: 1
                 description: Кол-во удаленных шаблонов драйверов
 
-# components:
-#   parameters:
-#     apartmentTemplateQueryId:
-#       in: query
-#       name: apartment_template_id
-#       description: id шаблона квартиры
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    apartmentTemplateQueryId:
+      in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer
 
-  # schemas:
-  #   ApartmentTemplatesNotFound:
-  #     type: object
-  #     properties:
-  #       detail:
-  #         type: string
-  #         example: ApartmentTemplates With id {apartment_template_id} Not Found!
+  schemas:
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!

@@ -41,11 +41,7 @@ post:
           schema:
             oneOf:
               - $ref: "../../schemas/core/errors/EntityAlreadyExists.yaml"
-              - type: object
-                properties:
-                  detail:
-                    type: string
-                    example: controller_ip required if is_dhcp is false
+              - $ref: "#/components/schemas/controllerIpValidationError"
 
     "200":
       content:
@@ -84,11 +80,11 @@ delete:
                 example: 1
                 description: Кол-во удаленных шаблонов квартир
 
-# components:
-#   schemas:
-#     controllerIpValidationError:
-#       type: object
-#       properties:
-#         detail:
-#           type: string
-#           example: controller_ip required if is_dhcp is false
+components:
+  schemas:
+    controllerIpValidationError:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: controller_ip required if is_dhcp is false

@@ -3,6 +3,10 @@ required:
   - title
   - address
   - city
+  - image_id
+  - integrator_id
+  - city
+  - description
 properties:
   title:
     type: string
@@ -10,9 +14,12 @@ properties:
     type: string
   description:
     type: string
+    nullable: true
   image_id:
     type: integer
+    nullable: true
   integrator_id:
     type: integer
+    nullable: true
   city:
     type: string

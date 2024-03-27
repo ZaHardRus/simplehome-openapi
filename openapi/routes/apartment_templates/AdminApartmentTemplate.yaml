@@ -4,12 +4,7 @@ get:
   tags:
     - apartment_templates
   parameters:
-    - in: path
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/apartmentTemplateId"
   responses:
     "404":
       content:
@@ -28,12 +23,7 @@ delete:
   tags:
     - apartment_templates
   parameters:
-    - in: path
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/apartmentTemplateId"
   responses:
     "400":
       content:
@@ -52,12 +42,12 @@ delete:
     
 
 
-# components:
-#   parameters:
-#     apartmentTemplateId:
-#       in: path
-#       name: apartment_template_id
-#       description: id шаблона квартиры
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    apartmentTemplateId:
+      in: path
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer

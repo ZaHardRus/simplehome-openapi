@@ -2,32 +2,40 @@ type: object
 properties:
   id:
     type: integer
-
   title:
     type: string
-
   address:
     type: string
-
   city:
     type: string
-
   description:
     type: string
-
+    nullable: true
   created_at:
     type: string
     format: date-time
-
+    nullable: true
   updated_at:
     type: string
     format: date-time
-
+    nullable: true
   image_id:
     type: integer
-
+    nullable: true
   integrator_id:
     type: integer
-
+    nullable: true
   customer_support_email:
     type: string
+    nullable: true
+required:
+  - id
+  - title
+  - address
+  - city
+  - description
+  - created_at
+  - updated_at
+  - image_id
+  - integrator_id
+  - customer_support_email

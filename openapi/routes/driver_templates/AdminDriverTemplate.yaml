@@ -4,12 +4,7 @@ get:
   tags:
     - drivers_templates
   parameters:
-    - in: path
-      name: driver_template_id
-      description: id шаблона драйвера
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/driverTemplateId"
   responses:
     "404":
       content:
@@ -28,12 +23,7 @@ put:
   tags:
     - drivers_templates
   parameters:
-    - in: path
-      name: driver_template_id
-      description: id шаблона драйвера
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/driverTemplateId"
   requestBody:
     content:
       application/json:
@@ -44,11 +34,7 @@ put:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: ApartmentTemplates With id {apartment_template_id} Not Found!
+            $ref: "#/components/schemas/ApartmentTemplatesNotFound"
     "403":
       content:
         application/json:
@@ -66,12 +52,7 @@ delete:
   tags:
     - drivers_templates
   parameters:
-  - in: path
-    name: driver_template_id
-    description: id шаблона драйвера
-    required: true
-    schema:
-      type: integer
+  - $ref: "#/components/parameters/driverTemplateId"
   responses:
     "403":
       content:
@@ -91,20 +72,20 @@ delete:
     "204":
       description: Удаление шаблона драйвера
 
-# components:
-#   parameters:
-#     driverTemplateId:
-#       in: path
-#       name: driver_template_id
-#       description: id шаблона драйвера
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    driverTemplateId:
+      in: path
+      name: driver_template_id
+      description: id шаблона драйвера
+      required: true
+      schema:
+        type: integer
 
-  # schemas:
-  #   ApartmentTemplatesNotFound:
-  #     type: object
-  #     properties:
-  #       detail:
-  #         type: string
-  #         example: ApartmentTemplates With id {apartment_template_id} Not Found!
+  schemas:
+    ApartmentTemplatesNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: ApartmentTemplates With id {apartment_template_id} Not Found!

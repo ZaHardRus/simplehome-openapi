@@ -44,11 +44,7 @@ post:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: Automation with id {automation_id} not found
+            $ref: "#/components/schemas/AutomationNotFound"
     "201":
       content:
         application/json:
@@ -86,11 +82,11 @@ delete:
                 example: 1
                 description: Кол-во удаленных триггеров
 
-# components:
-#   schemas:
-#     AutomationNotFound:
-#       type: object
-#       properties:
-#         detail:
-#           type: string
-#           example: Automation with id {automation_id} not found
+components:
+  schemas:
+    AutomationNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Automation with id {automation_id} not found

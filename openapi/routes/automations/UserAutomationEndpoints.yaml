@@ -4,12 +4,7 @@ get:
   tags:
     - automations
   parameters:
-    - in: path
-      name: automation_id
-      description: id автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationPathId"
     - in: query
       name: apartment_id
       required: false
@@ -29,11 +24,7 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: Automation Not Found!
+            $ref: "#/components/schemas/AutomationNotFound"
     "400":
       description: Id must be an integer
 
@@ -43,12 +34,7 @@ delete:
   tags:
     - automations
   parameters:
-    - in: path
-      name: automation_id
-      description: id автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationPathId"
 
   responses:
     "404":
@@ -56,11 +42,7 @@ delete:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: Automation Not Found!
+            $ref: "#/components/schemas/AutomationNotFound"
     "400":
       description: Id must be an integer
     "403":
@@ -74,12 +56,7 @@ put:
   tags:
     - automations
   parameters:
-    - in: path
-      name: automation_id
-      description: id автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationPathId"
 
   requestBody:
     content:
@@ -92,11 +69,7 @@ put:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              detail:
-                type: string
-                example: Automation Not Found!
+            $ref: "#/components/schemas/AutomationNotFound"
     "403":
       description: Not enough permissions
     "201":
@@ -108,20 +81,20 @@ put:
 
 
 
-# components:
-#   parameters:
-#     AutomationPathId:
-#       in: path
-#       name: automation_id
-#       description: id автоматизации
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    AutomationPathId:
+      in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
 
-#   schemas:
-#     AutomationNotFound:
-#       type: object
-#       properties:
-#         detail:
-#           type: string
-#           example: Automation Not Found!
+  schemas:
+    AutomationNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Automation Not Found!
