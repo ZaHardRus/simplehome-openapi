@@ -59,7 +59,7 @@ put:
   tags:
     - images
   parameters:
-    - in: "#/components/parameters/imageId"
+    - $ref: "#/components/parameters/imageId"
   requestBody:
     content:
       application/json:

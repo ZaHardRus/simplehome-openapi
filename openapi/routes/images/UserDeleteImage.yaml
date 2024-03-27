@@ -4,12 +4,7 @@ delete:
   tags:
     - images
   parameters:
-    - in: path
-      name: image_id
-      description: id изображения
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/imageId"
   responses:
     "404":
       content:
@@ -26,12 +21,12 @@ delete:
 
 
 
-# components:
-#   parameters:
-#     imageId:
-#       in: path
-#       name: image_id
-#       description: id изображения
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    imageId:
+      in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer

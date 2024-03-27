@@ -4,12 +4,7 @@ get:
   tags:
     - automation_actions
   parameters:
-    - in: path
-      name: automation_action_id
-      description: id действия автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationActionPathId"
   responses:
     "404":
       content:
@@ -32,12 +27,7 @@ delete:
   tags:
     - automation_actions
   parameters:
-    - in: path
-      name: automation_action_id
-      description: id действия автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationActionPathId"
   responses:
     "403":
       content:
@@ -67,12 +57,7 @@ put:
         schema:
           $ref: "../../schemas/automation_actions/CreateAutomationAction.yaml"
   parameters:
-    - in: path
-      name: automation_action_id
-      description: id действия автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationActionPathId"
   responses:
     "403":
       content:
@@ -97,12 +82,12 @@ put:
               $ref: "../../schemas/automation_actions/RetrieveAutomationAction.yaml"
 
 
-# components:
-#   parameters:
-#     AutomationActionPathId:
-#       in: path
-#       name: automation_action_id
-#       description: id действия автоматизации
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    AutomationActionPathId:
+      in: path
+      name: automation_action_id
+      description: id действия автоматизации
+      required: true
+      schema:
+        type: integer

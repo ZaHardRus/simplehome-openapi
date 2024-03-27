@@ -4,12 +4,7 @@ get:
   tags:
     - automation_triggers
   parameters:
-    - in: path
-      name: automation_trigger_id
-      description: id триггера автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
     - in: query
       name: apartment_id
       required: false
@@ -43,12 +38,7 @@ delete:
   tags:
     - automation_triggers
   parameters:
-    - in: path
-      name: automation_trigger_id
-      description: id триггера автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
     - in: query
       name: apartment_id
       required: false
@@ -90,12 +80,7 @@ put:
         schema:
           $ref: "../../schemas/automation_triggers/CreateAutomationTrigger.yaml"
   parameters:
-    - in: path
-      name: automation_trigger_id
-      description: id триггера автоматизации
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/AutomationTriggerPathId"
     - in: query
       name: apartment_id
       required: false
@@ -132,12 +117,12 @@ put:
               $ref: "../../schemas/automation_triggers/RetrieveAutomationTrigger.yaml"
 
 
-# components:
-#   parameters:
-#     AutomationTriggerPathId:
-#       in: path
-#       name: automation_trigger_id
-#       description: id триггера автоматизации
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    AutomationTriggerPathId:
+      in: path
+      name: automation_trigger_id
+      description: id триггера автоматизации
+      required: true
+      schema:
+        type: integer

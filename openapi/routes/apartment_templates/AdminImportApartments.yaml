@@ -23,16 +23,8 @@ post:
         application/json:
           schema:
             oneOf:
-              - type: object
-                properties:
-                  detail:
-                    type: string
-                    example: residence_id Must Be An Integer!
-              - type: object
-                properties:
-                  detail:
-                    type: string
-                    example: residence_id Must Not Be None!
+              - $ref: "#/components/schemas/ResidenceMustBeInteger"
+              - $ref: "#/components/schemas/ResidenceMustNotBeNone"
           examples:
             Must Be An Integer:
               value:
@@ -83,17 +75,17 @@ post:
                       type: string
 
 
-# components:
-#   schemas:
-#     ResidenceMustBeInteger:
-#       type: object
-#       properties:
-#         detail:
-#           type: string
-#           example: residence_id Must Be An Integer!
-#     ResidenceMustNotBeNone:
-#       type: object
-#       properties:
-#         detail:
-#           type: string
-#           example: residence_id Must Not Be None!
+components:
+  schemas:
+    ResidenceMustBeInteger:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: residence_id Must Be An Integer!
+    ResidenceMustNotBeNone:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: residence_id Must Not Be None!

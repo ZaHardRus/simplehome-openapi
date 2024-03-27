@@ -4,12 +4,7 @@ put:
   tags:
     - apartment_templates
   parameters:
-    - in: path
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: true
-      schema:
-        type: integer
+    - $ref: "#/components/parameters/apartmentTemplateId"
   requestBody:
     content:
       application/json:
@@ -28,12 +23,12 @@ put:
             $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplate.yaml"
 
 
-# components:
-#   parameters:
-#     apartmentTemplateId:
-#       in: path
-#       name: apartment_template_id
-#       description: id шаблона квартиры
-#       required: true
-#       schema:
-#         type: integer
+components:
+  parameters:
+    apartmentTemplateId:
+      in: path
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer
