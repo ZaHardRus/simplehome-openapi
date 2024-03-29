@@ -20,11 +20,12 @@ properties:
   customer_support_email:
     type: string
     nullable: true
+  city:
+    type: string
 required:
   - title
   - address
-  - description
-  - updated_at
   - image_id
   - integrator_id
-  - customer_support_email
+  - city
+
