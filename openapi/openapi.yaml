@@ -23,19 +23,19 @@ security:
   - BearerAuth: []
 
 paths:
-  /api/v2/argus/object/{argus_object_id}:
+  /argus/object/{argus_object_id}:
     $ref: './routes/security_systems/RetrieveArgusObject.yaml'
 
-  /api/v2/argus/object/operation:
+  /argus/object/operation:
     $ref: './routes/security_systems/SendArgusObjectOperation.yaml'
 
-  /api/v2/admin/buildings/{building_id}/set_apartments:
+  /admin/buildings/{building_id}/set_apartments:
     $ref: './routes/buildings/AdminSetBuildingApartments.yaml'
 
-  /api/v2/admin/buildings/{building_id}:
+  /admin/buildings/{building_id}:
     $ref: './routes/buildings/AdminBuilding.yaml'
 
-  /api/v2/admin/buildings:
+  /admin/buildings:
     $ref: './routes/buildings/Buildings.yaml'
     
   /support/create_report:
@@ -44,16 +44,13 @@ paths:
   /support/list_subjects:
     $ref: './routes/customers_support/GetSupportedSubjects.yaml'
 
-  /api/v2/get_weather:
+  /get_weather:
     $ref: './routes/weather/GetWeather.yaml'
 
   /images:
     $ref: './routes/images/UserCreateImage.yaml'
-  
-  /images/intermediate/hash/{hash}:
-    $ref: './routes/images/UserDownloadImage.yaml'
 
-  /api/v2/images/intermediate/hash/{hash}:
+  /images/intermediate/hash/{hash}:
     $ref: './routes/images/UserDownloadImageByIntermediateToken.yaml'
 
   /images/{image_id}:
@@ -74,7 +71,7 @@ paths:
   /admin/images/hash/{hash}:
     $ref: './routes/images/AdminDownloadImage.yaml'
 
-  /api/v2/admin/images/create_dir:
+  /admin/images/create_dir:
     $ref: './routes/images/AdminCreateFileserviceDir.yaml'
 
   /admin/images/search:
@@ -134,55 +131,55 @@ paths:
   /admin/automation_actions:
     $ref: ./routes/automation_actions/AdminAutomationsActions.yaml
 
-  /api/v2/admin/apartment_templates:
+  /admin/apartment_templates:
     $ref: ./routes/apartment_templates/AdminApartmentTemplates.yaml
 
-  /api/v2/admin/apartment_templates/import_apartments:
+  /admin/apartment_templates/import_apartments:
     $ref: ./routes/apartment_templates/AdminImportApartments.yaml
 
-  /api/v2/admin/apartment_templates/{apartment_template_id}:
+  /admin/apartment_templates/{apartment_template_id}:
     $ref: ./routes/apartment_templates/AdminApartmentTemplate.yaml
 
-  /api/v2/admin/apartment_templates/controller/{apartment_template_id}:
+  /admin/apartment_templates/controller/{apartment_template_id}:
     $ref: ./routes/apartment_templates/AdminApartmentTemplateController.yaml
 
-  /api/v2/admin/apartment_templates/apartment/{apartment_template_id}:
+  /admin/apartment_templates/apartment/{apartment_template_id}:
     $ref: ./routes/apartment_templates/AdminApartmentTemplateApartment.yaml
 
-  /api/v2/admin/room_templates:
+  /admin/room_templates:
     $ref: ./routes/room_templates/AdminRoomTemplates.yaml
 
-  /api/v2/admin/room_templates/{room_template_id}:
+  /admin/room_templates/{room_template_id}:
     $ref: ./routes/room_templates/AdminRoomTemplate.yaml
 
-  /api/v2/admin/driver_templates:
+  /admin/driver_templates:
     $ref: ./routes/driver_templates/AdminDriverTemplates.yaml
 
-  /api/v2/admin/driver_templates/{driver_template_id}:
+  /admin/driver_templates/{driver_template_id}:
     $ref: ./routes/driver_templates/AdminDriverTemplate.yaml
 
-  /api/v2/admin/device_templates:
+  /admin/device_templates:
     $ref: ./routes/device_templates/AdminDeviceTemplates.yaml
 
-  /api/v2/admin/device_templates/{device_template_id}:
+  /admin/device_templates/{device_template_id}:
     $ref: ./routes/device_templates/AdminDeviceTemplate.yaml
 
-  /api/v2/admin/capability_templates:
+  /admin/capability_templates:
     $ref: ./routes/capability_templates/AdminCapabilityTemplates.yaml
 
-  /api/v2/admin/capability_templates/{capability_template_id}:
+  /admin/capability_templates/{capability_template_id}:
     $ref: ./routes/capability_templates/AdminCapabilityTemplate.yaml
 
-  /api/v2/admin/scenario_templates:
+  /admin/scenario_templates:
     $ref: ./routes/scenario_templates/AdminScenarioTemplates.yaml
 
-  /api/v2/admin/scenario_templates/{scenario_template_id}:
+  /admin/scenario_templates/{scenario_template_id}:
     $ref: ./routes/scenario_templates/AdminScenarioTemplate.yaml
 
-  /api/v2/admin/action_templates:
+  /admin/action_templates:
     $ref: ./routes/actions_templates/AdminActionTemplates.yaml
 
-  /api/v2/admin/action_templates/{action_template_id}:
+  /admin/action_templates/{action_template_id}:
     $ref: ./routes/actions_templates/AdminActionTemplate.yaml
 
 
@@ -1126,7 +1123,7 @@ paths:
   # /apartments:
   #   $ref: "./routes/apartments/user_apartments.yaml"
 
-  # # /api/v2/admin/apartments_types/list:
+  # # /admin/apartments_types/list:
   #   # get:
 
   # # users ------------------------------------------------------------------------------

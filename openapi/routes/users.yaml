@@ -1,7 +1,7 @@
-/api/v2/admin/get_accessible_schemas:
+/admin/get_accessible_schemas:
   post:
 
-/api/v2/users/get_accessible_schemas:
+/users/get_accessible_schemas:
   post:
 
 
@@ -57,11 +57,11 @@
   post:
     operationId: login_view.refresh_token
 
-/api/v2/user_details:
+/user_details:
   get:
     operationId: user_view.retrieve
 
-/api/v2/users/{pk}:
+/users/{pk}:
   patch:
     operationId: user_view.update
 
@@ -69,10 +69,10 @@
     operationId: user_view.delete
 
 
-/api/v2/user_info:
+/user_info:
   get:
     operationId: user_view.get_user_info_by_user_id
 
-/api/v2/user_by_phone_number:
+/user_by_phone_number:
   post:
     operationId: user_view.get_or_create_by_phone_number
