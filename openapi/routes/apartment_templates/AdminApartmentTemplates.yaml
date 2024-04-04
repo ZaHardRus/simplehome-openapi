@@ -17,7 +17,7 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplateWithIntegratorId.yaml"
+              $ref: "../../schemas/apartment_templates/RetrieveApartmentTemplate.yaml"
 
 post:
   operationId: admin-apartment-templates-create

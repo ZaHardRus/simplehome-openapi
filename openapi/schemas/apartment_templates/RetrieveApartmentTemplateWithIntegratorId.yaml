@@ -4,10 +4,12 @@ properties:
     type: integer
   controller_ip:
     type: string
+    nullable: true
   controller_port:
     type: integer
   residence_id:
     type: integer
+    nullable: true
   title:
     type: string
   created_at:
