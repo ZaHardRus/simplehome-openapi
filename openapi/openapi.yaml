@@ -266,7 +266,7 @@ paths:
           schema:
             type: string
         - in: query
-          name: max_result
+          name: max_results
           required: false
           schema:
             type: string
