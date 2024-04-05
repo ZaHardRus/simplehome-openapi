@@ -5,12 +5,6 @@ get:
   description: возвращает пагинированный список сценариев
   parameters:
     - in: query
-      name: search
-      description: производится поиск по имени сценария
-      schema:
-        type: string
-    
-    - in: query
       name: type
       description: тип сценария, глобальный или локальный (что бы это не значило)
       schema:
@@ -18,35 +12,13 @@ get:
         enum:
           - global
           - local
-    
-    - in: query
-      name: created_before_date
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: created_after_date
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: updated_before_date
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: updated_after_date
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-    # TODO: пагинация
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml"
+    - $ref: "../../schemas/core/filters/search_query.yaml"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateAfterFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateAfterFilter"
   responses:
     '200':
       description: success
