@@ -4,40 +4,9 @@ get:
   tags:
     - apartments 
   parameters:
-    - in: query
-      name: search
-      description: производит поиск по apartment_number значению в бд,
-                   среди доступных пользователю апартоментов
-      schema:
-        type: string
-
-    - in: query
-      name: sort
-      description: хз
-      schema:
-        type: string
-
-    - in: query
-      name: page
-      description: noqa
-      schema:
-        type: integer
-        default: 1
-
-    - in: query
-      name: max_results
-      description: noqa
-      schema:
-        type:  integer
-
-    - in: query
-      name: get_all
-      description: noqa
-      deprecated: true
-      schema:
-        type: boolean
-        default: false
-
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml"
+    - $ref: "../../schemas/core/filters/search_query.yaml"
     - in: query
       name: flor_number
       description: noqa

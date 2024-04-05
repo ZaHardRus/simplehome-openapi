@@ -568,6 +568,8 @@ paths:
       description: получить список всех интеграторов
       tags:
         - integrators
+      parameters:
+        - $ref: "./schemas/core/filters/pagination_query.yaml"
       responses:
         "200":
           description: список интеграторов
@@ -1390,6 +1392,8 @@ paths:
           name: apartment_id
           schema:
             type: integer
+        - $ref: "./schemas/core/filters/pagination_query.yaml"
+        - $ref: "./schemas/core/filters/search_query.yaml"
       responses:
         "200":
           description: success
@@ -1589,22 +1593,8 @@ paths:
           name: scenario_id
           schema:
             type: integer
-        - in: query
-          name: sort
-          schema:
-            type: string
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: max_results
-          schema:
-            type: integer
-        - in: query
-          name: get_all
-          schema:
-            type: boolean
+        - $ref: "./schemas/core/filters/sorting_query.yaml"
+        - $ref: "./schemas/core/filters/pagination_query.yaml"
       responses:
         '200':
           description: success
