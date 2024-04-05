@@ -5,7 +5,9 @@ get:
     - apartments 
   parameters:
     - $ref: "../../schemas/core/filters/sorting_query.yaml"
-    - $ref: "../../schemas/core/filters/pagination_query.yaml"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/PageQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
     - $ref: "../../schemas/core/filters/search_query.yaml"
     - in: query
       name: flor_number

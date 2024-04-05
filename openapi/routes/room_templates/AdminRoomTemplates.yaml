@@ -6,7 +6,9 @@ get:
   parameters:
     - $ref: "#/components/parameters/apartmentTemplateQueryId"
     - $ref: "../../schemas/core/filters/sorting_query.yaml"
-    - $ref: "../../schemas/core/filters/pagination_query.yaml"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/PageQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
 
   responses:
     "200":
