@@ -1392,8 +1392,6 @@ paths:
           name: apartment_id
           schema:
             type: integer
-        - $ref: "./schemas/core/filters/pagination_query.yaml"
-        - $ref: "./schemas/core/filters/search_query.yaml"
       responses:
         "200":
           description: success
