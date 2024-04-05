@@ -1,14 +1,17 @@
-- in: query
+PageQuery:
+  in: query
   name: page
   required: false
   schema:
     type: string
-- in: query
+MaxResultsQuery:
+  in: query
   name: max_results
   required: false
   schema:
     type: string
-- in: query
+GetAllQuery:
+  in: query
   name: get_all
   deprecated: true
   schema:

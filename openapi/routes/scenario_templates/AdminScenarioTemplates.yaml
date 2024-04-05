@@ -7,7 +7,9 @@ get:
     - $ref: "#/components/parameters/apartmentTemplateQueryId"
     - $ref: "#/components/parameters/type"
     - $ref: "#/components/parameters/roomTemplateIds"
-    - $ref: "../../schemas/core/filters/pagination_query.yaml"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/PageQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
   responses:
     "200":
       content:
