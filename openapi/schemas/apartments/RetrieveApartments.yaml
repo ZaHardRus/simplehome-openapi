@@ -12,3 +12,11 @@ properties:
     type: string
   type_label_eng:
     type: string
+required:
+  - id
+  - apartment_number
+  - residence_id
+  - residence_title
+  - type_label
+  - type_label_eng
+  
