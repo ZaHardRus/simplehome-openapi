@@ -56,7 +56,11 @@ put:
               type: string
   responses:
     '204':
-        description: Успешное удаление
+        description: Успешное изменение
+        content:
+          application/json:
+            schema:
+              $ref: '../../schemas/buildings/BuildingSchema.yaml''
     '400':
       description: некорректные данные в запросе
       content:
