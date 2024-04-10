@@ -5,7 +5,7 @@ put:
     - buildings
   parameters:
     - in: path
-      name: building_id
+      name: id
       required: true
       schema:
         type: integer
