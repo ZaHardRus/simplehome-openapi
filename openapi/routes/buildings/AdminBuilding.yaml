@@ -55,7 +55,7 @@ put:
             title: 
               type: string
   responses:
-    '204':
+    '201':
         description: Успешное изменение
         content:
           application/json:
