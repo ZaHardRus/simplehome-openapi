@@ -60,7 +60,7 @@ put:
         content:
           application/json:
             schema:
-              $ref: '../../schemas/buildings/BuildingSchema.yaml''
+              $ref: '../../schemas/buildings/BuildingSchema.yaml'
     '400':
       description: некорректные данные в запросе
       content:
