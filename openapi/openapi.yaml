@@ -412,7 +412,7 @@ paths:
                     items:
                       type: integer
 
-  /admin/residences/{pk}/buildings:
+  /admin/residences/{residence_id}/buildings:
     get:
       operationId: retrieve_buildings
       description: Отдаёт список строений принадлежащих резиденции.
@@ -421,7 +421,7 @@ paths:
         - residences
       parameters:
         - in: path
-          name: pk
+          name: residence_id
           required: true
           description: id резиденции
           schema:
@@ -434,20 +434,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    residence_id:
-                      type: integer
+                  $ref: './schemas/buildings/BuildingSchema.yaml'
 
   # доступы до резиденций
   /admin/residences_accesses/{pk}:
