@@ -5,7 +5,7 @@ delete:
     - buildings
   parameters:
     - in: path
-      name: id
+      name: building_id
       required: true
       schema:
         type: integer
@@ -40,7 +40,7 @@ put:
     - buildings
   parameters:
     - in: path
-      name: id
+      name: building_id
       required: true
       schema:
         type: integer
