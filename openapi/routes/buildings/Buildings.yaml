@@ -1,22 +1,22 @@
 post:
   operationId: admin-buildings-create
-  description: Создает несколько зданий
+  description: Создает здание
   tags:
     - buildings
   requestBody:
     content:
       application/json:
         schema:
-          type: array
-          items:
-            $ref: '../../schemas/buildings/CreateBuildingSchema.yaml'
+          $ref: '../../schemas/buildings/CreateBuildingSchema.yaml'
   responses:
     "400":
       description: некорректные данные в запросе
       content:
         application/json:
           schema:
-            $ref: '../../schemas/core/errors/EntityAlreadyExists.yaml'
+            oneOf:
+                - $ref: '#/components/schemas/WrongRequestBody'
+                - $ref: '../../schemas/core/errors/EntityAlreadyExists.yaml'
     "403":
       description: недостаточно прав доступа
       content:
@@ -28,11 +28,7 @@ post:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../../schemas/buildings/BuildingSchema.yaml'
-              - type: array
-                items:
-                  $ref: '../../schemas/buildings/BuildingSchema.yaml'
+            $ref: '../../schemas/buildings/BuildingSchema.yaml'
 
 delete:
   operationId: admin-multiple-buildings-delete
@@ -70,3 +66,21 @@ delete:
         application/json:
           schema:
             $ref: '../../schemas/core/errors/UserPermissionError.yaml' 
+
+
+components:
+  schemas:
+    WrongRequestBody:
+      type: object
+      properties:
+        error_type:
+          type: string
+          example: VALIDATION_ERROR
+          nullable: false
+        detail: 
+          type: string
+          example: Неверное тело запроса!
+          nullable: false
+      required:
+        - error_type
+        - detail
