@@ -10,7 +10,6 @@ get:
         type: string
     - in: query
       name: account_id
-      required: true
       schema:
         type: integer
   responses:
