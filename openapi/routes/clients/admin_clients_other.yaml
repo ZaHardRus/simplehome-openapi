@@ -44,7 +44,6 @@ patch:
         schema:
           type: object
           required:
-            - account_id
             - unique_id
           properties:
             account_id:

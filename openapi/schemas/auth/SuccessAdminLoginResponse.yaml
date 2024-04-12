@@ -1,0 +1,29 @@
+type: object
+properties:
+  exp_time:
+    type: integer
+  refresh_exp_time:
+    type: integer
+  group_id:
+    type: integer
+  user_id:
+    type: integer
+  prefix:
+    type: string
+  first_name:
+    type: string
+  last_name:
+    type: string
+  middle_name:
+    type: string
+  refresh_token:
+    type: string
+  token:
+    type: string
+required:
+  - token
+  - refresh_token
+  - refresh_exp_time
+  - exp_time
+  - user_id
+  - group_id

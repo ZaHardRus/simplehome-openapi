@@ -1160,6 +1160,10 @@ paths:
       responses:
         "200":
           description: Успешная авторизация
+          content:  
+            application/json:
+              schema:
+                $ref: "./schemas/auth/SuccessAdminLoginResponse.yaml"
   # TODO:
   /admin/users/all_user_phones:
     $ref: "./routes/users/all_user_phones.yaml"
