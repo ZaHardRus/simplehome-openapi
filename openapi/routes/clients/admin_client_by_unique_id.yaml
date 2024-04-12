@@ -15,7 +15,7 @@ get:
       name: unique_id
       required: true
       schema:
-        type: integer
+        type: string
 
   responses:
     "200":
