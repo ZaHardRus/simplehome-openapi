@@ -22,3 +22,35 @@ delete:
             # уточнить
             description: кол-во удалённого дерьма
             type: integer
+
+post:
+  tags:
+    - admin_session
+  operationId: create_client_session_admin
+  description: Создание клиентов (сессий пользователей) админом
+  requestBody:
+    content:
+      application/json:
+        schema: 
+          $ref: "../../schemas/clients/ClientsCreateSchema.yaml"
+  responses:
+    "201":
+      content:
+        application/json:
+          schema: 
+            $ref: "../../schemas/clients/RetrieveClient.yaml"
+      description: Созданный клиент
+          
+    "400":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties: 
+                error_type: 
+                  type: string
+                  example: "ENTITY_ALREADY_EXISTS"
+                detail: 
+                  type: string
+                  example: "Entity Already Exists!"
+      description: Такой клиент уже существует
