@@ -1,5 +1,4 @@
 get:
-  # TODO: в методе кривая пагинация
   operationId: apartments_list
   tags:
     - apartments 
@@ -9,17 +8,22 @@ get:
     - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
     - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
     - $ref: "../../schemas/core/filters/search_query.yaml"
+
     - in: query
       name: flor_number
-      description: noqa
+      description: фильтрация по номерам этажей
       schema:
-        type: integer
+        type: array
+        items: 
+          type: integer
 
     - in: query
       name: residence_id
-      description: id резиденции, в которой производим поиск резиденции
+      description: id резиденций, в которых производим поиск апартов
       schema:
-        type: integer
+        type: array
+        items: 
+          type: integer
 
     - in: query
       name: building_ids
@@ -31,42 +35,36 @@ get:
           type: integer
 
     - in: query
-      name: apartment_number
-      description: noqa
-      schema:
-        type: integer
-
-    - in: query
       name: apartment_type_ids
-      description: noqa
+      description: фильтрация по типам апартов
       schema:
         type: array
         items:
           type: integer
 
     - in: query
-      name: created_after_date
+      name: created_dt_after
       description: noqa
       schema:
         type: string
         format: date-time
 
     - in: query
-      name: updated_after_date
+      name: updated_dt_after
       description: noqa
       schema:
         type: string
         format: date-time
 
     - in: query
-      name: created_before_date      
+      name: created_dt_from      
       description: noqa
       schema:
         type: string
         format: date-time
 
     - in: query
-      name: updated_before_date
+      name: updated_dt_from
       description: noqa
       schema:
         type: string
@@ -80,31 +78,13 @@ get:
           schema:
             type: array
             items:
-              type: object
-              allOf:
-                - $ref: "../../schemas/apartments/RetrieveApartmentDublicate1.yaml"
-              properties:
-                type_label:
-                  type: string
-                accounts:
-                  type: array
-                  items:
-                    type: object
-                    allOf:
-                      - $ref: "../../schemas/users/RetrieveUser.yaml"
-                    properties:
-                      # нужен ли тут этот аттрибут ?
-                      is_owner:
-                        type: boolean
-
-    '404':
-      description: not found
+              $ref: "../../schemas/apartments/ApartmentWithAccounts.yaml"
 
 post:
   operationId: apartments_create
   tags:
     - apartments
-  description: создание апартоментов. Доступно с ролью админа и выше
+  description: создание апартаментов. Доступно с ролью админа и выше
   requestBody:
     content:
       application/json:
@@ -116,8 +96,9 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/apartments/RetrieveApartmentDublicate1.yaml"
-
+            $ref: "../../schemas/apartments/RetrieveCreatedApartment.yaml"
+    '400':
+      description: EntityAlreadyExists
 
 delete:
   operationId: apartments_delete_multiple
@@ -128,10 +109,13 @@ delete:
     content:
       application/json:
         schema:
-          description: список с id удаляемых апартоментов
-          type: array
-          items:
-            type: integer
+          type: object
+          properties:
+            id:
+              description: список с id удаляемых апартаментов
+              type: array
+              items:
+                type: integer
   responses:
     "200":
       description: success
@@ -140,4 +124,5 @@ delete:
           schema:
             description: кол-во удалённых строк
             type: integer
-    # raise UserPermissionError
+    '403':
+      description: UserPermissionError

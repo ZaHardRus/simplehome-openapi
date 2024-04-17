@@ -1,0 +1,23 @@
+type: object
+properties:
+  id:
+    type: integer
+  first_name: 
+    type: string
+  last_name:
+    type: string
+  middle_name:
+    type: string  
+  is_owner:
+    type: boolean
+  account_apartment_id:
+    type: integer
+  email:
+    type: string  
+  phone_number:
+    type: string  
+  image_id:
+    type: integer
+  language:
+    type: string  
+

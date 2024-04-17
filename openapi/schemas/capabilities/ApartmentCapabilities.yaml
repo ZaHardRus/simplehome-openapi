@@ -1,0 +1,26 @@
+type: object
+properties:
+  address:
+    type: string 
+    example: "авы"
+  feedback_address:
+    type: string 
+    example: "выф"
+  id:
+    type: integer 
+    example: 11115
+  uid:
+    type: string 
+    example: "wirenboard-AMRRKXLM"
+  type:
+    type: string 
+    example: "mqtt"
+  port:
+    type: integer 
+    example: 1883
+  ip:
+    type: string 
+    example: "192.168.88.74"
+  function:
+    type: string 
+    example: null

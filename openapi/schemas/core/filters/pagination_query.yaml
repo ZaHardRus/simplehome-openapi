@@ -13,7 +13,6 @@ MaxResultsQuery:
 GetAllQuery:
   in: query
   name: get_all
-  deprecated: true
   schema:
     type: boolean
     default: false

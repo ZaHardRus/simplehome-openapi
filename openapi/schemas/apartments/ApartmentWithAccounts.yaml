@@ -1,0 +1,32 @@
+type: object
+properties:
+  id:
+    type: integer
+  apartment_number:
+    type: string
+  residence_id:
+    type: integer
+  residence_title:
+    type: string
+  type_label:
+    type: string
+  type_label_eng:
+    type: string
+  apartment_type_id:
+    type: integer
+  floor_number:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  building_id:
+    type: integer
+  comment:
+    type: string
+  accounts:
+    type: array
+    items:
+      $ref: "../../schemas/apartments/Accounts.yaml"

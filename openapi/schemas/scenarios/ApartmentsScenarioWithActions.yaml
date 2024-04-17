@@ -1,0 +1,41 @@
+type: object
+properties:
+  id: 
+    type: integer
+    example: 1630
+  title: 
+    type: string
+    example: "Отдых"
+  trigger_type: 
+    type: string
+    example: "auto"
+  icon_tag: 
+    type: string
+    example: "photo"
+  uid: 
+    type: string
+    example: "wirenboard-AMRRKXLM"
+  apartment_id: 
+    type: integer
+    example: 1
+  room_id: 
+    type: integer
+    example: 1
+  is_confirmation_required: 
+    type: boolean
+    example: null
+  description: 
+    type: string
+    example: description
+  created_at: 
+    type: string
+    example: "2022-01-25T14:01:33.570737+00:00"
+    format: date-time
+  updated_at: 
+    type: string
+    example: "2022-03-29T09:35:39.355854+00:00"
+    format: date-time
+  actions: 
+    type: array
+    items:
+      $ref: "../../schemas/actions/ScenariosActions.yaml"
