@@ -31,3 +31,7 @@ properties:
     example: 1
   extra:
     type: object
+  is_registered:
+    type: boolean
+  is_dhcp:
+    type: boolean

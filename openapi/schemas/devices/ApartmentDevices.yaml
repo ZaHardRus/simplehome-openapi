@@ -1,0 +1,97 @@
+type: object
+properties:
+  id:
+    type: integer 
+    example: 305
+  name:
+    type: string 
+    example: "Супер датчик протечки"
+  type:
+    type: string 
+    example: "global"
+  subtype:
+    type: string 
+    example: "trigger"
+  driver_id:
+    type: integer 
+    example: 2
+  description:
+    type: string 
+    example: 1
+  room_id:
+    type: integer 
+    example: 482
+  created_at:
+    type: string 
+    example: "2021-05-11T09:58:26.178004+00:00"
+    format: date-time
+  updated_at:
+    type: string 
+    example: "2024-03-21T09:47:15.746945+00:00"
+    format: date-time
+  icon_tag:
+    type: string 
+    example: "water_sensor"
+  residence_id:
+    type: integer 
+    example: 1
+  extra:
+    type: object 
+    example: {"mode": "scenario"}
+  capability_id:
+    type: integer 
+    example: 449
+  device_id:
+    type: integer 
+    example: 305
+  capability_type:
+    type: string 
+    example: "toggle"
+  min_value:
+    type: integer 
+    example: 0
+  max_value:
+    type: integer 
+    example: 1
+  address:
+    type: string 
+    example: "/devices/master_off_control/controls/master_OFF/on"
+  capability_residence_id:
+    type: integer 
+    example: 1
+  capability_extra:
+    type: object 
+    example: null
+  feedback_address:
+    type: string 
+    example: null
+  unit:
+    type: string 
+    example: null
+  capability_updated_at:
+    type: string 
+    example: "2021-09-06T11:16:02.218641+00:00"
+  function:
+    type: string 
+    example: null
+  push_enabled:
+    type: string 
+    example: "always"
+  is_required:
+    type: boolean 
+    example: false
+  capability_sort_order:
+    type: string 
+    example: null
+  driver_type:
+    type: string 
+    example: "mqtt"
+  driver_port:
+    type: integer 
+    example: 1883
+  driver_ip:
+    type: string 
+    example: "192.168.88.74"
+  room_title:
+    type: string 
+    example: "Postman 1080p"

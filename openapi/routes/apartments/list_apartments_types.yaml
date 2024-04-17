@@ -1,0 +1,21 @@
+get:
+  operationId: apartments_types_list
+  tags:
+    - apartments 
+
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                label:
+                  type: string
+                label_eng: 
+                  type: string

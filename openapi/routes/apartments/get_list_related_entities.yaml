@@ -1,5 +1,4 @@
 get:
-  deprecated: true
   operationId: get_list_related_entities
   tags:
     - apartments
@@ -23,21 +22,32 @@ get:
             type: object
             properties:
               controller_ids:
-                type: integer
-                description: noqa
-
+                type: array
+                items:
+                  id:
+                  type: integer
+                  example: 1
               driver_ids:
-                type: integer
-                description: noqa
-
+                type: array
+                items:
+                  id:
+                  type: integer
+                  example: 1 
               room_ids:
-                type: integer
-                description: noqa
-
+                type: array
+                items:
+                  id:
+                  type: integer
+                  example: 1 
               scenario_ids:
-                type: integer
-                description: noqa
-
+                type: array
+                items:
+                  id:
+                  type: integer
+                  example: 1 
               device_ids:
-                type: integer
-                description: noqa
+                type: array
+                items:
+                  id:
+                  type: integer
+                  example: 1 

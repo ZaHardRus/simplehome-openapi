@@ -1114,16 +1114,19 @@ paths:
   # /apartments:
   #   $ref: "./routes/apartments/user_apartments.yaml"
 
-  # # /admin/apartments_types/list:
-  #   # get:
+  /admin/apartments_types/list:
+    $ref: './routes/apartments/list_apartments_types.yaml'
+
+  /api/v2/admin/apartments/get_list_related_entities:
+    $ref: "./routes/apartments/get_list_related_entities.yaml"
+
+  /api/v2/admin/apartments/clone/{pk}:
+    $ref:
+
+  # /api/v2/admin/apartments/change_residence_id/{pk}'   НЕ ИСПОЛЬЗУЕТСЯ
 
   # # users ------------------------------------------------------------------------------
-
-  # /admin/get_accessible_schemas:
-  #   $ref: "./routes/users/admin_get_accessible_schemas.yaml"
-
-  # /users/get_accessible_schemas:
-  #   $ref: "./routes/users/admin_get_accessible_schemas.yaml"
+  
   # TODO:
   # /admin/users:
   #   $ref: "./routes/users/admin_users.yaml"

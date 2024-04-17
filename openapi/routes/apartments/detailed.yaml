@@ -13,39 +13,54 @@
           application/json:
             schema:
               type: object
-              allOf:
-                  - $ref: "../../schemas/apartments/RetrieveApartments.yaml"
               properties:
-                owners:
+                id:
+                  type: integer
+                apartment_number:
+                  type: integer
+                apartment_type_id:
+                  type: integer
+                floor_number:
+                  type: integer
+                residence_id:
+                  type: integer
+                created_at:
+                  type: string
+                  format: date-time
+                updated_at:
+                  type: string
+                  format: date-time
+                building_id:
+                  type: integer
+                comment:
+                  type: string
+                accounts:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      owner_id:
-                        type: integer
-                        example: 1
-                      first_name:
-                        type: string
-                        example: "Владислав"
-                      last_name:
-                        type: string
-                        example: "Быков"
-                      middle_name:
-                        type: string
-                        example: "Чел"
-                residence_title:
-                  type: string
-                  description: название  резиденции, которой принадлежат данные апартаменты
-                  example: "ЖК Зло"
+                    $ref: "../../schemas/apartments/Accounts.yaml"
+                controller:
+                  $ref: '../../schemas/controllers/RetrieveController.yaml'
+                rooms:
+                  type: array
+                  items:
+                    $ref: "../../schemas/rooms/ApartmentRooms.yaml"
+                scenarios:
+                  type: array
+                  items:
+                    $ref: "../../schemas/scenarios/ApartmentsScenarioWithActions.yaml"
+                devices:
+                  type: array
+                  items:
+                    $ref: "../../schemas/devices/ApartmentDevices.yaml"
                 drivers:
                   description: набор драйверов апартаментов
                   type: array
                   items:
                     $ref: '../../schemas/drivers/RetrieveDriver.yaml'
-                controller:
-                  $ref: '../../schemas/controllers/RetrieveController.yaml'
-
-
+                capabilities:
+                  type: array
+                  items:
+                    $ref: "../../schemas/capabilities/ApartmentCapabilities.yaml"
 
   delete:
     description: удаляет апартаменты.
@@ -68,7 +83,8 @@
         description: успешное удаление
       '404':
         description: апартаменты не найдены
-      # TODO: raise UserPermissionError
+      '403':
+        description: UserPermissionError
 
   # TODO: должно быть просто id
   put:
@@ -102,7 +118,9 @@
                         type: boolean
                       account_apartment_id:
                         type: integer
-
-      # raise UserPermissionError
-      # raise EntityAlreadyExists
-      # raise NotFound('Not Found!', 404)
+      '403':
+        description: UserPermissionError
+      '400':
+        description: EntityAlreadyExists
+      '404':
+        description: NotFound
