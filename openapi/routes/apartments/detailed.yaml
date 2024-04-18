@@ -92,32 +92,44 @@
     description: Доступно с ролью админа и выше.
     tags:
       - apartments
+    parameters:
+      - in: path
+        name: apartment_id
+        description: id изменяемых апартаментов
+        required: true
+        schema:
+          type: integer
+          example: 1
+    requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                apartment_number:
+                  type: string
+                  example: Квартира Олега Тинькова
+                apartment_type_id:
+                  type: integer
+                  example: 133
+                floor_number:
+                  type: integer
+                  example: 13
+                residence_id:
+                  type: integer
+                  example: 777
+                building_id:
+                  type: integer
+                  example: 14
+                comment:
+                  type: string
+                  example: "Postman update"
     responses:
       '201':
         content:
           application/json:
             schema:
-              type: object
-              allOf:
-                - $ref: "../../schemas/apartments/RetrieveApartmentDublicate1.yaml"
-              properties:
-                accounts:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      first_name:
-                        type:   string
-                      last_name:
-                        type: string
-                      middle_name:
-                        type: string
-                      is_owner:
-                        type: boolean
-                      account_apartment_id:
-                        type: integer
+              $ref: "../../schemas/apartments/RetrieveUpdatedApartmentWithAccounts.yaml"
       '403':
         description: UserPermissionError
       '400':
