@@ -1094,7 +1094,7 @@ paths:
             pidoras architecture pattern"
 
   # # apartments ---------------------------------------------------------------------------
-  /admin/apartments/{pk}:
+  /admin/apartments/{apartment_id}:
     $ref: './routes/apartments/detailed.yaml'
 
   /admin/apartments:
@@ -1103,27 +1103,23 @@ paths:
   /admin/apartments/get_list_related_entities:
     $ref: './routes/apartments/get_list_related_entities.yaml'
 
-  /admin/apartments/change_residence_id/{pk}:
+  /admin/apartments/change_residence_id/{apartment_id}:
     $ref: './routes/apartments/change_residence_id.yaml'
 
+  /admin/apartments_types/list:
+    $ref: './routes/apartments/list_apartments_types.yaml'
+
+  /admin/apartments/clone/{apartment_id}:
+    $ref: './routes/apartments/clone_apartment.yaml'
+
   # # пользовательская апишка на апартаменты
-  /apartments/{pk}:
+  /apartments/{apartment_id}:
     $ref: './routes/apartments/user_apartments_detailed.yaml'
 
   # Нужно дописать
   # /apartments:
   #   $ref: "./routes/apartments/user_apartments.yaml"
 
-  /admin/apartments_types/list:
-    $ref: './routes/apartments/list_apartments_types.yaml'
-
-  /api/v2/admin/apartments/get_list_related_entities:
-    $ref: "./routes/apartments/get_list_related_entities.yaml"
-
-  /api/v2/admin/apartments/clone/{pk}:
-    $ref:
-
-  # /api/v2/admin/apartments/change_residence_id/{pk}'   НЕ ИСПОЛЬЗУЕТСЯ
 
   # # users ------------------------------------------------------------------------------
   
