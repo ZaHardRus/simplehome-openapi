@@ -1,0 +1,21 @@
+type: object
+properties:
+  apartment_number:
+    type: string
+    required: true
+    example: Дом Олега Тинькова
+    description: Название нового помещения
+  floor_number:
+    type: integer
+    example: 1
+    description: Этаж нового помещения
+  apartment_type_id:
+    type: integer
+    description: id типа помещения
+  building_id:
+    type: integer
+    description: id здания
+  comment:
+    type: string
+    description: комментарий
+  

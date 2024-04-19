@@ -1,0 +1,52 @@
+post:
+  operationId: clone_apartments
+  tags:
+    - apartments
+  description: Позволяет создать копию апартаментов 
+              с возможностью изменить название, этаж, тип помещения, 
+              номер здания и комментарий
+  parameters:
+    - in: query
+      name: id
+      description: id апартаментов, которые необходимо клонировать
+      schema:
+        type: integer
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/apartments/CloneApartmentSchema.yaml"
+
+  responses:
+    '404':
+      description: NotFound
+
+    '201':
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              apartment_number:
+                type: string
+              apartment_type_id:
+                type: integer
+              floor_number:
+                type: integer
+              residence_id:
+                type: integer
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              building_id:
+                type: integer
+              comment:
+                type: string
+      
