@@ -2,6 +2,13 @@
     operationId: apartments_retrieve
     tags:
       - apartments
+    parameters:
+        - in: path
+          name: apartment_id
+          required: true
+          schema:
+            type: integer
+          example: 1
     description: По сути retrieve метод на получение апартаментов и всего,
                  что в них имеется.
                  Нужно вынести в отдельный роут инфу о контроллере, овнерах и тп
@@ -72,7 +79,7 @@
       - apartments
     parameters:
       - in: path
-        name: pk
+        name: apartment_id
         description: id удаляемых апартаментов
         required: true
         schema:
