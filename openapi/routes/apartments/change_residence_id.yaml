@@ -1,6 +1,4 @@
-# TODO: должно быть частью логики обновления
 post:
-  deprecated: true
   operationId: change_residence_id
   description: Доступно инженеру и выше.
                Должно быть частью логики обновления апартаментов.
@@ -11,7 +9,7 @@ post:
     - in: path
       description: id апартаментов, чью резиденцию меняем
       required: true
-      name: pk
+      name: apartment_id
       schema:
         type: integer
 
@@ -26,11 +24,13 @@ post:
             residence_id:
               description: id новой резиденции
               type: integer
+              required: true
   responses:
     '201':
       description: success
       content:
         application/json:
           schema:
-            $ref: "../../schemas/apartments/RetrieveApartmentDublicate1.yaml"
-
+            $ref: '../../schemas/apartments/ApartmentSchema.yaml'
+    '404':
+      description: NotFound
