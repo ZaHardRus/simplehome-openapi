@@ -1,0 +1,28 @@
+type: object
+properties:
+  id:
+    type: integer
+  apartment_number:
+    type: string
+    nullable: false
+  apartment_type_id:
+    type: integer
+    nullable: false
+  floor_number:
+    type: integer
+    nullable: false
+  residence_id:
+    type: integer
+    nullable: false
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+  building_id:
+    type: integer
+    nullable: true
+  comment:
+    type: string
+    nullable: true
