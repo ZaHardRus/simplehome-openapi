@@ -1,7 +1,6 @@
 type: object
 required:
   - unique_id
-  - email
 properties:
   email:
     type: string
