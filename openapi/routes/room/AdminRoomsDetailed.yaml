@@ -1,0 +1,109 @@
+get:
+  operationId: room_retrieve
+  tags:
+    - rooms
+  parameters:
+      - in: path
+        name: room_id
+        required: true
+        schema:
+          type: integer
+        example: 1
+  description: Получение полной информации по комнате
+  
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              title:
+                type: string
+                example: Уборная Олега Тинькова
+              image_id:
+                type: integer
+                example: 55
+              apartment_id:
+                type: integer
+                example: 1
+              created_at:
+                type: string
+                example: "2020-11-26T17:04:17.558199+00:00"
+                format: date-time
+              updated_at:
+                type: string
+                example: "2024-04-17T06:09:31.352373+00:00"
+                format: date-time
+              residence_id:
+                type: integer
+                example: 1
+              scenarios:
+                type: array
+                items:
+                  $ref: "../../schemas/actions/RoomScenarioAction.yaml"
+              devices:
+                type: array
+                items:
+                  $ref: "../../schemas/devices/RoomDevice.yaml"
+    '404':
+      description: NotFound  
+
+delete:
+  description: Удаляет комнату
+  operationId: room_delete
+  tags:
+    - rooms
+  parameters:
+  - in: query
+    name: delete_devices
+    description: флаг удаления устройств
+    required: false
+    schema:
+      type: boolean
+      example: true
+  responses:
+    '204':
+      description: Successfully deleted
+    '404':
+      description: NotFound
+
+put:
+  operationId: room_update
+  description: Обновляет комнату
+  tags:
+    - rooms
+  parameters:
+    - in: path
+      name: room_id
+      description: id изменяемой комнаты
+      required: true
+      schema:
+        type: integer
+        example: 1
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/rooms/CreateRoom.yaml"
+  responses:
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/rooms/ListRooms.yaml"
+    '403':
+      description: UserPermissionError
+    '400':
+      description: EntityAlreadyExists
+    '404':
+      description: NotFound
+      
+
+      
+      

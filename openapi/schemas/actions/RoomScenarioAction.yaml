@@ -1,0 +1,31 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 11422
+  scenario_id:
+    type: integer
+    example: 1630
+  capability_id:
+    type: integer
+    example: 1409
+  value:
+    type: string
+    example: "58"
+  residence_id:
+    type: integer
+    example: 1
+  updated_at:
+    type: string
+    example: "2022-03-29T09:35:39.262607+00:00"
+    format: date-time
+  created_at:
+    type: string
+    example: "2022-03-29T09:35:39.262609+00:00"
+    format: date-time
+  driver_id:
+    type: integer
+    example: 2
+  address:
+    type: string
+    example: "/devices/gr27_light/controls/value/on"

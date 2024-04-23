@@ -1,0 +1,26 @@
+type: object
+properties:
+  apartment_number:
+    type: string
+    required: true
+  floor_number:
+    type: integer
+    required: true 
+  residence_id:
+    type: integer
+    required: true 
+  controller_uid:
+    type: string
+    required: true
+  building_id:
+    type: integer
+    required: false
+  controller_serial_number:
+    type: string
+    required: true
+  comment:
+    type: string
+    required: false
+  apartment_type_id:
+    type: integer
+    required: true

@@ -111,26 +111,7 @@
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                apartment_number:
-                  type: string
-                  example: Квартира Олега Тинькова
-                apartment_type_id:
-                  type: integer
-                  example: 133
-                floor_number:
-                  type: integer
-                  example: 13
-                residence_id:
-                  type: integer
-                  example: 777
-                building_id:
-                  type: integer
-                  example: 14
-                comment:
-                  type: string
-                  example: "Postman update"
+              $ref: '../../schemas/apartments/UpdateApartment.yaml'
     responses:
       '201':
         content:
