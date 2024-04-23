@@ -19,6 +19,3 @@ properties:
     maxLength: 1024
   apartment_type_id:
     type: integer
-  template_id:
-    type: integer
-    nullable: true

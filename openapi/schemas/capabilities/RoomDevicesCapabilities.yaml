@@ -1,0 +1,57 @@
+type: object
+properties: 
+  id:
+    type: integer
+    example: 449
+  device_id:
+    type: integer
+    example: 305
+  type:
+    type: string
+    example: "toggle"
+  min_value:
+    type: integer
+    example: 0
+  max_value:
+    type: integer
+    example: 1
+  address:
+    type: string
+    example: "/devices/master_off_control/controls/master_OFF/on"
+  residence_id:
+    type: integer
+    example: 1
+  extra:
+    type: object
+    example: null
+  sort_order:
+    type: string
+    example: null
+  feedback_address:
+    type: string
+    example: null
+  unit:
+    type: string
+    example: null
+  updated_at:
+    type: string
+    example: "2021-09-06T11:16:02.218641+00:00"
+    format: date-time
+  function:
+    type: string
+    example: null
+  push_enabled:
+    type: string
+    example: "always"
+  is_required:
+    type: boolean
+    example: false
+  driver:
+    type: string
+    example: "mqtt"
+  ip:
+    type: string
+    example: "192.168.88.74"
+  port:
+    type: integer
+    example: 1888

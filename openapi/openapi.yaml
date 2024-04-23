@@ -146,11 +146,39 @@ paths:
   /admin/apartment_templates/apartment/{apartment_template_id}:
     $ref: ./routes/apartment_templates/AdminApartmentTemplateApartment.yaml
 
+# # room # #
+
+  ##        ########   #######   #######  ##     ##       ##
+  ##        ##     ## ##     ## ##     ## ###   ###       ##
+  ##        ##     ## ##     ## ##     ## #### ####       ##
+  ##        ########  ##     ## ##     ## ## ### ##       ##
+  ##        ##   ##   ##     ## ##     ## ##     ##       ##
+  ##        ##    ##  ##     ## ##     ## ##     ##       ##
+  ##        ##     ##  #######   #######  ##     ##       ##
+
+
   /admin/room_templates:
     $ref: ./routes/room_templates/AdminRoomTemplates.yaml
 
   /admin/room_templates/{room_template_id}:
     $ref: ./routes/room_templates/AdminRoomTemplate.yaml
+
+  /admin/rooms:
+    $ref: ./routes/room/AdminRooms.yaml 
+  
+  /admin/rooms/{room_id}:
+    $ref: ./routes/room/AdminRoomsDetailed.yaml
+
+  #  TODO: 
+  #  /admin/rooms/set_apartment_relations  # post
+  #  /admin/rooms/get_list_device_ids  # get
+  #  /admin/rooms/get_list_scenario_ids  # get
+  #  /admin/room_roles # get  # post  # delete
+  #  /admin/room_roles/{pk:\d+}  # get
+  #  /admin/set_room_roles  # post
+
+  # preferences ??
+
 
   /admin/driver_templates:
     $ref: ./routes/driver_templates/AdminDriverTemplates.yaml
@@ -181,6 +209,16 @@ paths:
 
   /admin/action_templates/{action_template_id}:
     $ref: ./routes/actions_templates/AdminActionTemplate.yaml
+
+  # # residence # #
+
+  ##        ########  ########  ######  #### ########  ######## ##    ##  ######  ########        ##
+  ##        ##     ## ##       ##    ##  ##  ##     ## ##       ###   ## ##    ## ##              ##
+  ##        ##     ## ##       ##        ##  ##     ## ##       ####  ## ##       ##              ##
+  ##        ########  ######    ######   ##  ##     ## ######   ## ## ## ##       ######          ##
+  ##        ##   ##   ##             ##  ##  ##     ## ##       ##  #### ##       ##              ##
+  ##        ##    ##  ##       ##    ##  ##  ##     ## ##       ##   ### ##    ## ##              ##
+  ##        ##     ## ########  ######  #### ########  ######## ##    ##  ######  ########        ##
 
 
   /admin/residences/{id}:
@@ -1093,7 +1131,17 @@ paths:
             
             pidoras architecture pattern"
 
-  # # apartments ---------------------------------------------------------------------------
+  # # apartments # #
+
+  ##           ###    ########     ###    ########  ######## ##     ## ######## ##    ## ########  ######         ##
+  ##          ## ##   ##     ##   ## ##   ##     ##    ##    ###   ### ##       ###   ##    ##    ##    ##        ##
+  ##         ##   ##  ##     ##  ##   ##  ##     ##    ##    #### #### ##       ####  ##    ##    ##              ##
+  ##        ##     ## ########  ##     ## ########     ##    ## ### ## ######   ## ## ##    ##     ######         ##
+  ##        ######### ##        ######### ##   ##      ##    ##     ## ##       ##  ####    ##          ##        ##
+  ##        ##     ## ##        ##     ## ##    ##     ##    ##     ## ##       ##   ###    ##    ##    ##        ##
+  ##        ##     ## ##        ##     ## ##     ##    ##    ##     ## ######## ##    ##    ##     ######         ##
+
+
   /admin/apartments/{apartment_id}:
     $ref: './routes/apartments/detailed.yaml'
 
@@ -1112,6 +1160,9 @@ paths:
   /admin/apartments/clone/{apartment_id}:
     $ref: './routes/apartments/clone_apartment.yaml'
 
+  /admin/apartment_templates/create_apartment/{template_id}:
+    $ref: './routes/apartments/create_apartment_from_template.yaml'
+
   # # пользовательская апишка на апартаменты
   /apartments/{apartment_id}:
     $ref: './routes/apartments/user_apartments_detailed.yaml'
@@ -1121,7 +1172,16 @@ paths:
   #   $ref: "./routes/apartments/user_apartments.yaml"
 
 
-  # # users ------------------------------------------------------------------------------
+  # # users # #
+
+  ##        ##     ##  ######  ######## ########        ##
+  ##        ##     ## ##    ## ##       ##     ##       ##
+  ##        ##     ## ##       ##       ##     ##       ##
+  ##        ##     ##  ######  ######   ########        ##
+  ##        ##     ##       ## ##       ##   ##         ##
+  ##        ##     ## ##    ## ##       ##    ##        ##
+  ##         #######   ######  ######## ##     ##       ##
+
   
   # TODO:
   # /admin/users:

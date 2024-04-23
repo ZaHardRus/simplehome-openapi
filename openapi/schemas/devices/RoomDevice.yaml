@@ -1,0 +1,56 @@
+type: object
+properties:
+  id:
+    type: integer 
+    example: 305
+  name:
+    type: string 
+    example: "Супер датчик протечки"
+  type:
+    type: string 
+    example: "global"
+  subtype:
+    type: string 
+    example: "trigger"
+  driver_id:
+    type: integer 
+    example: 2
+  description:
+    type: string 
+    example: 1
+  room_id:
+    type: integer 
+    example: 482
+  created_at:
+    type: string 
+    example: "2021-05-11T09:58:26.178004+00:00"
+    format: date-time
+  updated_at:
+    type: string 
+    example: "2024-03-21T09:47:15.746945+00:00"
+    format: date-time
+  icon_tag:
+    type: string 
+    example: "water_sensor"
+  residence_id:
+    type: integer 
+    example: 1
+  extra:
+    type: object 
+    example: {"mode": "scenario"}
+  room_title:
+    type: string
+    example: "Postman wireless"
+  driver_type:
+    type: string
+    example: "mqtt"
+  driver_extra:
+    type: object
+    example: null
+  destination:
+    type: string
+    example: "192.168.88.74:1883"
+  capabilities:
+    type: array
+    items: 
+      $ref: '../../schemas/capabilities/RoomDevicesCapabilities.yaml'

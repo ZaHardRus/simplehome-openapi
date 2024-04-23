@@ -1,0 +1,16 @@
+type: object
+properties:
+  title:
+    type: string
+    example: Гостинна Олега Тинькова
+    required: true
+  apartment_id:
+    type: integer
+    example: 777
+    required: true
+  residence_id:
+    type: integer
+    example: 13
+  image_id:
+    type: integer
+    example: 65

@@ -1,0 +1,18 @@
+type: object
+properties:
+  id: 
+    type: integer
+    example: 1630
+  title: 
+    type: string
+    example: "Отдых"
+  trigger_type: 
+    type: string
+    example: "auto"
+  icon_tag: 
+    type: string
+    example: "photo"
+  actions: 
+    type: array
+    items:
+      $ref: "../../schemas/actions/RoomScenarioAction.yaml"

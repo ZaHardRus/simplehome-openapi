@@ -1,0 +1,27 @@
+post:
+  operationId: create_apartments_from_template
+  tags:
+    - apartments
+  description: создание апартаментов на основе шаблона
+  parameters:
+      - in: path
+        name: template_id
+        description: id шаблона
+        required: true
+        schema:
+          type: integer
+          example: 1
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/apartments/CreateApartmentFromTemplate.yaml"
+  responses:
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/apartments/RetrieveCreatedApartment.yaml"
+    '400':
+      description: NotFound

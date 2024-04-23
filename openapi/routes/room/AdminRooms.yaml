@@ -1,0 +1,119 @@
+get:
+  operationId: rooms_list
+  tags:
+    - rooms 
+  parameters:
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/PageQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
+    - $ref: "../../schemas/core/filters/search_query.yaml"
+
+    - in: query
+      name: apartment_id
+      description: фильтрация по апартаментам
+      schema:
+        type: integer
+        example: 1
+
+    - in: query
+      name: created_dt_after
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+
+    - in: query
+      name: updated_dt_after
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+
+    - in: query
+      name: created_dt_from      
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+
+    - in: query
+      name: updated_dt_from
+      description: noqa
+      schema:
+        type: string
+        format: date-time
+
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/rooms/ListRooms.yaml"
+    '404':
+      description: NotFound
+
+post:
+  operationId: room_create
+  tags:
+    - rooms
+  description: создание комнаты
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/rooms/CreateRoom.yaml"
+  responses:
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/rooms/ListRooms.yaml"
+    '403':
+      description: UserPermissionError
+    '404':
+      description: NotExist
+
+delete:
+  operationId: rooms_delete_multiple
+  tags:
+    - rooms  
+  parameters:
+    - in: query
+      name: delete_devices
+      description: флаг удаления устройств
+      required: false
+      schema:
+        type: boolean
+        example: true
+  description: удаляет несколько комнат
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              description: список с id удаляемых комнат
+              type: array
+              items:
+                type: integer
+              example: [1, 2]
+  responses:
+    "200":
+      description: success
+      content:
+        application/json:
+          schema:
+            description: кол-во удалённых строк
+            type: object
+            properties:
+              deleted_rows:
+                type: integer
+                example: 2
+    '403':
+      description: UserPermissionError
