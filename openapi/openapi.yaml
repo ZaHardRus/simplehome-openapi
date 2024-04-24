@@ -302,7 +302,7 @@ paths:
           name: page
           required: false
           schema:
-            type: string
+            type: integer
         - in: query
           name: max_results
           required: false
