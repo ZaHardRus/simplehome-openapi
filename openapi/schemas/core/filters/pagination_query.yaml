@@ -3,7 +3,7 @@ PageQuery:
   name: page
   required: false
   schema:
-    type: number
+    type: integer
 MaxResultsQuery:
   in: query
   name: max_results
