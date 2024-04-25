@@ -1,0 +1,25 @@
+get:
+  operationId: room_scenarios_list
+  tags:
+    - rooms 
+  parameters:
+    - in: query
+      name: room_id
+      description: id комнаты, сценарии которой нужно получить
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              scenario_ids:
+                type: array
+                items:
+                  type: integer
+    '400':
+      description: IdNotInteger

@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    type: integer
+  account_apartment_id:
+    type: integer
+  room_id:
+    type: integer
+  residence_id:
+    type: integer
+  updated_at:
+    type: string
+    format: date-time
