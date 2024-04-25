@@ -1,0 +1,118 @@
+get:
+  operationId: room_roles_list
+  tags:
+    - rooms 
+  parameters:
+    - $ref: "../../schemas/core/filters/sorting_query.yaml"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/PageQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
+    - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
+    - $ref: "../../schemas/core/filters/search_query.yaml"
+
+    - in: query
+      name: apartment_id
+      description: id апартаментов
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../../schemas/rooms/RoomRolesModel.yaml
+    '400':
+      description: IdNotInteger
+    '403':
+      description: UserPermissionError
+
+post:
+  operationId: room_roles_create
+  tags:
+    - rooms
+  description: создание ролей комнат
+  parameters:
+  - in: query
+    name: apartment_id
+    description: id апартаментов
+    schema:
+      type: integer
+      example: 1
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              account_apartment_id:
+                type: integer
+              room_id:
+                type: integer
+              residence_id:
+                type: integer
+  responses:
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                account_apartment_id: 
+                  type: integer
+                room_id: 
+                  type: integer
+    '403':
+      description: UserPermissionError
+    '404':
+      description: NotExist
+
+delete:
+  operationId: multiple_delete_room_roles
+  tags:
+    - rooms  
+  parameters:
+  - in: query
+    name: apartment_id
+    description: id апартаментов
+    schema:
+      type: integer
+      example: 1
+
+  description: удаляет несколько ролей комнат
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              description: список с id удаляемых ролей комнат
+              type: array
+              items:
+                type: integer
+              example: [1, 2]
+  responses:
+    "200":
+      description: success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detailed_rows:
+                type: array
+                items:
+                  type: integer
+              deleted_rows:
+                type: integer
+    '403':
+      description: UserPermissionError

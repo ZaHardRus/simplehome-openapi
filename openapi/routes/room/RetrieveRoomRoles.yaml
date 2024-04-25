@@ -1,0 +1,18 @@
+get:
+  operationId: retrieve_roov_role
+  description: Уточнить выполняемую функцию
+  tags:
+    - rooms
+  parameters:
+    - in: path
+      required: true
+      name: room_role_id
+      schema:
+        type: integer
+  responses:
+    '201':
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: ../../schemas/rooms/RoomRolesModel.yaml

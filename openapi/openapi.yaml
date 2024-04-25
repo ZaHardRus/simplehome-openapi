@@ -169,16 +169,23 @@ paths:
   /admin/rooms/{room_id}:
     $ref: ./routes/room/AdminRoomsDetailed.yaml
 
-  #  TODO: 
-  #  /admin/rooms/set_apartment_relations  # post
-  #  /admin/rooms/get_list_device_ids  # get
-  #  /admin/rooms/get_list_scenario_ids  # get
-  #  /admin/room_roles # get  # post  # delete
-  #  /admin/room_roles/{pk:\d+}  # get
-  #  /admin/set_room_roles  # post
+  /admin/rooms/set_apartment_relations:
+    $ref: ./routes/room/SetApartmentRelations.yaml
 
-  # preferences ??
+  /admin/rooms/get_list_device_ids:
+    $ref: ./routes/room/GetListDeviceIds.yaml
+  
+  /admin/rooms/get_list_scenario_ids:
+    $ref: ./routes/room/GetListScenarioIds.yaml
 
+  /admin/set_room_roles:
+    $ref: ./routes/room/SetRoomRoles.yaml
+
+  /admin/room_roles/{room_role_id}:
+    $ref: ./routes/room/RetrieveRoomRoles.yaml
+
+  /admin/room_roles:
+    $ref: ./routes/room/AdminRoomRoles.yaml
 
   /admin/driver_templates:
     $ref: ./routes/driver_templates/AdminDriverTemplates.yaml
@@ -646,6 +653,17 @@ paths:
 
   # TODO: переименование данных методов
   #  преференсы-----------------------------------------------------------------------------------------------------------------
+  # # preferences # #
+
+##    ########  ########  ######## ######## ######## ########  ######## ##    ##  ######  ########  ######    ##
+##    ##     ## ##     ## ##       ##       ##       ##     ## ##       ###   ## ##    ## ##       ##    ##   ##
+##    ##     ## ##     ## ##       ##       ##       ##     ## ##       ####  ## ##       ##       ##         ##
+##    ########  ########  ######   ######   ######   ########  ######   ## ## ## ##       ######    ######    ##
+##    ##        ##   ##   ##       ##       ##       ##   ##   ##       ##  #### ##       ##             ##   ##
+##    ##        ##    ##  ##       ##       ##       ##    ##  ##       ##   ### ##    ## ##       ##    ##   ##
+##    ##        ##     ## ######## ##       ######## ##     ## ######## ##    ##  ######  ########  ######    ##
+
+
   /account_apartment_list_display_preferences:
     post:
       operationId: create_list_display_preferences
@@ -828,7 +846,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
+                $ref: './schemas/preferences/AccountApartmentPreferencesModel.yaml'
 
     get:
       operationId: retrieve_account_apartment_preferences
@@ -853,7 +871,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref: "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
           
         '400':
           description: type of apartment_id must be integer
@@ -878,14 +896,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: './schemas/preferences/AccountApartmentPreferences2.yaml'
+              $ref: './schemas/preferences/AccountApartmentPreferencesModel.yaml'
       responses:
         '200':
           description: успешное обновление преференсов
           content:
             application/json:
               schema:
-                $ref: "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref: "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
 
     delete:
       operationId: delete_account_apartment_preferences
@@ -904,31 +922,77 @@ paths:
         '204':
           description: успешное удаление
 
-  /account_apartment_preferences/update_room_group_order/{pk}:
+  /account_apartment_preferences/update_room_group_order/{preference_id}:
     put:
-       operationId: update_room_groups_order
-       parameters:
-        - in: path
-          name: pk
-          required: true
-          schema:
-            type: integer
+      operationId: update_room_groups_order
+      parameters:
+      - in: path
+        name: preference_id
+        required: true
+        schema:
+          type: integer
 
-        - in: query
-          name: room_group_support
-          required: false
-          schema:
-            type: boolean
+      - in: query
+        name: room_group_support
+        required: false
+        schema:
+          type: boolean
 
-       tags:
-        - preferences
-       responses:
+      - in: query
+        name: apartment_id
+        required: true
+        schema:
+          type: integer
+
+      tags:
+      - preferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group_order:
+                  type: array
+                  items: 
+                    type: string
+                  example: ["2 этаж",
+                            "1 этаж"]
+                room_groups:
+                  type: object
+                  example:
+                    {
+                    "2 этаж": [{"id": 735},
+                               {"id": 733},
+                               {"id": 1417}],
+                    "1 этаж": [{"id": 736}],
+                    "null": [{"id": 2803},
+                             {"id": 1415},
+                             {"id": 2888}]
+                    }
+                global_scenarios:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                    example:
+                      {"id": 4292,
+                      "title": "Хобби, спорт, развл."}
+                global_security_order:
+                  type: array
+                  items: 
+                    type: string
+      responses:
         '200':
           description: успешное изменение порядка преференсов
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref:  "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
         '404':
           description: Account Apartment Preferences Not Found!
 
@@ -956,7 +1020,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref:  "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
 
   /account_apartment_preferences/set_default:
     post:
@@ -974,7 +1038,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref:  "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
         # NotFound(f"Default preference for apartment with id {apartment_id} not found")
 
   /account_apartment_preferences/get_default:
@@ -994,26 +1058,43 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref:  "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
 
   /admin/account_apartment_default_preferences:
     post:
       operationId: create_account_apartment_default_preferences
       tags:
         - preferences
+      parameters:
+        - in: query
+          description: id апартаментов, для которых устанавливаем преференсы
+          required: true
+          name: apartment_id
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:
             schema:
               $ref:  "./schemas/preferences/AccountApartmentPreferences.yaml"
       responses:
-        # TODO: должно быть 200.
         '201':
           description: success
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  apartment_id:
+                    type: integer
+                  updated_at:
+                    type: string
+                    format: date-time
+                  preferences:
+                    type: object
+                    nullable: true
 
     get:
       operationId: retrieve_account_apartment_default_preferences
@@ -1022,6 +1103,8 @@ paths:
       parameters:
         - in: query
           name: apartment_id
+          description: id апартаментов, для которых получаем преференсы
+          required: true
           schema:
             type: integer
       responses:
@@ -1030,16 +1113,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref:  "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
 
-  /admin/account_apartment_default_preferences/{pk}:
+  /admin/account_apartment_default_preferences/{default_preference_id}:
     put:
       operationId: update_account_apartment_default_preferences
       tags:
         - preferences
       parameters:
         - in: path
-          name: pk
+          name: default_preference_id
           required: true
           schema:
             type: integer
@@ -1047,14 +1130,39 @@ paths:
           name: apartment_id
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                global_scenarios:
+                  type: array
+                  example: []
+                global_security_order:
+                  type: array
+                  example: []
+                group_order:
+                  type: array
+                  items:
+                    type: string
+                  example: ["private","common"]
+                room_groups:
+                  type: object
+                  example: {
+                    "null": [],
+                    "common": [{"id": common_room_id}],
+                    "private": [{"id": private_room_id}]
+                    }
       responses:
         '200':
           description: success
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
-                # NotFound('Account Apartment Default Preferences Not Found!', 404)
+                $ref:  "./schemas/preferences/AccountApartmentDefaultPreferencesModel.yaml"
+        '404':
+          description: Account Apartment Default Preferences Not Found!
 
     delete:
       operationId: delete_account_apartment_default_preferences
@@ -1094,7 +1202,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref:  "./schemas/preferences/AccountApartmentPreferences2.yaml"
+                $ref:  "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
         '404':
           description: Account Apartment Default Preferences Not Found!
 
@@ -1113,7 +1221,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./schemas/preferences/AccountApartmentPreferences2.yaml"
+              $ref: "./schemas/preferences/AccountApartmentPreferencesModel.yaml"
       responses:
         '200':
           description: "
