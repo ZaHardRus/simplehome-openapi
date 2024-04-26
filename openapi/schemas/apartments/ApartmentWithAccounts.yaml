@@ -24,9 +24,25 @@ properties:
     format: date-time
   building_id:
     type: integer
+    nullable: true
   comment:
     type: string
+    nullable: true
   accounts:
     type: array
     items:
       $ref: "../../schemas/apartments/Accounts.yaml"
+required:
+  - id
+  - residence_id
+  - apartment_number
+  - type_label
+  - type_label_eng
+  - apartment_type_id
+  - floor_number
+  - building_id
+  - created_at
+  - updated_at
+  - comment
+  - accounts
+  - residence_title

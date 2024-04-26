@@ -117,7 +117,7 @@
         content:
           application/json:
             schema:
-              $ref: "../../schemas/apartments/RetrieveUpdatedApartmentWithAccounts.yaml"
+              $ref: "../../schemas/apartments/ApartmentWithAccounts.yaml"
       '403':
         description: UserPermissionError
       '400':
