@@ -7,7 +7,7 @@ post:
               номер здания и комментарий
   parameters:
     - in: query
-      name: id
+      name: apartment_id
       description: id апартаментов, которые необходимо клонировать
       schema:
         type: integer
