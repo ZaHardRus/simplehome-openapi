@@ -6,7 +6,7 @@ post:
               с возможностью изменить название, этаж, тип помещения, 
               номер здания и комментарий
   parameters:
-    - in: query
+    - in: path
       name: apartment_id
       description: id апартаментов, которые необходимо клонировать
       schema:
