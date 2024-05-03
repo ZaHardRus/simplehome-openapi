@@ -32,6 +32,9 @@ properties:
     type: array
     items:
       $ref: "../../schemas/apartments/Accounts.yaml"
+  demo_access:
+    $ref: "../../schemas/demo_access/RetrieveDemoAccess.yaml"
+    nullable: true
 required:
   - id
   - residence_id
@@ -46,3 +49,4 @@ required:
   - comment
   - accounts
   - residence_title
+  - demo_access

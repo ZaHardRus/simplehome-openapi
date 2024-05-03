@@ -1,0 +1,39 @@
+post:
+  operationId: create_demo_access
+  tags:
+    - demo_access
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/demo_access/CreateDemoAccess.yaml"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/demo_access/RetrieveDemoAccess.yaml"
+          examples:
+            DemoPeriodNotStarted:
+              summary: Демо доступ не был активирован
+              description: "Демо доступ создан, но не активирован, т.к. в квартире нет жильцов. 
+                        Он будет активирован при первом открытии квартиры в приложении"
+              value:
+                id: 10
+                demo_duration_days: 30
+                demo_start_day: null
+                demo_days_left: null
+                apartment_id: 1888
+                is_access_active: true
+            DemoPeriodNotEnded:
+              summary: Демо активирован
+              description: "Демо доступ создан и активирован, т.к. в квартире есть жильцы.
+                            Датой начала демо периода считается дата добавления первого жильца. 
+                            Доступ к квартире разрешен"
+              value:
+                id: 10
+                demo_duration_days: 30
+                demo_start_day: "2024-04-29"
+                demo_days_left: 20
+                apartment_id: 1888
+                is_access_active: true

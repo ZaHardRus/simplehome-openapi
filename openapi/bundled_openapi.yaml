@@ -19,7 +19,208 @@ servers:
 security:
   - BearerAuth: []
 paths:
-  /api/v2/argus/object/{argus_object_id}:
+  /admin/apartment_demo_access_by_apartment_id/{apartment_id}:
+    get:
+      operationId: get_demo_access_by_apartment_id
+      tags:
+        - demo_access
+      parameters:
+        - $ref: '#/components/parameters/apartmentId'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDemoAccess'
+              examples:
+                DemoPeriodEnded:
+                  summary: Демо доступ истек
+                  description: Демо доступ истек 3 дня назад. Доступ к квартире запрещен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: '2024-04-29'
+                    demo_days_left: -3
+                    apartment_id: 1888
+                    is_access_active: false
+                DemoPeriodNotEnded:
+                  summary: Демо активирован
+                  description: Демо доступ истечет через 20 дней. Доступ к квартире разрешен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: '2024-04-29'
+                    demo_days_left: 20
+                    apartment_id: 1888
+                    is_access_active: true
+                DemoPeriodNotStarted:
+                  summary: Демо доступ не был активирован
+                  description: Демо доступ не был активирован.  Он будет активирован при первом открытии квартиры в приложении.  Доступ к квартире разрешен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: null
+                    demo_days_left: null
+                    apartment_id: 1888
+                    is_access_active: true
+    components:
+      parameters:
+        apartmentId:
+          in: path
+          name: apartment_id
+          description: id апартамента
+          required: true
+          schema:
+            type: integer
+  /admin/apartment_demo_access/{demo_access_id}:
+    get:
+      operationId: get_demo_access
+      tags:
+        - demo_access
+      parameters:
+        - $ref: '#/components/parameters/demoAccessId'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDemoAccess'
+              examples:
+                DemoPeriodEnded:
+                  summary: Демо доступ истек
+                  description: Демо доступ истек 3 дня назад. Доступ к квартире запрещен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: '2024-04-29'
+                    demo_days_left: -3
+                    apartment_id: 1888
+                    is_access_active: false
+                DemoPeriodNotEnded:
+                  summary: Демо активирован
+                  description: Демо доступ истечет через 20 дней. Доступ к квартире разрешен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: '2024-04-29'
+                    demo_days_left: 20
+                    apartment_id: 1888
+                    is_access_active: true
+                DemoPeriodNotStarted:
+                  summary: Демо доступ не был активирован
+                  description: Демо доступ не был активирован.  Он будет активирован при первом открытии квартиры в приложении.  Доступ к квартире разрешен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: null
+                    demo_days_left: null
+                    apartment_id: 1888
+                    is_access_active: true
+    put:
+      operationId: update_demo_access
+      tags:
+        - demo_access
+      parameters:
+        - $ref: '#/components/parameters/demoAccessId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDemoAccess'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDemoAccess'
+              examples:
+                DemoPeriodNotStarted:
+                  summary: Демо доступ не был активирован
+                  description: Демо доступ не был активирован.  Он будет активирован при первом открытии квартиры в приложении.  Доступ к квартире разрешен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: null
+                    demo_days_left: null
+                    apartment_id: 1888
+                    is_access_active: true
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DemoAccessUpdateForbidden'
+          description: Запрещено изменять длительность демо доступа после его активации
+    delete:
+      operationId: delete_demo_access
+      tags:
+        - demo_access
+      parameters:
+        - $ref: '#/components/parameters/demoAccessId'
+      responses:
+        '204':
+          description: демо доступ удален
+    components:
+      parameters:
+        demoAccessId:
+          in: path
+          name: demo_access_id
+          description: id демо доступа
+          required: true
+          schema:
+            type: integer
+      schemas:
+        DemoAccessUpdateForbidden:
+          type: object
+          properties:
+            error_type:
+              type: string
+              nullable: false
+              example: VALIDATION_ERROR
+            detail:
+              type: string
+              nullable: false
+              example: Запрещено изменять демо доступы после начала демо периода
+          required:
+            - error_type
+            - detail
+  /admin/apartment_demo_access:
+    post:
+      operationId: create_demo_access
+      tags:
+        - demo_access
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDemoAccess'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDemoAccess'
+              examples:
+                DemoPeriodNotStarted:
+                  summary: Демо доступ не был активирован
+                  description: Демо доступ создан, но не активирован, т.к. в квартире нет жильцов.  Он будет активирован при первом открытии квартиры в приложении
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: null
+                    demo_days_left: null
+                    apartment_id: 1888
+                    is_access_active: true
+                DemoPeriodNotEnded:
+                  summary: Демо активирован
+                  description: Демо доступ создан и активирован, т.к. в квартире есть жильцы. Датой начала демо периода считается дата добавления первого жильца.  Доступ к квартире разрешен
+                  value:
+                    id: 10
+                    demo_duration_days: 30
+                    demo_start_day: '2024-04-29'
+                    demo_days_left: 20
+                    apartment_id: 1888
+                    is_access_active: true
+  /argus/object/{argus_object_id}:
     get:
       operationId: retrieve_argus_object
       tags:
@@ -51,7 +252,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArgusAuthorizationError'
-  /api/v2/argus/object/operation:
+  /argus/object/operation:
     post:
       operationId: send_argus_object_operation
       tags:
@@ -71,7 +272,7 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/WrongArgusOperation'
                   - $ref: '#/components/schemas/ArgusObjectNotExist'
-  /api/v2/admin/buildings/{building_id}/set_apartments:
+  /admin/buildings/{id}/set_apartments:
     put:
       operationId: admin-set-building-apartments
       description: Привязывает аппартаменты к зданию
@@ -79,7 +280,7 @@ paths:
         - buildings
       parameters:
         - in: path
-          name: building_id
+          name: id
           required: true
           schema:
             type: integer
@@ -125,7 +326,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFound'
-  /api/v2/admin/buildings/{building_id}:
+  /admin/buildings/{id}:
     delete:
       operationId: admin-buildings-delete
       description: Удаляет здание
@@ -182,8 +383,12 @@ paths:
                 title:
                   type: string
       responses:
-        '204':
-          description: Успешное удаление
+        '201':
+          description: Успешное изменение
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildingSchema'
         '400':
           description: некорректные данные в запросе
           content:
@@ -202,36 +407,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFound'
-  /api/v2/admin/buildings:
+  /admin/buildings:
     post:
       operationId: admin-buildings-create
-      description: Создает несколько зданий
+      description: Создает здание
       tags:
         - buildings
       requestBody:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/BuildingSchema'
+              $ref: '#/components/schemas/CreateBuildingSchema'
       responses:
         '201':
           description: успешно создано
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/BuildingSchema'
-                  - type: array
-                    items:
-                      $ref: '#/components/schemas/BuildingSchema'
+                $ref: '#/components/schemas/BuildingSchema'
         '400':
           description: некорректные данные в запросе
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EntityAlreadyExists'
+                oneOf:
+                  - $ref: '#/components/schemas/WrongRequestBody'
+                  - $ref: '#/components/schemas/EntityAlreadyExists'
         '403':
           description: недостаточно прав доступа
           content:
@@ -274,6 +475,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFound'
+    components:
+      schemas:
+        WrongRequestBody:
+          type: object
+          properties:
+            error_type:
+              type: string
+              example: VALIDATION_ERROR
+              nullable: false
+            detail:
+              type: string
+              example: Неверное тело запроса!
+              nullable: false
+          required:
+            - error_type
+            - detail
   /support/create_report:
     post:
       operationId: support-request-create
@@ -365,7 +582,7 @@ paths:
                     rus:
                       type: string
                       example: Приложение вылетает или работает неправильно
-  /api/v2/get_weather:
+  /get_weather:
     get:
       operationId: get_weather
       description: Получение информации о погоде
@@ -479,75 +696,6 @@ paths:
                   - $ref: '#/components/schemas/IdMustBeAnInteger'
                   - $ref: '#/components/schemas/EntityAlreadyExists'
   /images/intermediate/hash/{hash}:
-    get:
-      operationId: fileservice-download
-      description: скачивание изображения
-      tags:
-        - images
-      parameters:
-        - in: path
-          name: hash
-          required: true
-          description: Хеш изображения из таблицы Image
-          schema:
-            type: string
-            example: 7aead86346e6a96620ff0b8c4661d2da
-        - in: query
-          name: access_token
-          required: false
-          schema:
-            type: string
-            example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIrNzkxMTE0MDc4MDkiLCJlbWFpbCI6InNpbXBsZWhvbWVAeWFuZGV4LnJ1IiwiZXhwIjoxNzAzODQ5OTc5LCJhcGFydG1lbnRfaWQiOm51bGwsInNjaGVtYSI6InB1YmxpYyJ9.Id-rYB-WIYF_Sl_JtnYuun2uum_fX_qJwO0GP7LTbRs
-        - in: header
-          name: Authorization
-          required: false
-          schema:
-            type: string
-            example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZV9udW1iZXIiOiIrNzkxMTE0MDc4MDkiLCJlbWFpbCI6InNpbXBsZWhvbWVAeWFuZGV4LnJ1IiwiZXhwIjoxNzAzODQ5OTc5LCJhcGFydG1lbnRfaWQiOm51bGwsInNjaGVtYSI6InB1YmxpYyJ9.Id-rYB-WIYF_Sl_JtnYuun2uum_fX_qJwO0GP7LTbRs
-      responses:
-        '200':
-          description: Возвращает изображение
-          content:
-            image/*:
-              schema:
-                type: string
-                format: binary
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InvalidImageHash'
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotAuthorized'
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ImageNotFound'
-    components:
-      schemas:
-        NotAuthorized:
-          type: object
-          properties:
-            detail:
-              type: string
-              example: Not Authorized!
-        InvalidImageHash:
-          type: object
-          properties:
-            detail:
-              type: string
-              example: Invalid Image Hash!
-        ImageNotFound:
-          type: object
-          properties:
-            detail:
-              type: string
-              example: Image Not Found!
-  /api/v2/images/intermediate/hash/{hash}:
     get:
       operationId: fileservice-download-by-intermediate
       description: скачивание изображения с помощью intermediate токена
@@ -928,7 +1076,7 @@ paths:
             detail:
               type: string
               example: Invalid Image Hash!
-  /api/v2/admin/images/create_dir:
+  /admin/images/create_dir:
     post:
       operationId: admin-fileservice-create-dir
       description: Создание папки в файловом хранилище
@@ -1324,6 +1472,10 @@ paths:
       tags:
         - automations
       parameters:
+        - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
         - in: query
           name: apartment_id
           required: false
@@ -2301,7 +2453,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserPermissionError'
-  /api/v2/admin/apartment_templates:
+  /admin/apartment_templates:
     get:
       operationId: admin-apartment-templates-list
       description: Получение списка шаблонов квартир
@@ -2320,7 +2472,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RetrieveApartmentTemplateWithIntegratorId'
+                  $ref: '#/components/schemas/RetrieveApartmentTemplate'
     post:
       operationId: admin-apartment-templates-create
       description: Создание шаблона квартиры
@@ -2387,7 +2539,7 @@ paths:
             detail:
               type: string
               example: controller_ip required if is_dhcp is false
-  /api/v2/admin/apartment_templates/import_apartments:
+  /admin/apartment_templates/import_apartments:
     post:
       operationId: admin-apartment-templates-import
       description: Импорт шаблонов квартир из xlsx файла.
@@ -2476,7 +2628,7 @@ paths:
             detail:
               type: string
               example: residence_id Must Not Be None!
-  /api/v2/admin/apartment_templates/{apartment_template_id}:
+  /admin/apartment_templates/{apartment_template_id}:
     get:
       operationId: admin-apartment-templates-retrieve
       description: Получение шаблона квартиры по id
@@ -2526,7 +2678,7 @@ paths:
           required: true
           schema:
             type: integer
-  /api/v2/admin/apartment_templates/controller/{apartment_template_id}:
+  /admin/apartment_templates/controller/{apartment_template_id}:
     put:
       operationId: admin-apartment-templates-update-controller
       description: Данный метод обновляет только те поля в шаблоне квартиры, которые относятся к контроллеру.
@@ -2559,7 +2711,7 @@ paths:
           required: true
           schema:
             type: integer
-  /api/v2/admin/apartment_templates/apartment/{apartment_template_id}:
+  /admin/apartment_templates/apartment/{apartment_template_id}:
     put:
       operationId: admin-apartment-templates-update-apartment
       description: Данный метод обновляет только те поля в шаблоне квартиры, которые относятся к квартире.
@@ -2592,7 +2744,7 @@ paths:
           required: true
           schema:
             type: integer
-  /api/v2/admin/room_templates:
+  /admin/room_templates:
     get:
       operationId: admin-room-templates-list
       description: Получение списка шаблонов комнат
@@ -2601,6 +2753,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/apartmentTemplateQueryId'
         - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
       responses:
         '200':
           content:
@@ -2680,7 +2835,7 @@ paths:
             detail:
               type: string
               example: Payload Type Must Be List Or Dict, Not {type(data)}
-  /api/v2/admin/room_templates/{room_template_id}:
+  /admin/room_templates/{room_template_id}:
     get:
       operationId: admin-room-templates-retrieve
       description: Получение шаблона комнаты
@@ -2768,7 +2923,484 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/driver_templates:
+  /admin/rooms:
+    get:
+      operationId: rooms_list
+      tags:
+        - rooms
+      parameters:
+        - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
+        - $ref: '#/components/parameters/search_query'
+        - in: query
+          name: apartment_id
+          description: фильтрация по апартаментам
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: created_dt_after
+          description: noqa
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: updated_dt_after
+          description: noqa
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: created_dt_from
+          description: noqa
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: updated_dt_from
+          description: noqa
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListRooms'
+        '404':
+          description: NotFound
+    post:
+      operationId: room_create
+      tags:
+        - rooms
+      description: создание комнаты
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoom'
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRooms'
+        '403':
+          description: UserPermissionError
+        '404':
+          description: NotExist
+    delete:
+      operationId: rooms_delete_multiple
+      tags:
+        - rooms
+      parameters:
+        - in: query
+          name: delete_devices
+          description: флаг удаления устройств
+          required: false
+          schema:
+            type: boolean
+            example: true
+      description: удаляет несколько комнат
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: список с id удаляемых комнат
+                  type: array
+                  items:
+                    type: integer
+                  example:
+                    - 1
+                    - 2
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                description: кол-во удалённых строк
+                type: object
+                properties:
+                  deleted_rows:
+                    type: integer
+                    example: 2
+        '403':
+          description: UserPermissionError
+  /admin/rooms/{room_id}:
+    get:
+      operationId: room_retrieve
+      tags:
+        - rooms
+      parameters:
+        - in: path
+          name: room_id
+          required: true
+          schema:
+            type: integer
+          example: 1
+      description: Получение полной информации по комнате
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: Уборная Олега Тинькова
+                  image_id:
+                    type: integer
+                    example: 55
+                  apartment_id:
+                    type: integer
+                    example: 1
+                  created_at:
+                    type: string
+                    example: '2020-11-26T17:04:17.558199+00:00'
+                    format: date-time
+                  updated_at:
+                    type: string
+                    example: '2024-04-17T06:09:31.352373+00:00'
+                    format: date-time
+                  residence_id:
+                    type: integer
+                    example: 1
+                  scenarios:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RoomScenarioAction'
+                  devices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RoomDevice'
+        '404':
+          description: NotFound
+    delete:
+      description: Удаляет комнату
+      operationId: room_delete
+      tags:
+        - rooms
+      parameters:
+        - in: query
+          name: delete_devices
+          description: флаг удаления устройств
+          required: false
+          schema:
+            type: boolean
+            example: true
+      responses:
+        '204':
+          description: Successfully deleted
+        '404':
+          description: NotFound
+    put:
+      operationId: room_update
+      description: Обновляет комнату
+      tags:
+        - rooms
+      parameters:
+        - in: path
+          name: room_id
+          description: id изменяемой комнаты
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoom'
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRooms'
+        '400':
+          description: EntityAlreadyExists
+        '403':
+          description: UserPermissionError
+        '404':
+          description: NotFound
+  /admin/rooms/set_apartment_relations:
+    post:
+      operationId: set_room_apartmnet_relation
+      tags:
+        - rooms
+      description: Связывает комнаты с апартаментами
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                apartment_id:
+                  type: integer
+                  required: true
+                  example: 1
+                room_ids:
+                  description: List of rooms id to connect with apartment
+                  type: array
+                  required: true
+                  items:
+                    type: integer
+                  example:
+                    - 1
+                    - 2
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 1
+        '400':
+          description: ValidationError
+  /admin/rooms/get_list_device_ids:
+    get:
+      operationId: room_devices_list
+      tags:
+        - rooms
+      parameters:
+        - in: query
+          name: room_id
+          description: id комнаты, устройства которой нужно получить
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  device_ids:
+                    type: array
+                    items:
+                      type: integer
+        '400':
+          description: IdNotInteger
+  /admin/rooms/get_list_scenario_ids:
+    get:
+      operationId: room_scenarios_list
+      tags:
+        - rooms
+      parameters:
+        - in: query
+          name: room_id
+          description: id комнаты, сценарии которой нужно получить
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scenario_ids:
+                    type: array
+                    items:
+                      type: integer
+        '400':
+          description: IdNotInteger
+  /admin/set_room_roles:
+    post:
+      operationId: set_room_roles
+      deprecated: true
+      tags:
+        - rooms
+      description: Установка ролей комнат
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  account_apartment_id:
+                    type: integer
+                    required: true
+                  room_id:
+                    type: integer
+                    required: true
+                  residence_id:
+                    type: integer
+                    required: false
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: NotExist
+        '403':
+          description: UserPermissionError
+  /admin/room_roles/{room_role_id}:
+    get:
+      operationId: retrieve_roov_role
+      description: Уточнить выполняемую функцию
+      tags:
+        - rooms
+      parameters:
+        - in: path
+          required: true
+          name: room_role_id
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomRolesModel'
+  /admin/room_roles:
+    get:
+      operationId: room_roles_list
+      tags:
+        - rooms
+      parameters:
+        - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
+        - $ref: '#/components/parameters/search_query'
+        - in: query
+          name: apartment_id
+          description: id апартаментов
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoomRolesModel'
+        '400':
+          description: IdNotInteger
+        '403':
+          description: UserPermissionError
+    post:
+      operationId: room_roles_create
+      tags:
+        - rooms
+      description: создание ролей комнат
+      parameters:
+        - in: query
+          name: apartment_id
+          description: id апартаментов
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  account_apartment_id:
+                    type: integer
+                  room_id:
+                    type: integer
+                  residence_id:
+                    type: integer
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    account_apartment_id:
+                      type: integer
+                    room_id:
+                      type: integer
+        '403':
+          description: UserPermissionError
+        '404':
+          description: NotExist
+    delete:
+      operationId: multiple_delete_room_roles
+      tags:
+        - rooms
+      parameters:
+        - in: query
+          name: apartment_id
+          description: id апартаментов
+          schema:
+            type: integer
+            example: 1
+      description: удаляет несколько ролей комнат
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: список с id удаляемых ролей комнат
+                  type: array
+                  items:
+                    type: integer
+                  example:
+                    - 1
+                    - 2
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detailed_rows:
+                    type: array
+                    items:
+                      type: integer
+                  deleted_rows:
+                    type: integer
+        '403':
+          description: UserPermissionError
+  /admin/driver_templates:
     get:
       operationId: admin-driver-templates-list
       description: Получение  списка шаблонов драйверов
@@ -2777,6 +3409,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/apartmentTemplateQueryId'
         - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
+        - $ref: '#/components/parameters/search_query'
       responses:
         '200':
           content:
@@ -2861,7 +3497,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/driver_templates/{driver_template_id}:
+  /admin/driver_templates/{driver_template_id}:
     get:
       operationId: admin-driver-templates-retrieve
       description: Получение шаблона драйвера
@@ -2949,7 +3585,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/device_templates:
+  /admin/device_templates:
     get:
       operationId: admin-device-templates-list
       description: Получение списка шаблонов устройств
@@ -2962,6 +3598,10 @@ paths:
         - $ref: '#/components/parameters/typeQueryId'
         - $ref: '#/components/parameters/subtypeQueryId'
         - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
+        - $ref: '#/components/parameters/search_query'
       responses:
         '200':
           content:
@@ -3093,7 +3733,7 @@ paths:
             detail:
               type: string
               example: Fail To Find {error_message}
-  /api/v2/admin/device_templates/{device_template_id}:
+  /admin/device_templates/{device_template_id}:
     get:
       operationId: admin-device-templates-retrieve
       description: Получение шаблона устройства
@@ -3181,7 +3821,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/capability_templates:
+  /admin/capability_templates:
     get:
       operationId: admin-capability-templates-list
       description: Получение списка шаблонов навыков
@@ -3274,7 +3914,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/capability_templates/{capability_template_id}:
+  /admin/capability_templates/{capability_template_id}:
     get:
       operationId: admin-capability-templates-retrieve
       description: Получение шаблона навыка
@@ -3362,7 +4002,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/scenario_templates:
+  /admin/scenario_templates:
     get:
       operationId: admin-scenario-templates-list
       description: Получение списка шаблонов сценариев
@@ -3372,6 +4012,9 @@ paths:
         - $ref: '#/components/parameters/parameters-apartmentTemplateQueryId'
         - $ref: '#/components/parameters/type'
         - $ref: '#/components/parameters/roomTemplateIds'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
       responses:
         '200':
           content:
@@ -3472,7 +4115,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/scenario_templates/{scenario_template_id}:
+  /admin/scenario_templates/{scenario_template_id}:
     get:
       operationId: admin-scenario-templates-retrieve
       description: Получение шаблона сценария
@@ -3560,7 +4203,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/action_templates:
+  /admin/action_templates:
     get:
       operationId: admin-action-templates-list
       description: Получение списка шаблонов действий
@@ -3569,6 +4212,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/parameters-apartmentTemplateQueryId'
         - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
       responses:
         '200':
           content:
@@ -3653,7 +4299,7 @@ paths:
             detail:
               type: string
               example: ApartmentTemplates With id {apartment_template_id} Not Found!
-  /api/v2/admin/action_templates/{action_template_id}:
+  /admin/action_templates/{action_template_id}:
     get:
       operationId: admin-action-templates-retrieve
       description: Получение шаблона действия
@@ -3814,9 +4460,9 @@ paths:
           name: page
           required: false
           schema:
-            type: string
+            type: integer
         - in: query
-          name: max_result
+          name: max_results
           required: false
           schema:
             type: string
@@ -3947,7 +4593,7 @@ paths:
                       type: integer
         '400':
           description: Id Must Be An Integer!
-  /admin/residences/{pk}/buildings:
+  /admin/residences/{residence_id}/buildings:
     get:
       operationId: retrieve_buildings
       description: Отдаёт список строений принадлежащих резиденции. Доступно инженеру и выше
@@ -3955,7 +4601,7 @@ paths:
         - residences
       parameters:
         - in: path
-          name: pk
+          name: residence_id
           required: true
           description: id резиденции
           schema:
@@ -3968,20 +4614,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-                    residence_id:
-                      type: integer
+                  $ref: '#/components/schemas/BuildingSchema'
   /admin/residences_accesses/{pk}:
     post:
       operationId: multiple_create
@@ -4090,6 +4723,10 @@ paths:
       description: получить список всех интеграторов
       tags:
         - integrators
+      parameters:
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
       responses:
         '200':
           description: список интеграторов
@@ -4291,7 +4928,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
     get:
       operationId: retrieve_account_apartment_preferences
       tags:
@@ -4315,7 +4952,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
         '400':
           description: type of apartment_id must be integer
   /account_apartment_preferences/{pk}:
@@ -4338,14 +4975,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountApartmentPreferences2'
+              $ref: '#/components/schemas/AccountApartmentPreferencesModel'
       responses:
         '200':
           description: успешное обновление преференсов
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
     delete:
       operationId: delete_account_apartment_preferences
       tags:
@@ -4362,12 +4999,12 @@ paths:
           description: успешное удаление
         '404':
           description: успешное удаление AccountApartmentPreferences
-  /account_apartment_preferences/update_room_group_order/{pk}:
+  /account_apartment_preferences/update_room_group_order/{preference_id}:
     put:
       operationId: update_room_groups_order
       parameters:
         - in: path
-          name: pk
+          name: preference_id
           required: true
           schema:
             type: integer
@@ -4376,15 +5013,62 @@ paths:
           required: false
           schema:
             type: boolean
+        - in: query
+          name: apartment_id
+          required: true
+          schema:
+            type: integer
       tags:
         - preferences
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group_order:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - 2 этаж
+                    - 1 этаж
+                room_groups:
+                  type: object
+                  example:
+                    2 этаж:
+                      - id: 735
+                      - id: 733
+                      - id: 1417
+                    1 этаж:
+                      - id: 736
+                    'null':
+                      - id: 2803
+                      - id: 1415
+                      - id: 2888
+                global_scenarios:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      title:
+                        type: string
+                    example:
+                      id: 4292
+                      title: Хобби, спорт, развл.
+                global_security_order:
+                  type: array
+                  items:
+                    type: string
       responses:
         '200':
           description: успешное изменение порядка преференсов
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
         '404':
           description: Account Apartment Preferences Not Found!
   /account_apartment_preferences/delete_room_groups/{pk}:
@@ -4410,7 +5094,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
   /account_apartment_preferences/set_default:
     post:
       operationId: set_default_apartment_preferences
@@ -4427,7 +5111,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
   /account_apartment_preferences/get_default:
     get:
       operationId: get_default_apartment_preferences
@@ -4444,12 +5128,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
   /admin/account_apartment_default_preferences:
     post:
       operationId: create_account_apartment_default_preferences
       tags:
         - preferences
+      parameters:
+        - in: query
+          description: id апартаментов, для которых устанавливаем преференсы
+          required: true
+          name: apartment_id
+          schema:
+            type: integer
       requestBody:
         content:
           application/json:
@@ -4461,7 +5152,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  apartment_id:
+                    type: integer
+                  updated_at:
+                    type: string
+                    format: date-time
+                  preferences:
+                    type: object
+                    nullable: true
     get:
       operationId: retrieve_account_apartment_default_preferences
       tags:
@@ -4469,6 +5171,8 @@ paths:
       parameters:
         - in: query
           name: apartment_id
+          description: id апартаментов, для которых получаем преференсы
+          required: true
           schema:
             type: integer
       responses:
@@ -4477,15 +5181,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
-  /admin/account_apartment_default_preferences/{pk}:
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
+  /admin/account_apartment_default_preferences/{default_preference_id}:
     put:
       operationId: update_account_apartment_default_preferences
       tags:
         - preferences
       parameters:
         - in: path
-          name: pk
+          name: default_preference_id
           required: true
           schema:
             type: integer
@@ -4493,13 +5197,42 @@ paths:
           name: apartment_id
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                global_scenarios:
+                  type: array
+                  example: []
+                global_security_order:
+                  type: array
+                  example: []
+                group_order:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - private
+                    - common
+                room_groups:
+                  type: object
+                  example:
+                    'null': []
+                    common:
+                      - id: common_room_id
+                    private:
+                      - id: private_room_id
       responses:
         '200':
           description: success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentDefaultPreferencesModel'
+        '404':
+          description: Account Apartment Default Preferences Not Found!
     delete:
       operationId: delete_account_apartment_default_preferences
       tags:
@@ -4537,7 +5270,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountApartmentPreferences2'
+                $ref: '#/components/schemas/AccountApartmentPreferencesModel'
         '404':
           description: Account Apartment Default Preferences Not Found!
   /admin/account_apartment_default_preferences/delete_room_groups/{pk}:
@@ -4555,17 +5288,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountApartmentPreferences2'
+              $ref: '#/components/schemas/AccountApartmentPreferencesModel'
       responses:
         '200':
           description: |2-
              — Кто тебе дом строил? Здорово получилось… — Да пидорасы! — ?? — Нанял рабочих залить фундамент. Выкопали, залили, ушли. Нанял каменщиков, те пришли спрашивают: Какие пидорасы фундамент заливали? Стены выложили, ушли. Нанял штукатуров, те тоже — что за пидорасы кладку делали? Ну, и так далее. Вот и получается, что дом строили одни пидорасы… 
             pidoras architecture pattern
-  /admin/apartments/{pk}:
+  /admin/apartments/{apartment_id}:
     get:
       operationId: apartments_retrieve
       tags:
         - apartments
+      parameters:
+        - in: path
+          name: apartment_id
+          required: true
+          schema:
+            type: integer
+          example: 1
       description: По сути retrieve метод на получение апартаментов и всего, что в них имеется. Нужно вынести в отдельный роут инфу о контроллере, овнерах и тп
       responses:
         '200':
@@ -4574,37 +5314,54 @@ paths:
             application/json:
               schema:
                 type: object
-                allOf:
-                  - $ref: '#/components/schemas/RetrieveApartments'
                 properties:
-                  owners:
+                  id:
+                    type: integer
+                  apartment_number:
+                    type: integer
+                  apartment_type_id:
+                    type: integer
+                  floor_number:
+                    type: integer
+                  residence_id:
+                    type: integer
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  building_id:
+                    type: integer
+                  comment:
+                    type: string
+                  accounts:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        owner_id:
-                          type: integer
-                          example: 1
-                        first_name:
-                          type: string
-                          example: Владислав
-                        last_name:
-                          type: string
-                          example: Быков
-                        middle_name:
-                          type: string
-                          example: Чел
-                  residence_title:
-                    type: string
-                    description: название  резиденции, которой принадлежат данные апартаменты
-                    example: ЖК Зло
+                      $ref: '#/components/schemas/Accounts'
+                  controller:
+                    $ref: '#/components/schemas/RetrieveController'
+                  rooms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApartmentRooms'
+                  scenarios:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApartmentsScenarioWithActions'
+                  devices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApartmentDevices'
                   drivers:
                     description: набор драйверов апартаментов
                     type: array
                     items:
                       $ref: '#/components/schemas/RetrieveDriver'
-                  controller:
-                    $ref: '#/components/schemas/RetrieveController'
+                  capabilities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApartmentCapabilities'
     delete:
       description: удаляет апартаменты. Метод доступен с ролью админа и выше. Апартаменты можно удалить только в случае, если у пользователя есть доступ до апартаментов
       operationId: apartments_delete
@@ -4612,7 +5369,7 @@ paths:
         - apartments
       parameters:
         - in: path
-          name: pk
+          name: apartment_id
           description: id удаляемых апартаментов
           required: true
           schema:
@@ -4621,6 +5378,8 @@ paths:
       responses:
         '204':
           description: успешное удаление
+        '403':
+          description: UserPermissionError
         '404':
           description: апартаменты не найдены
     put:
@@ -4628,76 +5387,56 @@ paths:
       description: Доступно с ролью админа и выше.
       tags:
         - apartments
+      parameters:
+        - in: path
+          name: apartment_id
+          description: id изменяемых апартаментов
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApartment'
       responses:
         '201':
           content:
             application/json:
               schema:
-                type: object
-                allOf:
-                  - $ref: '#/components/schemas/RetrieveApartmentDublicate1'
-                properties:
-                  accounts:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        first_name:
-                          type: string
-                        last_name:
-                          type: string
-                        middle_name:
-                          type: string
-                        is_owner:
-                          type: boolean
-                        account_apartment_id:
-                          type: integer
+                $ref: '#/components/schemas/ApartmentWithAccounts'
+        '400':
+          description: EntityAlreadyExists
+        '403':
+          description: UserPermissionError
+        '404':
+          description: NotFound
   /admin/apartments:
     get:
       operationId: apartments_list
       tags:
         - apartments
       parameters:
-        - in: query
-          name: search
-          description: производит поиск по apartment_number значению в бд, среди доступных пользователю апартоментов
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: хз
-          schema:
-            type: string
-        - in: query
-          name: page
-          description: noqa
-          schema:
-            type: integer
-            default: 1
-        - in: query
-          name: max_results
-          description: noqa
-          schema:
-            type: integer
-        - in: query
-          name: get_all
-          description: noqa
-          deprecated: true
-          schema:
-            type: boolean
-            default: false
+        - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
+        - $ref: '#/components/parameters/search_query'
         - in: query
           name: flor_number
-          description: noqa
+          description: фильтрация по номерам этажей
           schema:
-            type: integer
+            type: array
+            items:
+              type: integer
         - in: query
           name: residence_id
-          description: id резиденции, в которой производим поиск резиденции
+          description: id резиденций, в которых производим поиск апартов
           schema:
-            type: integer
+            type: array
+            items:
+              type: integer
         - in: query
           name: building_ids
           description: список строений, внутри которых ищем апартаменты
@@ -4707,37 +5446,32 @@ paths:
             items:
               type: integer
         - in: query
-          name: apartment_number
-          description: noqa
-          schema:
-            type: integer
-        - in: query
           name: apartment_type_ids
-          description: noqa
+          description: фильтрация по типам апартов
           schema:
             type: array
             items:
               type: integer
         - in: query
-          name: created_after_date
+          name: created_dt_after
           description: noqa
           schema:
             type: string
             format: date-time
         - in: query
-          name: updated_after_date
+          name: updated_dt_after
           description: noqa
           schema:
             type: string
             format: date-time
         - in: query
-          name: created_before_date
+          name: created_dt_from
           description: noqa
           schema:
             type: string
             format: date-time
         - in: query
-          name: updated_before_date
+          name: updated_dt_from
           description: noqa
           schema:
             type: string
@@ -4750,28 +5484,12 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  allOf:
-                    - $ref: '#/components/schemas/RetrieveApartmentDublicate1'
-                  properties:
-                    type_label:
-                      type: string
-                    accounts:
-                      type: array
-                      items:
-                        type: object
-                        allOf:
-                          - $ref: '#/components/schemas/RetrieveUser'
-                        properties:
-                          is_owner:
-                            type: boolean
-        '404':
-          description: not found
+                  $ref: '#/components/schemas/ApartmentWithAccounts'
     post:
       operationId: apartments_create
       tags:
         - apartments
-      description: создание апартоментов. Доступно с ролью админа и выше
+      description: создание апартаментов. Доступно с ролью админа и выше
       requestBody:
         content:
           application/json:
@@ -4783,7 +5501,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveApartmentDublicate1'
+                $ref: '#/components/schemas/RetrieveCreatedApartment'
+        '400':
+          description: EntityAlreadyExists
     delete:
       operationId: apartments_delete_multiple
       tags:
@@ -4793,10 +5513,13 @@ paths:
         content:
           application/json:
             schema:
-              description: список с id удаляемых апартоментов
-              type: array
-              items:
-                type: integer
+              type: object
+              properties:
+                id:
+                  description: список с id удаляемых апартаментов
+                  type: array
+                  items:
+                    type: integer
       responses:
         '200':
           description: success
@@ -4805,9 +5528,10 @@ paths:
               schema:
                 description: кол-во удалённых строк
                 type: integer
+        '403':
+          description: UserPermissionError
   /admin/apartments/get_list_related_entities:
     get:
-      deprecated: true
       operationId: get_list_related_entities
       tags:
         - apartments
@@ -4817,7 +5541,7 @@ paths:
           name: apartment_id
           description: вообще, это список. Элементы разделяются символом "+"
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           description: success
@@ -4827,25 +5551,39 @@ paths:
                 type: object
                 properties:
                   controller_ids:
-                    type: integer
-                    description: noqa
+                    type: array
+                    items:
+                      id: null
+                      type: integer
+                      example: 1
                   driver_ids:
-                    type: integer
-                    description: noqa
+                    type: array
+                    items:
+                      id: null
+                      type: integer
+                      example: 1
                   room_ids:
-                    type: integer
-                    description: noqa
+                    type: array
+                    items:
+                      id: null
+                      type: integer
+                      example: 1
                   scenario_ids:
-                    type: integer
-                    description: noqa
+                    type: array
+                    items:
+                      id: null
+                      type: integer
+                      example: 1
                   device_ids:
-                    type: integer
-                    description: noqa
+                    type: array
+                    items:
+                      id: null
+                      type: integer
+                      example: 1
         '400':
           description: Id Must Be An Integer! Ошибка валидации
-  /admin/apartments/change_residence_id/{pk}:
+  /admin/apartments/change_residence_id/{apartment_id}:
     post:
-      deprecated: true
       operationId: change_residence_id
       description: Доступно инженеру и выше. Должно быть частью логики обновления апартаментов. Привязывает апартаменты и связанные данные к новой резиденции
       tags:
@@ -4854,7 +5592,7 @@ paths:
         - in: path
           description: id апартаментов, чью резиденцию меняем
           required: true
-          name: pk
+          name: apartment_id
           schema:
             type: integer
       requestBody:
@@ -4868,14 +5606,113 @@ paths:
                 residence_id:
                   description: id новой резиденции
                   type: integer
+                  required: true
       responses:
         '201':
           description: success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetrieveApartmentDublicate1'
-  /apartments/{pk}:
+                $ref: '#/components/schemas/ApartmentSchema'
+        '404':
+          description: NotFound
+  /admin/apartments_types/list:
+    get:
+      operationId: apartments_types_list
+      tags:
+        - apartments
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    label:
+                      type: string
+                    label_eng:
+                      type: string
+  /admin/apartments/clone/{apartment_id}:
+    post:
+      operationId: clone_apartments
+      tags:
+        - apartments
+      description: Позволяет создать копию апартаментов с возможностью изменить название, этаж, тип помещения, номер здания и комментарий
+      parameters:
+        - in: path
+          name: apartment_id
+          description: id апартаментов, которые необходимо клонировать
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneApartmentSchema'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  apartment_number:
+                    type: string
+                  apartment_type_id:
+                    type: integer
+                  floor_number:
+                    type: integer
+                  residence_id:
+                    type: integer
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+                  building_id:
+                    type: integer
+                  comment:
+                    type: string
+        '404':
+          description: NotFound
+  /admin/apartment_templates/create_apartment/{template_id}:
+    post:
+      operationId: create_apartments_from_template
+      tags:
+        - apartments
+      description: создание апартаментов на основе шаблона
+      parameters:
+        - in: path
+          name: template_id
+          description: id шаблона
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApartmentFromTemplate'
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveCreatedApartment'
+        '400':
+          description: NotFound
+  /apartments/{apartment_id}:
     get:
       operationId: retrieve_user_apartment
       tags:
@@ -5071,6 +5908,10 @@ paths:
       responses:
         '200':
           description: Успешная авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessAdminLoginResponse'
   /admin/users/all_user_phones:
     get:
       description: Возвращает список всех номеров телефонов. Доступен инженеру и выше. Данный метод не является безопасным. Постарайтесь от него избавиться
@@ -5549,10 +6390,9 @@ paths:
           name: unique_id
           required: true
           schema:
-            type: integer
+            type: string
         - in: query
           name: account_id
-          required: true
           schema:
             type: integer
       responses:
@@ -5590,6 +6430,36 @@ paths:
               schema:
                 description: кол-во удалённого дерьма
                 type: integer
+    post:
+      tags:
+        - admin_session
+      operationId: create_client_session_admin
+      description: Создание клиентов (сессий пользователей) админом
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientsCreateSchema'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveClient'
+          description: Созданный клиент
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_type:
+                    type: string
+                    example: ENTITY_ALREADY_EXISTS
+                  detail:
+                    type: string
+                    example: Entity Already Exists!
+          description: Такой клиент уже существует
   /admin/clients/{pk}:
     get:
       operationId: admin_clients_retrieve
@@ -5633,7 +6503,6 @@ paths:
             schema:
               type: object
               required:
-                - account_id
                 - unique_id
               properties:
                 account_id:
@@ -5708,7 +6577,7 @@ paths:
           name: unique_id
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: success
@@ -5729,11 +6598,6 @@ paths:
       description: возвращает пагинированный список сценариев
       parameters:
         - in: query
-          name: search
-          description: производится поиск по имени сценария
-          schema:
-            type: string
-        - in: query
           name: type
           description: тип сценария, глобальный или локальный (что бы это не значило)
           schema:
@@ -5741,30 +6605,15 @@ paths:
             enum:
               - global
               - local
-        - in: query
-          name: created_before_date
-          description: noqa
-          schema:
-            type: string
-            format: date-time
-        - in: query
-          name: created_after_date
-          description: noqa
-          schema:
-            type: string
-            format: date-time
-        - in: query
-          name: updated_before_date
-          description: noqa
-          schema:
-            type: string
-            format: date-time
-        - in: query
-          name: updated_after_date
-          description: noqa
-          schema:
-            type: string
-            format: date-time
+        - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
+        - $ref: '#/components/parameters/search_query'
+        - $ref: '#/components/parameters/CreateBeforeFilter'
+        - $ref: '#/components/parameters/CreateAfterFilter'
+        - $ref: '#/components/parameters/UpdateBeforeFilter'
+        - $ref: '#/components/parameters/UpdateAfterFilter'
       responses:
         '200':
           description: success
@@ -6207,22 +7056,10 @@ paths:
           name: scenario_id
           schema:
             type: integer
-        - in: query
-          name: sort
-          schema:
-            type: string
-        - in: query
-          name: page
-          schema:
-            type: integer
-        - in: query
-          name: max_results
-          schema:
-            type: integer
-        - in: query
-          name: get_all
-          schema:
-            type: boolean
+        - $ref: '#/components/parameters/sorting_query'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/MaxResultsQuery'
+        - $ref: '#/components/parameters/GetAllQuery'
       responses:
         '200':
           description: success
@@ -6330,7 +7167,290 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  parameters:
+    apartmentId:
+      in: path
+      name: apartment_id
+      description: id апартамента
+      required: true
+      schema:
+        type: integer
+    demoAccessId:
+      in: path
+      name: demo_access_id
+      description: id демо доступа
+      required: true
+      schema:
+        type: integer
+    imageId:
+      in: path
+      name: image_id
+      description: id изображения
+      required: true
+      schema:
+        type: integer
+    sorting_query:
+      in: query
+      name: sort
+      required: false
+      description: Принимает имя поля, по которому необходимо выполнить сортировку. Для изменения порядка сортировки, перед именем поля вставляется символ "-".
+      schema:
+        type: string
+        example: '-id'
+    notificationId:
+      in: path
+      name: notification_id
+      description: id уведомления
+      required: true
+      schema:
+        type: integer
+    PageQuery:
+      in: query
+      name: page
+      required: false
+      schema:
+        type: integer
+    MaxResultsQuery:
+      in: query
+      name: max_results
+      required: false
+      schema:
+        type: string
+    GetAllQuery:
+      in: query
+      name: get_all
+      schema:
+        type: boolean
+        default: false
+    AutomationPathId:
+      in: path
+      name: automation_id
+      description: id автоматизации
+      required: true
+      schema:
+        type: integer
+    AutomationTriggerPathId:
+      in: path
+      name: automation_trigger_id
+      description: id триггера автоматизации
+      required: true
+      schema:
+        type: integer
+    AutomationActionPathId:
+      in: path
+      name: automation_action_id
+      description: id действия автоматизации
+      required: true
+      schema:
+        type: integer
+    CreateBeforeFilter:
+      in: query
+      name: created_before_date
+      required: false
+      schema:
+        type: string
+        example: 2023-03-02 13:22:06.993476%2B00:00
+    CreateAfterFilter:
+      in: query
+      name: created_after_date
+      required: false
+      schema:
+        type: string
+        example: 2023-03-02 13:22:06.993476%2B00:00
+    UpdateBeforeFilter:
+      in: query
+      name: updated_before_date
+      required: false
+      schema:
+        type: string
+        example: 2023-03-02 13:22:06.993476%2B00:00
+    UpdateAfterFilter:
+      in: query
+      name: updated_after_date
+      required: false
+      schema:
+        type: string
+        example: 2023-03-02 13:22:06.993476%2B00:00
+    Required:
+      in: query
+      name: residence_id
+      required: true
+      schema:
+        type: integer
+        example: 1
+    apartmentTemplateId:
+      in: path
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer
+    apartmentTemplateQueryId:
+      in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: true
+      schema:
+        type: integer
+    roomTemplateId:
+      in: path
+      name: room_template_id
+      description: id шаблона комнаты
+      required: true
+      schema:
+        type: integer
+    search_query:
+      in: query
+      name: search
+      required: false
+      schema:
+        type: string
+    driverTemplateId:
+      in: path
+      name: driver_template_id
+      description: id шаблона драйвера
+      required: true
+      schema:
+        type: integer
+    parameters-apartmentTemplateQueryId:
+      in: query
+      name: apartment_template_id
+      description: id шаблона квартиры
+      required: false
+      schema:
+        type: integer
+    driverTemplateQueryId:
+      in: query
+      name: driver_template_ids
+      description: id шаблона драйвера
+      required: false
+      schema:
+        type: string
+    roomTemplateQueryId:
+      in: query
+      name: room_template_ids
+      description: id шаблона комнаты
+      required: false
+      schema:
+        type: string
+    typeQueryId:
+      in: query
+      name: type
+      description: Тип устройства. Обязательный параметр, если subtype указан
+      required: false
+      schema:
+        type: string
+    subtypeQueryId:
+      in: query
+      name: subtype
+      description: Подтип устройства
+      required: false
+      schema:
+        type: string
+    deviceTemplateId:
+      in: path
+      name: device_template_id
+      description: id шаблона устройства
+      required: true
+      schema:
+        type: integer
+    capabilityTemplateId:
+      in: path
+      name: capability_template_id
+      description: id шаблона навыка
+      required: true
+      schema:
+        type: integer
+    type:
+      in: query
+      name: type
+      description: Тип сценария. Может быть либо global либо local
+      required: false
+      schema:
+        type: string
+        example: global
+    roomTemplateIds:
+      in: query
+      name: room_template_ids
+      description: ids шаблонов сценариев
+      required: false
+      schema:
+        type: string
+        example: 1, 2, 3
+    scenarioTemplateId:
+      in: path
+      name: scenario_template_id
+      description: id шаблона сценария
+      required: true
+      schema:
+        type: integer
+    actionTemplateId:
+      in: path
+      name: action_template_id
+      description: id шаблона действия
+      required: true
+      schema:
+        type: integer
   schemas:
+    RetrieveDemoAccess:
+      type: object
+      required:
+        - id
+        - demo_duration_days
+        - demo_start_day
+        - demo_days_left
+        - apartment_id
+        - is_access_active
+      properties:
+        id:
+          type: integer
+          nullable: false
+        demo_duration_days:
+          type: integer
+          minimum: 1
+          nullable: false
+        demo_start_day:
+          type: string
+          format: date
+          nullable: true
+        demo_days_left:
+          type: integer
+          nullable: true
+        apartment_id:
+          type: integer
+          nullable: false
+        is_access_active:
+          type: boolean
+          nullable: false
+    CreateDemoAccess:
+      type: object
+      required:
+        - demo_duration_days
+        - apartment_id
+      properties:
+        demo_duration_days:
+          type: integer
+          minimum: 1
+          example: 30
+          nullable: false
+        apartment_id:
+          type: integer
+          nullable: false
+          example: 1888
+    DemoAccessUpdateForbidden:
+      type: object
+      properties:
+        error_type:
+          type: string
+          nullable: false
+          example: VALIDATION_ERROR
+        detail:
+          type: string
+          nullable: false
+          example: Запрещено изменять демо доступы после начала демо периода
+      required:
+        - error_type
+        - detail
     ArgusObject:
       type: object
       properties:
@@ -6445,12 +7565,46 @@ components:
     BuildingSchema:
       type: object
       properties:
+        id:
+          type: integer
+        title:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        residence_id:
+          type: integer
+      required:
+        - id
+        - title
+        - residence_id
+    CreateBuildingSchema:
+      type: object
+      properties:
         title:
           type: string
         residence_id:
           type: integer
       required:
         - title
+        - residence_id
+    WrongRequestBody:
+      type: object
+      properties:
+        error_type:
+          type: string
+          example: VALIDATION_ERROR
+          nullable: false
+        detail:
+          type: string
+          example: Неверное тело запроса!
+          nullable: false
+      required:
+        - error_type
+        - detail
     EntityAlreadyExists:
       type: object
       properties:
@@ -6587,18 +7741,6 @@ components:
         detail:
           type: string
           example: Invalid Image Hash!
-    NotAuthorized:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Not Authorized!
-    ImageNotFound:
-      type: object
-      properties:
-        detail:
-          type: string
-          example: Image Not Found!
     InvalidToken:
       type: object
       properties:
@@ -6611,6 +7753,12 @@ components:
         detail:
           type: string
           example: Intermediate Token Expired!
+    ImageNotFound:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: Image Not Found!
     ImageUpdateSchema:
       type: object
       properties:
@@ -7014,59 +8162,6 @@ components:
           type: string
         notification_recipients:
           type: array
-    RetrieveApartmentTemplateWithIntegratorId:
-      type: object
-      properties:
-        id:
-          type: integer
-        controller_ip:
-          type: string
-        controller_port:
-          type: integer
-        residence_id:
-          type: integer
-        title:
-          type: string
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        created_user_id:
-          type: integer
-        last_updated_user_id:
-          type: integer
-        is_dhcp:
-          type: boolean
-        integrator_id:
-          type: integer
-      required:
-        - id
-        - controller_port
-        - title
-        - created_at
-        - updated_at
-        - created_user_id
-        - last_updated_user_id
-        - is_dhcp
-    CreateApartmentTemplate:
-      type: object
-      properties:
-        id:
-          type: integer
-        controller_ip:
-          type: string
-        controller_port:
-          type: integer
-        residence_id:
-          type: integer
-        title:
-          type: string
-        is_dhcp:
-          type: boolean
-      required:
-        - controller_port
-        - is_dhcp
-        - title
     RetrieveApartmentTemplate:
       type: object
       properties:
@@ -7101,6 +8196,25 @@ components:
         - created_user_id
         - last_updated_user_id
         - is_dhcp
+    CreateApartmentTemplate:
+      type: object
+      properties:
+        id:
+          type: integer
+        controller_ip:
+          type: string
+        controller_port:
+          type: integer
+        residence_id:
+          type: integer
+        title:
+          type: string
+        is_dhcp:
+          type: boolean
+      required:
+        - controller_port
+        - is_dhcp
+        - title
     controllerIpValidationError:
       type: object
       properties:
@@ -7183,6 +8297,211 @@ components:
         detail:
           type: string
           example: ApartmentTemplates With id {apartment_template_id} Not Found!
+    ListRooms:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Уборная Олега Тинькова
+        image_id:
+          type: integer
+          example: 777
+        apartment_id:
+          type: integer
+          example: 13
+        created_at:
+          type: string
+          example: '2020-11-26T17:04:17.558199+00:00'
+          format: date-time
+        updated_at:
+          type: string
+          example: '2024-04-17T06:09:31.352373+00:00'
+          format: date-time
+        residence_id:
+          type: integer
+          example: 14
+    CreateRoom:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Гостинна Олега Тинькова
+          required: true
+        apartment_id:
+          type: integer
+          example: 777
+          required: true
+        residence_id:
+          type: integer
+          example: 13
+        image_id:
+          type: integer
+          example: 65
+    RoomScenarioAction:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 11422
+        scenario_id:
+          type: integer
+          example: 1630
+        capability_id:
+          type: integer
+          example: 1409
+        value:
+          type: string
+          example: '58'
+        residence_id:
+          type: integer
+          example: 1
+        updated_at:
+          type: string
+          example: '2022-03-29T09:35:39.262607+00:00'
+          format: date-time
+        created_at:
+          type: string
+          example: '2022-03-29T09:35:39.262609+00:00'
+          format: date-time
+        driver_id:
+          type: integer
+          example: 2
+        address:
+          type: string
+          example: /devices/gr27_light/controls/value/on
+    RoomDevicesCapabilities:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 449
+        device_id:
+          type: integer
+          example: 305
+        type:
+          type: string
+          example: toggle
+        min_value:
+          type: integer
+          example: 0
+        max_value:
+          type: integer
+          example: 1
+        address:
+          type: string
+          example: /devices/master_off_control/controls/master_OFF/on
+        residence_id:
+          type: integer
+          example: 1
+        extra:
+          type: object
+          example: null
+        sort_order:
+          type: string
+          example: null
+        feedback_address:
+          type: string
+          example: null
+        unit:
+          type: string
+          example: null
+        updated_at:
+          type: string
+          example: '2021-09-06T11:16:02.218641+00:00'
+          format: date-time
+        function:
+          type: string
+          example: null
+        push_enabled:
+          type: string
+          example: always
+        is_required:
+          type: boolean
+          example: false
+        driver:
+          type: string
+          example: mqtt
+        ip:
+          type: string
+          example: 192.168.88.74
+        port:
+          type: integer
+          example: 1888
+    RoomDevice:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 305
+        name:
+          type: string
+          example: Супер датчик протечки
+        type:
+          type: string
+          example: global
+        subtype:
+          type: string
+          example: trigger
+        driver_id:
+          type: integer
+          example: 2
+        description:
+          type: string
+          example: 1
+        room_id:
+          type: integer
+          example: 482
+        created_at:
+          type: string
+          example: '2021-05-11T09:58:26.178004+00:00'
+          format: date-time
+        updated_at:
+          type: string
+          example: '2024-03-21T09:47:15.746945+00:00'
+          format: date-time
+        icon_tag:
+          type: string
+          example: water_sensor
+        residence_id:
+          type: integer
+          example: 1
+        extra:
+          type: object
+          example:
+            mode: scenario
+        room_title:
+          type: string
+          example: Postman wireless
+        driver_type:
+          type: string
+          example: mqtt
+        driver_extra:
+          type: object
+          example: null
+        destination:
+          type: string
+          example: 192.168.88.74:1883
+        capabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoomDevicesCapabilities'
+    RoomRolesModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_apartment_id:
+          type: integer
+        room_id:
+          type: integer
+        residence_id:
+          type: integer
+        updated_at:
+          type: string
+          format: date-time
     RetrieveDriverTemplates:
       type: object
       properties:
@@ -7624,14 +8943,14 @@ components:
         customer_support_email:
           type: string
           nullable: true
+        city:
+          type: string
       required:
         - title
         - address
-        - description
-        - updated_at
         - image_id
         - integrator_id
-        - customer_support_email
+        - city
     CreateResidence:
       type: object
       required:
@@ -7673,6 +8992,13 @@ components:
           type: string
         type_label_eng:
           type: string
+      required:
+        - id
+        - apartment_number
+        - residence_id
+        - residence_title
+        - type_label
+        - type_label_eng
     RetrieveResidenceWithApartments:
       type: object
       allOf:
@@ -7699,6 +9025,9 @@ components:
           type: integer
         title:
           type: string
+      required:
+        - id
+        - title
     AccountApartmentListDisplayPreferences:
       type: object
       properties:
@@ -7712,7 +9041,7 @@ components:
           example: '2022-02-14T11:59:37.945Z'
         preferences:
           type: object
-    AccountApartmentPreferences2:
+    AccountApartmentPreferencesModel:
       type: object
       properties:
         id:
@@ -7758,37 +9087,41 @@ components:
           type: array
           items:
             type: object
-    RetrieveDriver:
+    AccountApartmentDefaultPreferencesModel:
       type: object
       properties:
         id:
           type: integer
-          example: 1
-        ip:
-          type: string
-          example: 192.168.0.74
-        port:
+        apartment_id:
           type: integer
-          example: 1883
-        type:
-          type: string
-          example: mqtt
-        controller_id:
-          type: integer
-          example: 1
-        created_at:
-          type: string
-          format: date-time
-          example: '2021-02-01T13:43:38.838000+00:00'
         updated_at:
           type: string
           format: date-time
-          example: '2021-02-01T13:43:39.549000+00:00'
-        residence_id:
-          type: integer
-          example: 1
-        extra:
+        preferences:
           type: object
+    Accounts:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        middle_name:
+          type: string
+        is_owner:
+          type: boolean
+        account_apartment_id:
+          type: integer
+        email:
+          type: string
+        phone_number:
+          type: string
+        image_id:
+          type: integer
+        language:
+          type: string
     RetrieveController:
       type: object
       properties:
@@ -7823,6 +9156,491 @@ components:
           example: 1
         extra:
           type: object
+        is_registered:
+          type: boolean
+        is_dhcp:
+          type: boolean
+    ApartmentRooms:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        image_id:
+          type: integer
+        apartment_id:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        residence_id:
+          type: integer
+    ScenariosActions:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 11422
+        scenario_id:
+          type: integer
+          example: 1630
+        capability_id:
+          type: integer
+          example: 1409
+        value:
+          type: string
+          example: '58'
+        residence_id:
+          type: integer
+          example: 1
+        updated_at:
+          type: string
+          example: '2022-03-29T09:35:39.262607+00:00'
+          format: date-time
+        created_at:
+          type: string
+          example: '2022-03-29T09:35:39.262609+00:00'
+          format: date-time
+        driver_id:
+          type: integer
+          example: 2
+        extra:
+          type: object
+          example: null
+        address:
+          type: string
+          example: /devices/gr27_light/controls/value/on
+        feedback_address:
+          type: string
+          example: /devices/gr27_light/controls/value_fb
+        name:
+          type: string
+          example: Точки
+        type:
+          type: string
+          example: light
+        subtype:
+          type: string
+          example: dimmable
+        device_id:
+          type: integer
+          example: 913
+        capability_type:
+          type: string
+          example: brightness
+        room_id:
+          type: integer
+          example: 484
+        title:
+          type: string
+          example: Спальня
+        capability_extra:
+          type: object
+          example: null
+    ApartmentsScenarioWithActions:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1630
+        title:
+          type: string
+          example: Отдых
+        trigger_type:
+          type: string
+          example: auto
+        icon_tag:
+          type: string
+          example: photo
+        uid:
+          type: string
+          example: wirenboard-AMRRKXLM
+        apartment_id:
+          type: integer
+          example: 1
+        room_id:
+          type: integer
+          example: 1
+        is_confirmation_required:
+          type: boolean
+          example: null
+        description:
+          type: string
+          example: description
+        created_at:
+          type: string
+          example: '2022-01-25T14:01:33.570737+00:00'
+          format: date-time
+        updated_at:
+          type: string
+          example: '2022-03-29T09:35:39.355854+00:00'
+          format: date-time
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenariosActions'
+    ApartmentDevices:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 305
+        name:
+          type: string
+          example: Супер датчик протечки
+        type:
+          type: string
+          example: global
+        subtype:
+          type: string
+          example: trigger
+        driver_id:
+          type: integer
+          example: 2
+        description:
+          type: string
+          example: 1
+        room_id:
+          type: integer
+          example: 482
+        created_at:
+          type: string
+          example: '2021-05-11T09:58:26.178004+00:00'
+          format: date-time
+        updated_at:
+          type: string
+          example: '2024-03-21T09:47:15.746945+00:00'
+          format: date-time
+        icon_tag:
+          type: string
+          example: water_sensor
+        residence_id:
+          type: integer
+          example: 1
+        extra:
+          type: object
+          example:
+            mode: scenario
+        capability_id:
+          type: integer
+          example: 449
+        device_id:
+          type: integer
+          example: 305
+        capability_type:
+          type: string
+          example: toggle
+        min_value:
+          type: integer
+          example: 0
+        max_value:
+          type: integer
+          example: 1
+        address:
+          type: string
+          example: /devices/master_off_control/controls/master_OFF/on
+        capability_residence_id:
+          type: integer
+          example: 1
+        capability_extra:
+          type: object
+          example: null
+        feedback_address:
+          type: string
+          example: null
+        unit:
+          type: string
+          example: null
+        capability_updated_at:
+          type: string
+          example: '2021-09-06T11:16:02.218641+00:00'
+        function:
+          type: string
+          example: null
+        push_enabled:
+          type: string
+          example: always
+        is_required:
+          type: boolean
+          example: false
+        capability_sort_order:
+          type: string
+          example: null
+        driver_type:
+          type: string
+          example: mqtt
+        driver_port:
+          type: integer
+          example: 1883
+        driver_ip:
+          type: string
+          example: 192.168.88.74
+        room_title:
+          type: string
+          example: Postman 1080p
+    RetrieveDriver:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        ip:
+          type: string
+          example: 192.168.0.74
+        port:
+          type: integer
+          example: 1883
+        type:
+          type: string
+          example: mqtt
+        controller_id:
+          type: integer
+          example: 1
+        created_at:
+          type: string
+          format: date-time
+          example: '2021-02-01T13:43:38.838000+00:00'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2021-02-01T13:43:39.549000+00:00'
+        residence_id:
+          type: integer
+          example: 1
+        extra:
+          type: object
+    ApartmentCapabilities:
+      type: object
+      properties:
+        address:
+          type: string
+          example: авы
+        feedback_address:
+          type: string
+          example: выф
+        id:
+          type: integer
+          example: 11115
+        uid:
+          type: string
+          example: wirenboard-AMRRKXLM
+        type:
+          type: string
+          example: mqtt
+        port:
+          type: integer
+          example: 1883
+        ip:
+          type: string
+          example: 192.168.88.74
+        function:
+          type: string
+          example: null
+    UpdateApartment:
+      type: object
+      required:
+        - apartment_number
+        - floor_number
+        - residence_id
+        - apartment_type_id
+      properties:
+        apartment_number:
+          type: string
+          maxLength: 128
+        floor_number:
+          type: integer
+        residence_id:
+          type: integer
+        building_id:
+          type: integer
+        comment:
+          type: string
+          maxLength: 1024
+        apartment_type_id:
+          type: integer
+    ApartmentWithAccounts:
+      type: object
+      properties:
+        id:
+          type: integer
+        apartment_number:
+          type: string
+        residence_id:
+          type: integer
+        residence_title:
+          type: string
+        type_label:
+          type: string
+        type_label_eng:
+          type: string
+        apartment_type_id:
+          type: integer
+        floor_number:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        building_id:
+          type: integer
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Accounts'
+        demo_access:
+          $ref: '#/components/schemas/RetrieveDemoAccess'
+          nullable: true
+      required:
+        - id
+        - residence_id
+        - apartment_number
+        - type_label
+        - type_label_eng
+        - apartment_type_id
+        - floor_number
+        - building_id
+        - created_at
+        - updated_at
+        - comment
+        - accounts
+        - residence_title
+        - demo_access
+    CreateApartment:
+      type: object
+      required:
+        - apartment_number
+        - floor_number
+        - residence_id
+        - apartment_type_id
+      properties:
+        apartment_number:
+          type: string
+          maxLength: 128
+        floor_number:
+          type: integer
+        residence_id:
+          type: integer
+        building_id:
+          type: integer
+        comment:
+          type: string
+          maxLength: 1024
+        apartment_type_id:
+          type: integer
+        template_id:
+          type: integer
+          nullable: true
+    RetrieveCreatedApartment:
+      type: object
+      properties:
+        id:
+          type: integer
+        apartment_number:
+          description: номер апартоментов
+          type: integer
+        residence_id:
+          type: integer
+        floor_number:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        building_id:
+          type: integer
+        comment:
+          type: string
+        apartment_type_id:
+          type: integer
+    ApartmentSchema:
+      type: object
+      properties:
+        id:
+          type: integer
+        apartment_number:
+          type: string
+          nullable: false
+        apartment_type_id:
+          type: integer
+          nullable: false
+        floor_number:
+          type: integer
+          nullable: false
+        residence_id:
+          type: integer
+          nullable: false
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        building_id:
+          type: integer
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+    CloneApartmentSchema:
+      type: object
+      properties:
+        apartment_number:
+          type: string
+          required: true
+          example: Дом Олега Тинькова
+          description: Название нового помещения
+        floor_number:
+          type: integer
+          example: 1
+          description: Этаж нового помещения
+        apartment_type_id:
+          type: integer
+          description: id типа помещения
+        building_id:
+          type: integer
+          description: id здания
+        comment:
+          type: string
+          description: комментарий
+    CreateApartmentFromTemplate:
+      type: object
+      properties:
+        apartment_number:
+          type: string
+          required: true
+        floor_number:
+          type: integer
+          required: true
+        residence_id:
+          type: integer
+          required: true
+        controller_uid:
+          type: string
+          required: true
+        building_id:
+          type: integer
+          required: false
+        controller_serial_number:
+          type: string
+          required: true
+        comment:
+          type: string
+          required: false
+        apartment_type_id:
+          type: integer
+          required: true
     RetrieveApartmentDublicate1:
       type: object
       properties:
@@ -7876,28 +9694,6 @@ components:
             - eng
         integrator_id:
           type: integer
-    CreateApartment:
-      type: object
-      required:
-        - apartment_number
-        - floor_number
-        - residence_id
-        - apartment_type_id
-      properties:
-        apartment_number:
-          type: string
-          maxLength: 128
-        floor_number:
-          type: integer
-        residence_id:
-          type: integer
-        building_id:
-          type: integer
-        comment:
-          type: string
-          maxLength: 1024
-        apartment_type_id:
-          type: integer
     RetrieveUserWithAccountResidence:
       type: object
       properties:
@@ -7935,6 +9731,36 @@ components:
           description: список резиденций доступных пользователю
           items:
             $ref: '#/components/schemas/RetrieveResidence'
+    SuccessAdminLoginResponse:
+      type: object
+      properties:
+        exp_time:
+          type: integer
+        refresh_exp_time:
+          type: integer
+        group_id:
+          type: integer
+        user_id:
+          type: integer
+        prefix:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        middle_name:
+          type: string
+        refresh_token:
+          type: string
+        token:
+          type: string
+      required:
+        - token
+        - refresh_token
+        - refresh_exp_time
+        - exp_time
+        - user_id
+        - group_id
     SuccessLoginResponse:
       type: object
       properties:
@@ -8027,8 +9853,6 @@ components:
       type: object
       required:
         - unique_id
-        - account_id
-        - email
       properties:
         email:
           type: string
@@ -8165,189 +9989,3 @@ components:
         description:
           type: string
           example: very
-  parameters:
-    imageId:
-      in: path
-      name: image_id
-      description: id изображения
-      required: true
-      schema:
-        type: integer
-    sorting_query:
-      in: query
-      name: sort
-      required: false
-      description: Принимает имя поля, по которому необходимо выполнить сортировку. Для изменения порядка сортировки, перед именем поля вставляется символ "-".
-      schema:
-        type: string
-        example: '-id'
-    notificationId:
-      in: path
-      name: notification_id
-      description: id уведомления
-      required: true
-      schema:
-        type: integer
-    AutomationPathId:
-      in: path
-      name: automation_id
-      description: id автоматизации
-      required: true
-      schema:
-        type: integer
-    AutomationTriggerPathId:
-      in: path
-      name: automation_trigger_id
-      description: id триггера автоматизации
-      required: true
-      schema:
-        type: integer
-    AutomationActionPathId:
-      in: path
-      name: automation_action_id
-      description: id действия автоматизации
-      required: true
-      schema:
-        type: integer
-    CreateBeforeFilter:
-      in: query
-      name: created_before_date
-      required: false
-      schema:
-        type: string
-        example: 2023-03-02 13:22:06.993476%2B00:00
-    CreateAfterFilter:
-      in: query
-      name: created_after_date
-      required: false
-      schema:
-        type: string
-        example: 2023-03-02 13:22:06.993476%2B00:00
-    UpdateBeforeFilter:
-      in: query
-      name: updated_before_date
-      required: false
-      schema:
-        type: string
-        example: 2023-03-02 13:22:06.993476%2B00:00
-    UpdateAfterFilter:
-      in: query
-      name: updated_after_date
-      required: false
-      schema:
-        type: string
-        example: 2023-03-02 13:22:06.993476%2B00:00
-    Required:
-      in: query
-      name: residence_id
-      required: true
-      schema:
-        type: integer
-        example: 1
-    apartmentTemplateId:
-      in: path
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: true
-      schema:
-        type: integer
-    apartmentTemplateQueryId:
-      in: query
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: true
-      schema:
-        type: integer
-    roomTemplateId:
-      in: path
-      name: room_template_id
-      description: id шаблона комнаты
-      required: true
-      schema:
-        type: integer
-    driverTemplateId:
-      in: path
-      name: driver_template_id
-      description: id шаблона драйвера
-      required: true
-      schema:
-        type: integer
-    parameters-apartmentTemplateQueryId:
-      in: query
-      name: apartment_template_id
-      description: id шаблона квартиры
-      required: false
-      schema:
-        type: integer
-    driverTemplateQueryId:
-      in: query
-      name: driver_template_ids
-      description: id шаблона драйвера
-      required: false
-      schema:
-        type: string
-    roomTemplateQueryId:
-      in: query
-      name: room_template_ids
-      description: id шаблона комнаты
-      required: false
-      schema:
-        type: string
-    typeQueryId:
-      in: query
-      name: type
-      description: Тип устройства. Обязательный параметр, если subtype указан
-      required: false
-      schema:
-        type: string
-    subtypeQueryId:
-      in: query
-      name: subtype
-      description: Подтип устройства
-      required: false
-      schema:
-        type: string
-    deviceTemplateId:
-      in: path
-      name: device_template_id
-      description: id шаблона устройства
-      required: true
-      schema:
-        type: integer
-    capabilityTemplateId:
-      in: path
-      name: capability_template_id
-      description: id шаблона навыка
-      required: true
-      schema:
-        type: integer
-    type:
-      in: query
-      name: type
-      description: Тип сценария. Может быть либо global либо local
-      required: false
-      schema:
-        type: string
-        example: global
-    roomTemplateIds:
-      in: query
-      name: room_template_ids
-      description: ids шаблонов сценариев
-      required: false
-      schema:
-        type: string
-        example: 1, 2, 3
-    scenarioTemplateId:
-      in: path
-      name: scenario_template_id
-      description: id шаблона сценария
-      required: true
-      schema:
-        type: integer
-    actionTemplateId:
-      in: path
-      name: action_template_id
-      description: id шаблона действия
-      required: true
-      schema:
-        type: integer

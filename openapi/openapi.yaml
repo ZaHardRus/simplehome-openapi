@@ -23,6 +23,16 @@ security:
   - BearerAuth: []
 
 paths:
+
+  /admin/apartment_demo_access_by_apartment_id/{apartment_id}:
+    $ref: './routes/demo_access/DemoAccessByApartmentId.yaml'
+
+  /admin/apartment_demo_access/{demo_access_id}:
+    $ref: './routes/demo_access/DemoAccessById.yaml'
+
+  /admin/apartment_demo_access:
+    $ref: './routes/demo_access/CreateDemoAccess.yaml'
+
   /argus/object/{argus_object_id}:
     $ref: './routes/security_systems/RetrieveArgusObject.yaml'
 
