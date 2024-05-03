@@ -6,7 +6,8 @@
         {
             "label": "boundle json",
             "type": "shell",
-            "command": "make bundle_openapi_json"
+            "command": "make bundle_openapi_json",
+            "problemMatcher": []
         },
         {
             "label": "boundle yaml",

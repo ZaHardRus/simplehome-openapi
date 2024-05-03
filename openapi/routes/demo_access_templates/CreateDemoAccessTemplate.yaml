@@ -1,0 +1,15 @@
+post:
+  operationId: create_demo_access_template
+  tags:
+    - demo_access_templates
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/demo_access_templates/CreateDemoAccessTemplate.yaml"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/demo_access_templates/RetrieveDemoAccessTemplate.yaml"

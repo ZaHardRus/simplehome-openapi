@@ -24,6 +24,15 @@ security:
 
 paths:
 
+  /admin/apartment_template_demo_access:
+    $ref: './routes/demo_access_templates/CreateDemoAccessTemplate.yaml'
+  
+  /admin/apartment_template_demo_access/{demo_access_template_id}:
+    $ref: './routes/demo_access_templates/DemoAccessById.yaml'
+
+  /admin/apartment_template_demo_access_by_template_id/{apartment_template_id}:
+    $ref: './routes/demo_access_templates/DemoAccessByApartmentTemplateId.yaml'
+
   /admin/apartment_demo_access_by_apartment_id/{apartment_id}:
     $ref: './routes/demo_access/DemoAccessByApartmentId.yaml'
 
