@@ -1,0 +1,51 @@
+get:
+  operationId: get_demo_access_template
+  tags:
+    - demo_access_templates
+  parameters:
+    - $ref: "#/components/parameters/demoAccessTemplateId"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/demo_access_templates/RetrieveDemoAccessTemplate.yaml"
+
+put:
+  operationId: update_demo_access_template
+  tags:
+    - demo_access_templates
+  parameters:
+    - $ref: "#/components/parameters/demoAccessTemplateId"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/demo_access_templates/CreateDemoAccessTemplate.yaml"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/demo_access_templates/RetrieveDemoAccessTemplate.yaml"
+
+delete:
+  operationId: delete_demo_access_template
+  tags:
+    - demo_access_templates
+  parameters:
+    - $ref: "#/components/parameters/demoAccessTemplateId"
+  responses:
+    "204":
+      description: шаблон демо доступа удален
+
+
+components:
+  parameters:
+    demoAccessTemplateId:
+      in: path
+      name: demo_access_template_id
+      description: id шаблона демо доступа
+      required: true
+      schema:
+        type: integer

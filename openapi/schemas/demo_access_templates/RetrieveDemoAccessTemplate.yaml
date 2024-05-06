@@ -1,0 +1,19 @@
+type: object
+required:
+  - id
+  - demo_duration_days
+  - apartment_template_id
+properties:
+  id: 
+    type: integer
+    nullable: false
+    example: 2
+  demo_duration_days: 
+    type: integer
+    minimum: 1
+    nullable: false
+    example: 30
+  apartment_template_id: 
+    type: integer
+    nullable: false
+    example: 20

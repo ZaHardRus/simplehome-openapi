@@ -1,0 +1,56 @@
+get:
+  operationId: get_demo_access_by_apartment_id
+  tags:
+    - demo_access
+  parameters:
+    - $ref: "#/components/parameters/apartmentId"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/demo_access/RetrieveDemoAccess.yaml"
+          examples:
+            DemoPeriodEnded:
+              summary: Демо доступ истек
+              description: Демо доступ истек 3 дня назад. Доступ к квартире запрещен
+              value:
+                id: 10
+                demo_duration_days: 30
+                demo_start_day: "2024-04-29"
+                demo_days_left: -3
+                apartment_id: 1888
+                is_access_active: false
+            DemoPeriodNotEnded:
+              summary: Демо активирован
+              description: Демо доступ истечет через 20 дней. Доступ к квартире разрешен
+              value:
+                id: 10
+                demo_duration_days: 30
+                demo_start_day: "2024-04-29"
+                demo_days_left: 20
+                apartment_id: 1888
+                is_access_active: true
+            DemoPeriodNotStarted:
+              summary: Демо доступ не был активирован
+              description: "Демо доступ не был активирован. 
+                        Он будет активирован при первом открытии квартиры в приложении. 
+                        Доступ к квартире разрешен"
+              value:
+                id: 10
+                demo_duration_days: 30
+                demo_start_day: null
+                demo_days_left: null
+                apartment_id: 1888
+                is_access_active: true
+
+
+components:
+  parameters:
+    apartmentId:
+      in: path
+      name: apartment_id
+      description: id апартамента
+      required: true
+      schema:
+        type: integer

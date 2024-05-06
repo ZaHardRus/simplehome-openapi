@@ -1,0 +1,23 @@
+get:
+  operationId: get_demo_access_template_by_apartment_template_id
+  tags:
+    - demo_access_templates
+  parameters:
+    - $ref: "#/components/parameters/apartmentTemplateId"
+  responses:
+    "200":
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/demo_access_templates/RetrieveDemoAccessTemplate.yaml"
+
+
+components:
+  parameters:
+    apartmentTemplateId:
+      in: path
+      name: apartment_template_id
+      description: id шаблона апартамента
+      required: true
+      schema:
+        type: integer

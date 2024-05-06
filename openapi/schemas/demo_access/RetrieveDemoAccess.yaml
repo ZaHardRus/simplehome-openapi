@@ -1,0 +1,29 @@
+type: object
+required:
+  - id
+  - demo_duration_days
+  - demo_start_day
+  - demo_days_left
+  - apartment_id
+  - is_access_active
+properties:
+  id: 
+    type: integer
+    nullable: false
+  demo_duration_days: 
+    type: integer
+    minimum: 1
+    nullable: false
+  demo_start_day: 
+    type: string
+    format: date
+    nullable: true
+  demo_days_left: 
+    type: integer
+    nullable: true
+  apartment_id: 
+    type: integer
+    nullable: false
+  is_access_active:
+    type: boolean
+    nullable: false
