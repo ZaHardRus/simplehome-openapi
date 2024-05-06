@@ -8,41 +8,22 @@ get:
     - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
     - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
     - $ref: "../../schemas/core/filters/search_query.yaml"
-
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateAfterFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateAfterFilter"
     - in: query
       name: apartment_id
       description: фильтрация по апартаментам
       schema:
         type: integer
         example: 1
-
     - in: query
-      name: created_dt_after
-      description: noqa
+      name: room_group_support
+      description: получение групп комнат
       schema:
-        type: string
-        format: date-time
+        type: boolean
 
-    - in: query
-      name: updated_dt_after
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: created_dt_from      
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: updated_dt_from
-      description: noqa
-      schema:
-        type: string
-        format: date-time
 
   responses:
     '200':
