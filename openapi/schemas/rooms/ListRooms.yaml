@@ -9,6 +9,7 @@ properties:
   image_id:
     type: integer
     example: 777
+    nullable: true
   apartment_id:
     type: integer
     example: 13
@@ -16,10 +17,20 @@ properties:
     type: string
     example: "2020-11-26T17:04:17.558199+00:00"
     format: date-time
+    nullable: true
   updated_at:
     type: string
     example: "2024-04-17T06:09:31.352373+00:00"
     format: date-time
+    nullable: true
   residence_id:
     type: integer
     example: 14
+required:
+  - id
+  - title
+  - image_id
+  - apartment_id
+  - created_at
+  - updated_at
+  - residence_id
