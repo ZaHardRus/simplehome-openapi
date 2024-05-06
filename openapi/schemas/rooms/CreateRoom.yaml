@@ -2,7 +2,7 @@ type: object
 properties:
   title:
     type: string
-    example: Гостинна Олега Тинькова
+    example: Гостинная Олега Тинькова
     required: true
   apartment_id:
     type: integer
@@ -13,4 +13,5 @@ properties:
     example: 13
   image_id:
     type: integer
+    nullable: true
     example: 65
