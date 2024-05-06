@@ -4,7 +4,7 @@ get:
     - rooms
   parameters:
       - in: path
-        name: room_id
+        name: id
         required: true
         schema:
           type: integer
@@ -17,39 +17,18 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              id:
-                type: integer
-                example: 1
-              title:
-                type: string
-                example: Уборная Олега Тинькова
-              image_id:
-                type: integer
-                example: 55
-              apartment_id:
-                type: integer
-                example: 1
-              created_at:
-                type: string
-                example: "2020-11-26T17:04:17.558199+00:00"
-                format: date-time
-              updated_at:
-                type: string
-                example: "2024-04-17T06:09:31.352373+00:00"
-                format: date-time
-              residence_id:
-                type: integer
-                example: 1
-              scenarios:
-                type: array
-                items:
-                  $ref: "../../schemas/actions/RoomScenarioAction.yaml"
-              devices:
-                type: array
-                items:
-                  $ref: "../../schemas/devices/RoomDevice.yaml"
+            allOf:
+              - $ref:  "../../schemas/rooms/ListRooms.yaml"
+              - type: object
+                properties:
+                  scenarios:
+                    type: array
+                    items:
+                      $ref: "../../schemas/actions/RoomScenarioAction.yaml"
+                  devices:
+                    type: array
+                    items:
+                      $ref: "../../schemas/devices/RoomDevice.yaml"
     '404':
       description: NotFound  
 
@@ -59,13 +38,13 @@ delete:
   tags:
     - rooms
   parameters:
-  - in: query
-    name: delete_devices
-    description: флаг удаления устройств
-    required: false
-    schema:
-      type: boolean
-      example: true
+    - in: query
+      name: delete_devices
+      description: флаг удаления устройств
+      required: false
+      schema:
+        type: boolean
+        example: true
   responses:
     '204':
       description: Successfully deleted

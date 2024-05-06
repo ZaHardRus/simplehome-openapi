@@ -185,7 +185,7 @@ paths:
   /admin/rooms:
     $ref: ./routes/room/AdminRooms.yaml 
   
-  /admin/rooms/{room_id}:
+  /admin/rooms/{id}:
     $ref: ./routes/room/AdminRoomsDetailed.yaml
 
   /admin/rooms/set_apartment_relations:
