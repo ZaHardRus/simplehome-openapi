@@ -1,0 +1,9 @@
+type: object
+properties:
+  group_name:
+    type: string
+    example: "Санузел"
+  rooms:
+    type: array
+    items:
+      $ref: "./ListRooms.yaml"

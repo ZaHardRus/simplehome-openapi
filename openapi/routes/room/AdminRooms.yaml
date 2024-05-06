@@ -33,7 +33,9 @@ get:
           schema:
             type: array
             items:
-              $ref: "../../schemas/rooms/ListRooms.yaml"
+              oneOf:
+                - $ref: "../../schemas/rooms/ListRooms.yaml"
+                - $ref: "../../schemas/rooms/ListRoomsByGroup.yaml"
     '404':
       description: NotFound
 
