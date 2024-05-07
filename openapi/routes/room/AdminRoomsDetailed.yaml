@@ -38,6 +38,13 @@ delete:
   tags:
     - rooms
   parameters:
+    - in: path
+      name: id
+      description: id удаляемой комнаты
+      required: true
+      schema:
+        type: integer
+        example: 1
     - in: query
       name: delete_devices
       description: флаг удаления устройств
@@ -58,7 +65,7 @@ put:
     - rooms
   parameters:
     - in: path
-      name: room_id
+      name: id
       description: id изменяемой комнаты
       required: true
       schema:
