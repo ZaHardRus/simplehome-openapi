@@ -1,126 +1,104 @@
-  get:
-    operationId: apartments_retrieve
-    tags:
-      - apartments
-    parameters:
-        - in: path
-          name: apartment_id
-          required: true
+get:
+  operationId: apartments_retrieve
+  tags:
+    - apartments
+  parameters:
+      - in: path
+        name: apartment_id
+        required: true
+        schema:
+          type: integer
+        example: 1
+  description: По сути retrieve метод на получение апартаментов и всего,
+                что в них имеется.
+                Нужно вынести в отдельный роут инфу о контроллере, овнерах и тп
+  
+  responses:
+    '200':
+      description: success
+      content:
+        application/json:
           schema:
-            type: integer
-          example: 1
-    description: По сути retrieve метод на получение апартаментов и всего,
-                 что в них имеется.
-                 Нужно вынести в отдельный роут инфу о контроллере, овнерах и тп
-    
-    responses:
-      '200':
-        description: success
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-                apartment_number:
-                  type: integer
-                apartment_type_id:
-                  type: integer
-                floor_number:
-                  type: integer
-                residence_id:
-                  type: integer
-                created_at:
-                  type: string
-                  format: date-time
-                updated_at:
-                  type: string
-                  format: date-time
-                building_id:
-                  type: integer
-                comment:
-                  type: string
-                accounts:
-                  type: array
-                  items:
-                    $ref: "../../schemas/apartments/Accounts.yaml"
-                controller:
-                  $ref: '../../schemas/controllers/RetrieveController.yaml'
-                rooms:
-                  type: array
-                  items:
-                    $ref: "../../schemas/rooms/ApartmentRooms.yaml"
-                scenarios:
-                  type: array
-                  items:
-                    $ref: "../../schemas/scenarios/ApartmentsScenarioWithActions.yaml"
-                devices:
-                  type: array
-                  items:
-                    $ref: "../../schemas/devices/ApartmentDevices.yaml"
-                drivers:
-                  description: набор драйверов апартаментов
-                  type: array
-                  items:
-                    $ref: '../../schemas/drivers/RetrieveDriver.yaml'
-                capabilities:
-                  type: array
-                  items:
-                    $ref: "../../schemas/capabilities/ApartmentCapabilities.yaml"
+            type: object
+            allOf:
+              - $ref: "../../schemas/apartments/ApartmentWithAccounts.yaml"
+            properties:
+              controller:
+                $ref: '../../schemas/controllers/RetrieveController.yaml'
+              rooms:
+                type: array
+                items:
+                  $ref: "../../schemas/rooms/ApartmentRooms.yaml"
+              scenarios:
+                type: array
+                items:
+                  $ref: "../../schemas/scenarios/ApartmentsScenarioWithActions.yaml"
+              devices:
+                type: array
+                items:
+                  $ref: "../../schemas/devices/ApartmentDevices.yaml"
+              drivers:
+                description: набор драйверов апартаментов
+                type: array
+                items:
+                  $ref: '../../schemas/drivers/RetrieveDriver.yaml'
+              capabilities:
+                type: array
+                items:
+                  $ref: "../../schemas/capabilities/ApartmentCapabilities.yaml"
 
-  delete:
-    description: удаляет апартаменты.
-                 Метод доступен с ролью админа и выше.
-                 Апартаменты можно удалить только в случае, 
-                 если у пользователя есть доступ до апартаментов
-    operationId: apartments_delete
-    tags:
-      - apartments
-    parameters:
-      - in: path
-        name: apartment_id
-        description: id удаляемых апартаментов
-        required: true
-        schema:
-          type: integer
-          example: 1
-    responses:
-      '204':
-        description: успешное удаление
-      '404':
-        description: апартаменты не найдены
-      '403':
-        description: UserPermissionError
+delete:
+  description: удаляет апартаменты.
+                Метод доступен с ролью админа и выше.
+                Апартаменты можно удалить только в случае, 
+                если у пользователя есть доступ до апартаментов
+  operationId: apartments_delete
+  tags:
+    - apartments
+  parameters:
+    - in: path
+      name: apartment_id
+      description: id удаляемых апартаментов
+      required: true
+      schema:
+        type: integer
+        example: 1
+  responses:
+    '204':
+      description: успешное удаление
+    '404':
+      description: апартаменты не найдены
+    '403':
+      description: UserPermissionError
 
-  # TODO: должно быть просто id
-  put:
-    operationId: apartments_update
-    description: Доступно с ролью админа и выше.
-    tags:
-      - apartments
-    parameters:
-      - in: path
-        name: apartment_id
-        description: id изменяемых апартаментов
-        required: true
-        schema:
-          type: integer
-          example: 1
-    requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '../../schemas/apartments/UpdateApartment.yaml'
-    responses:
-      '201':
-        content:
-          application/json:
-            schema:
-              $ref: "../../schemas/apartments/ApartmentWithAccounts.yaml"
-      '403':
-        description: UserPermissionError
-      '400':
-        description: EntityAlreadyExists
-      '404':
-        description: NotFound
+# TODO: должно быть просто id
+put:
+  operationId: apartments_update
+  description: Доступно с ролью админа и выше.
+  tags:
+    - apartments
+  parameters:
+    - in: path
+      name: apartment_id
+      description: id изменяемых апартаментов
+      required: true
+      schema:
+        type: integer
+        example: 1
+  requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/apartments/UpdateApartment.yaml'
+  responses:
+    '201':
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/apartments/ApartmentWithAccounts.yaml"
+    '403':
+      description: UserPermissionError
+    '400':
+      description: EntityAlreadyExists
+    '404':
+      description: NotFound
