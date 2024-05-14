@@ -8,6 +8,10 @@ get:
     - $ref: "../../schemas/core/filters/pagination_query.yaml#/MaxResultsQuery"
     - $ref: "../../schemas/core/filters/pagination_query.yaml#/GetAllQuery"
     - $ref: "../../schemas/core/filters/search_query.yaml"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/CreateAfterFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateBeforeFilter"
+    - $ref: "../../schemas/core/filters/datetime_query_filter.yaml#/UpdateAfterFilter"
 
     - in: query
       name: floor_number
@@ -41,34 +45,6 @@ get:
         type: array
         items:
           type: integer
-
-    - in: query
-      name: created_after_date
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: updated_dt_after
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: created_before_date
-      description: noqa
-      schema:
-        type: string
-        format: date-time
-
-    - in: query
-      name: updated_dt_from
-      description: noqa
-      schema:
-        type: string
-        format: date-time
 
   responses:
     '200':
