@@ -10,7 +10,7 @@ get:
     - $ref: "../../schemas/core/filters/search_query.yaml"
 
     - in: query
-      name: flor_number
+      name: floor_number
       description: фильтрация по номерам этажей
       schema:
         type: array
@@ -43,7 +43,7 @@ get:
           type: integer
 
     - in: query
-      name: created_dt_after
+      name: created_after_date
       description: noqa
       schema:
         type: string
@@ -57,7 +57,7 @@ get:
         format: date-time
 
     - in: query
-      name: created_dt_from      
+      name: created_before_date
       description: noqa
       schema:
         type: string
