@@ -11,7 +11,7 @@ get:
 
     - in: query
       name: floor_number
-      description: фильтрация по номерам этажей
+      description: фильтрация по номеру этажа
       schema:
         type: array
         items: 
